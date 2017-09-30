@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="GBK"?>
+<Config>
+	<Action id="test">
+		<Description>车辆信息action</Description>
+		<ActionContext>
+		    <Data name="MSG" type="string" output="true"/>
+		    <Data name="goto" type="string" />
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.mytestaction.MytestAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+		<PresentationConfig>
+			<ActionDestination method="forward" return_code="0">/jsp/businessData/vehicle_info.jsp</ActionDestination>				
+		</PresentationConfig>
+	</Action>
+	
+	<Action id="SYS_LOGIN_ACTION">
+		<Description>系统登录</Description>
+		<ActionContext>
+			<Data name="name" type="string"/>
+			<Data name="pass" type="string"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+<!-- 			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/> -->
+			<ActionStep id="2" classname="com.vehicle.action.SysLoginAction"  on1Do="next" onOtherDo="next"/>
+<!-- 			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/> -->
+		</ActionParam>
+		</Action>
+	<Action id="SYS_LOGOUT_ACTION">
+		<Description>系统登出</Description>
+		<ActionContext>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+<!-- 			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/> -->
+			<ActionStep id="2" classname="com.vehicle.action.SysLogoutAction"  on1Do="next" onOtherDo="next"/>
+<!-- 			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/> -->
+		</ActionParam>
+		<PresentationConfig>
+		<ActionDestination method="forward" return_code="1">/page/index.jsp</ActionDestination>				
+		</PresentationConfig>
+	</Action>
+	<Action id="QUERY_VEHICLE_MSG_ACTION">
+		<Description>查询车辆信息</Description>
+		<ActionContext>
+			<Data name="sEcho" type="string"/>
+			<Data name="startDate" type="string"/>
+			<Data name="endDate" type="string"/>
+			<Data name="vehicle_license" type="string"/>
+			<Data name="iDisplayStart" type="integer"/>
+			<Data name="iDisplayLength" type="integer"/>
+			<Data name="jsonResult" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+<!-- 			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/> -->
+			<ActionStep id="2" classname="com.vehicle.action.QueryVehicleMsgMainAction"  on1Do="next" onOtherDo="next"/>
+<!-- 			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/> -->
+		</ActionParam>
+	</Action>
+	<Action id="QUERY_SINGLE_VEHICLE_MSG_ACTION">
+		<Description>查询单辆车信息</Description>
+		<ActionContext>
+			<Data name="startDate" type="string"/>
+			<Data name="endDate" type="string"/>
+			<Data name="vehicle_license" type="string"/>
+			<Data name="MSG" type="string" output="true"/>
+			<Data name="VEHICLE_INFO" type="object" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+<!-- 			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/> -->
+			<ActionStep id="2" classname="com.vehicle.action.QuerySingleVehicleMsgMainAction"  on1Do="next" onOtherDo="next"/>
+<!-- 			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/> -->
+		</ActionParam>
+	</Action>
+	
+		<!-- 菜单导航 -->
+	<Action id="menuNav">
+		<Description>左侧菜单导航</Description>
+		<ActionContext>
+		    <Data name="firstName" type="string" />
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.mytestaction.MenuNavAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+		<PresentationConfig>
+			<!-- <ActionDestination method="forward" return_code="100">/jsp/demo/editTab.jsp</ActionDestination>	 -->
+			<ActionDestination method="forward" return_code="100">/jsp/demo/weektable.jsp</ActionDestination>				
+		</PresentationConfig>
+	</Action>
+	
+	<Action id="VEHILEINFO">
+		<Description>车辆信息action</Description>
+		<ActionContext>
+		    <Data name="MSG" type="string" output="true"/>
+		    <Data name="goto" type="string" />
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.mytestaction.MytestAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+		<PresentationConfig>
+			<ActionDestination method="forward" return_code="0">/jsp/businessData/vehicle_info.jsp</ActionDestination>				
+		</PresentationConfig>
+	</Action>
+	<Action id="OWNER">
+		<Description>车主信息action</Description>
+		<ActionContext>
+		    <Data name="MSG" type="string" output="true"/>
+		    <Data name="goto" type="string" />
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.mytestaction.MytestAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+		<PresentationConfig>
+			<ActionDestination method="forward" return_code="0">/jsp/businessData/vehicle_owner.jsp</ActionDestination>				
+		</PresentationConfig>
+	</Action>
+	
+	<Action id="DRIVER">
+		<Description>驾驶司机信息action</Description>
+		<ActionContext>
+		    <Data name="MSG" type="string" output="true"/>
+		    <Data name="goto" type="string" />
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.mytestaction.MytestAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+		<PresentationConfig>
+			<ActionDestination method="forward" return_code="0">/jsp/businessData/driver_info.jsp</ActionDestination>				
+		</PresentationConfig>
+	</Action>
+	
+	<Action id="CUSTOMER">
+		<Description>用户客户管理信息action</Description>
+		<ActionContext>
+		    <Data name="MSG" type="string" output="true"/>
+		    <Data name="goto" type="string" />
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.mytestaction.MytestAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+		<PresentationConfig>
+			<ActionDestination method="forward" return_code="0">/jsp/businessData/customer_manage.jsp</ActionDestination>				
+		</PresentationConfig>
+	</Action>
+	
+	<Action id="CUST_CONTENT">
+		<Description>单位联系人信息action</Description>
+		<ActionContext>
+		    <Data name="MSG" type="string" output="true"/>
+		    <Data name="goto" type="string" />
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.mytestaction.MytestAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+		<PresentationConfig>
+			<ActionDestination method="forward" return_code="0">/jsp/businessData/cust_content.jsp</ActionDestination>				
+		</PresentationConfig>
+	</Action>
+	
+<!-- 
+	<Action id="USER_MANAGE">
+		<Description>用户管理查询</Description>
+		<ActionContext>
+		    <Data name="MSG" type="string" output="true"/>
+		    <Data name="key" type="string" />
+		    <Data name="PAGE_LIST" type="array" output="true"/>
+		    <Data name="PAGE_INFO" type="object" output="true"/>
+			<Data name="PAGE_INFO.currentPage" type="integer" />
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="cn.com.goldtech.action.user.UserManageQueryAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="cn.com.goldtech.actions.OptionLogAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+		<PresentationConfig>
+		<ActionDestination method="forward" return_code="1">/jsp/user/user_manage.jsp</ActionDestination>				
+		</PresentationConfig>
+	</Action>
+	
+	<Action id="GET_USER_AUTH">
+		<Description>获取用户权限</Description>
+		<ActionContext>
+		    <Data name="MSG" type="string" output="true"/>
+		    <Data name="auth" type="array" output="true"/>
+		    <Data name="inAuth" type="array" output="true"/>
+		    <Data name="userId" type="integer" />
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="cn.com.goldtech.action.user.UserGetAuthListAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="cn.com.goldtech.actions.OptionLogAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="USER_ROLE_LIST">
+		<Description>用户所属角色信息列表</Description>
+		<ActionContext>
+		    <Data name="MSG" type="string" output="true"/>
+		    <Data name="roles" type="array" output="true"/>
+		    <Data name="userId" type="integer" />
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="cn.com.goldtech.action.user.UserRoleListAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="cn.com.goldtech.actions.OptionLogAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="USER_AUTH">
+		<Description>用户授权</Description>
+		<ActionContext>
+		    <Data name="MSG" type="string" output="true"/>
+		    <Data name="auths" type="string" />
+		    <Data name="isAdmin" type="integer" />
+		    <Data name="userId" type="integer" />
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="cn.com.goldtech.action.user.UserAuthAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="cn.com.goldtech.actions.OptionLogAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="USER_ROLE_MANAGE">
+		<Description>用户角色管理查询</Description>
+		<ActionContext>
+		    <Data name="MSG" type="string" output="true"/>
+		    <Data name="key" type="string" />
+		    <Data name="PAGE_LIST" type="array" output="true"/>
+		    <Data name="PAGE_INFO" type="object" output="true"/>
+			<Data name="PAGE_INFO.currentPage" type="integer" />
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="cn.com.goldtech.action.user.UserRoleManageQueryAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="cn.com.goldtech.actions.OptionLogAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+		<PresentationConfig>
+		<ActionDestination method="forward" return_code="1">/jsp/user/user_role_manage.jsp</ActionDestination>				
+		</PresentationConfig>
+	</Action>
+	
+	<Action id="USER_ROLE_BASIC_INFO">
+		<Description>角色基本信息</Description>
+		<ActionContext>
+		    <Data name="MSG" type="string" output="true"/>
+		    <Data name="data" type="object" output="true"/>
+		    <Data name="roleId" type="integer" />
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="cn.com.goldtech.action.user.UserRoleBasicInfoAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="cn.com.goldtech.actions.OptionLogAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="USER_ROLE_CODE_CHECK">
+		<Description>角色编号验证</Description>
+		<ActionContext>
+		    <Data name="MSG" type="string" output="true"/>
+		    <Data name="data" type="object" output="true"/>
+		    <Data name="roleCode" type="string" />
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="cn.com.goldtech.action.user.UserRoleCodeCheckAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="cn.com.goldtech.actions.OptionLogAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="USER_ROLE_ADD">
+		<Description>角色新增</Description>
+		<ActionContext>
+		    <Data name="MSG" type="string" output="true"/>
+		    <Data name="roleName" type="string" />
+		    <Data name="roleCode" type="string" />
+		    <Data name="remark" type="string" />
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="cn.com.goldtech.action.user.UserRoleAddAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="cn.com.goldtech.actions.OptionLogAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="USER_ROLE_DELETE">
+		<Description>角色删除</Description>
+		<ActionContext>
+		    <Data name="MSG" type="string" output="true"/>
+		    <Data name="roleId" type="integer" />
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="cn.com.goldtech.action.user.UserRoleDeleteAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="cn.com.goldtech.actions.OptionLogAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="USER_ROLE_UPDATE">
+		<Description>角色修改</Description>
+		<ActionContext>
+		    <Data name="MSG" type="string" output="true"/>
+		    <Data name="roleName" type="string" />
+		    <Data name="remark" type="string" />
+		    <Data name="roleCode" type="string" />
+		    <Data name="roleId" type="integer" />
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="cn.com.goldtech.action.user.UserRoleUpdateAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="cn.com.goldtech.actions.OptionLogAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action> -->	
+</Config>

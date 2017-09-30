@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="GBK"?>
+<Config>
+	<Action id="ORGANIZE_ROLE_QUERY_ACTION">
+		<Description>查询角色列表</Description>
+		<ActionContext>
+			<Data name="sEcho" type="string"/>
+			<Data name="iDisplayStart" type="integer"/>
+			<Data name="iDisplayLength" type="integer"/>
+			
+			<Data name="ROLE_NAME" type="string"/>
+			<Data name="ROLE_CODE" type="string"/>
+			<Data name="INCLUDE_STOP" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="jsonResult" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.organize.action.OrganizeRoleQueryAction"  on1Do="next" onOtherDo="next"/>
+<!-- 			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/> -->
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="ORGANIZE_ROLE_ADD_ACTION">
+		<Description>新增角色</Description>
+		<ActionContext>
+			<Data name="ROLE_NAME" type="string"/>
+			<Data name="ROLE_CODE" type="string"/>
+			<Data name="ROLE_DESC" type="string"/>
+			<Data name="ROLE_ACTION_STR" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.organize.action.AddRoleAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="ORGANIZE_ROLE_EDIT_ACTION">
+		<Description>角色编辑</Description>
+		<ActionContext>
+			<Data name="ROLE_NAME" type="string"/>
+			<Data name="ROLE_CODE" type="string"/>
+			<Data name="ROLE_DESC" type="string"/>
+			<Data name="ROLE_ACTION_STR" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.organize.action.EditRoleAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="ORGANIZE_ROLE_DETAIL_ACTION">
+		<Description>查询角色明细</Description>
+		<ActionContext>
+			<Data name="ROLE_CODE" type="string"/>
+			
+			<Data name="MSG" type="string" output="true"/>
+			<Data name="ROLE_BEAN" type="object" output="true"/>
+			<Data name="ACTION_LIST" type="array" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.organize.action.QueryRoleDetailAction"  on1Do="next" onOtherDo="3"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+
+	
+	<Action id="ORGANIZE_ROLE_MOD_ACTION">
+		<Description>角色停用启用删除</Description>
+		<ActionContext>
+			<Data name="ROLE_CODE" type="string"/>
+			<Data name="OPT_TYPE" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.organize.action.ModRoleAction"  on1Do="next" onOtherDo="3"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="ORGANIZE_INS_GROUP_QUERY_LIST_ACTION">
+		<Description>查询检查组列表</Description>
+		<ActionContext>
+			<Data name="sEcho" type="string"/>
+			<Data name="iDisplayStart" type="integer"/>
+			<Data name="iDisplayLength" type="integer"/>
+			
+			<Data name="INS_GROUP_NAME" type="string"/>
+			<Data name="INCLUDE_STOP" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="jsonResult" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.organize.action.QueryInsGroupListAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="ORGANIZE_INS_GROUP_ADD_ACTION">
+		<Description>新增检查组</Description>
+		<ActionContext>
+			<Data name="INS_GROUP_NAME" type="string"/>
+			<Data name="INS_GROUP_DESC" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.organize.action.AddInsGroupAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="ORGANIZE_INS_GROUP_DETAIL_ACTION">
+		<Description>查询检查组明细</Description>
+		<ActionContext>
+			<Data name="INS_GROUP_ID" type="string"/>
+			
+			<Data name="MSG" type="string" output="true"/>
+			<Data name="INS_GROUP_BEAN" type="object" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.organize.action.QueryInsGroupDetailAction"  on1Do="next" onOtherDo="3"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="ORGANIZE_INS_GROUP_EDIT_ACTION">
+		<Description>检查组编辑</Description>
+		<ActionContext>
+			<Data name="INS_GROUP_NAME" type="string"/>
+			<Data name="INS_GROUP_ID" type="string"/>
+			<Data name="INS_GROUP_DESC" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.organize.action.EditInsGroupAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="ORGANIZE_INS_GROUP_MOD_ACTION">
+		<Description>检查组停用启用删除</Description>
+		<ActionContext>
+			<Data name="INS_GROUP_ID" type="string"/>
+			<Data name="OPT_TYPE" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.organize.action.ModInsGroupAction"  on1Do="next" onOtherDo="3"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="ORGANIZE_MEMBER_LIST_QUERY_ACTION">
+		<Description>查询用户列表</Description>
+		<ActionContext>
+			<Data name="sEcho" type="string"/>
+			<Data name="iDisplayStart" type="integer"/>
+			<Data name="iDisplayLength" type="integer"/>
+			
+			<Data name="MEMBER_NAME" type="string"/>
+			<Data name="MEMBER_CODE" type="string"/>
+			<Data name="MOBILE" type="string"/>
+			
+			<Data name="INCLUDE_STOP" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="jsonResult" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.organize.action.QueryMemberListAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="ORGANIZE_MEMBER_DETAIL_ACTION">
+		<Description>查询用户明细</Description>
+		<ActionContext>
+			<Data name="MEMBER_ID" type="string"/>
+			
+			<Data name="MSG" type="string" output="true"/>
+			<Data name="MEMBER_BEAN" type="object" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.organize.action.QueryMemberDetailAction"  on1Do="next" onOtherDo="3"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+</Config>

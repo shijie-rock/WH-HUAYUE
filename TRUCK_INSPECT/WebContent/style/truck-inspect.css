@@ -1,0 +1,267 @@
+body.index-body{
+	padding-top:27px;
+}
+
+div.navbar.navbar-fixed-top.bs-docs-nav{
+	min-height:30px;
+}
+div.header-data {
+	float:right;
+
+}
+div.hdata>div.mcol-left>i{
+	color: #795548;
+	background-color: #fff;
+}
+
+
+/*µ¯¿òÌáÐÑ*/
+.popup_operate{
+	padding: 5px 5px;
+	height: 35px;
+}
+header{
+/* 	padding-top:15px; */
+/* 	padding-bottom:5px;  */
+	padding-top:0px;
+	padding-bottom:0px; 
+}
+body.content-body{
+    padding-top:0px;
+    border-top:0px;	
+    background: #eee url(../img/main-back.png) repeat;
+/*  background: #343434 url(../img/back.png) repeat; */ /*ÄÚÈÝÒ³µ×Í¼*/
+}
+
+footer.main-footer{
+	border-top: 1px solid #ddd;
+} 
+
+span.totop i{
+	line-height:30px;
+}
+div.content-mainbar{
+	margin-left:0px;
+	border-left:0px;
+}
+
+div.sidebar #nav > li > a{
+	padding: 6px 20px !important;
+}
+
+/*content head*/
+
+div.mainbar .page-head{
+	padding: 4px 20px !important;
+}
+
+div.page-head {
+    background-color: #f8f8f8;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f2f2f2));
+    background: -webkit-linear-gradient(top, #f8f8f8, #f2f2f2);
+    background: -moz-linear-gradient(top, #f8f8f8, #f2f2f2);
+    background: -ms-linear-gradient(top, #f8f8f8, #f2f2f2);
+    background: -o-linear-gradient(top, #f8f8f8, #f2f2f2);
+    background: linear-gradient(top, #f8f8f8, #f2f2f2);
+    padding:4px 20px;
+    border-bottom: 1px solid #fff;
+    box-shadow: inset 0px 1px 1px #fff;
+}
+div.page-head h2 {
+    font-weight: normal;
+    font-size: 20px;
+}
+/*content head behide*/
+div.matter {
+    border-top: 1px solid #ddd;
+    padding: 5px 0px;
+/*  padding: 15px 0px; */
+}
+
+/*table container */
+div.container {
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+/*query condition*/
+div.col-md-12>div.widget{
+	margin-bottom: 5px;
+}
+div.col-md-12>div.widget>div.query-condition{
+	height:50px;
+}
+
+div.query-condition >div.form-group{
+	margin:8px 0px;
+}
+
+div.form-group >label.control-label{
+	line-height: 34px;
+	text-align:right;
+/* 	text-align:center; */
+}
+
+div.form-group >label.checkbox-inline{
+	padding: 7px 0px;
+}
+
+
+div.query-condition-summry{
+	float:left;
+	margin-left:10px;
+	display:none;
+	font-weight:normal;
+}
+
+
+/**/
+table.table{
+	font-size: 12px;
+}
+
+/**/
+button.btn-xs {
+    padding: 4px 5px;
+}
+
+/**/
+span.label-success, span.label-danger{
+	padding: .3em .6em .3em;
+}
+
+/*data table*/
+thead>tr{
+    border-top: 1px solid #ddd;
+    font-size: 14px;
+}
+li.fg-button.ui-button.ui-state-default{
+	border: 0px;
+	font-weight:normal;
+}
+li.fg-button.ui-button.ui-state-default.active>a{
+/* 	 color: #fff; */
+	 color: #777;
+	 background-color:#eee;
+	 border-color: #ddd;
+}
+/*data table list detail*/
+a.data-detail{
+  color: #428bca;
+}
+
+table.table>tbody>tr>td{
+	line-height:28px;
+}
+table.table>tbody>tr>td>span{
+	line-height:28px;
+}
+
+/*data table*/
+th.ui-state-default.sorting_disabled{
+ color: #666;
+}
+
+li.fg-button.ui-button.ui-state-default>a{
+ color: #777;
+}
+
+div.dataTables_paginate{
+	margin-bottom: 10px;
+	margin-right: 12px;
+}
+
+div.dataTables_info{
+	padding-top: 15px;
+	padding-left: 20px;
+	font-size: 12px;
+/* 	font-size: 14px; */
+}
+div.dataTables_length>label{
+ margin:10px 15px;
+}
+
+
+/*modal*/
+div.modal.fade{
+	overflow-y:hidden;
+}
+body.content-body.modal-open{
+	margin-right:0px;
+}
+
+div.bread-crumb.pull-right{
+	margin-top: 10px;
+}
+
+.modal div.modal-footer{
+	margin-top:0px;
+}
+.form-horizontal>.form-group>label{
+	padding-top: 0px;
+}
+div.form-group>label,div.form-group>div{
+ 	padding-right:0px;
+}
+
+input.required-input{
+/* 	border: 1px solid #FF9999; */
+/* 	box-shadow: inset 0 1px 1px #FF99CC; */
+	display:inline;
+    width: 93%;
+}   
+
+div.modal-scrollable {
+	overflow-y: auto;
+	min-height:200px;
+}
+
+div.panel-body>p{
+	margin-top: -10px;
+	font-size: 12px;
+	color: #666;
+	font-weight: bold;
+}
+ul.nav > li > a{
+	padding-top:5px;
+	padding-bottom:5px;
+}
+div.panel-body>div.action-checkbox-div{
+	padding:5px 10px;
+}
+ul.nav> li.active > a{
+	background-color: #46b8da;
+}
+
+hr.modal-hr{
+	margin-bottom: 0px;
+	width:95%;
+	align:center;
+}
+
+/*modal alert*/
+div.alert.opt-result-alert{
+	position: absolute;
+    z-index: 10;
+    width: 100%;
+    opacity: 0.8;
+/*  margin-top: -10px; */
+    padding: 5px;
+    text-align: center; 
+    display:none;
+    border-radius:0px;
+}
+
+/*modal conform alert*/
+div.modal-body>div.alert{
+	margin-bottom:0px;
+}
+/*data table btn large*/
+td>button.btn-line2large{
+    margin-top: 5px;
+    width: 120px;
+}
+a{
+	text-decoration:none;	
+}
+

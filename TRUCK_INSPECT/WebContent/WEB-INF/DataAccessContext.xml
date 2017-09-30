@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd">
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"><value>com.mysql.jdbc.Driver</value></property>
+		<property name="url"><value>jdbc:mysql://localhost:3306/truck_inspect?useUnicode=true&amp;characterEncoding=UTF-8&amp;useOldAliasMetadataBehavior=true</value></property> 
+		<property name="username"><value>root</value></property>
+		<property name="password"><value>123456</value></property> 
+	</bean>
+	<bean id="dataSource1" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+		<value>java:comp/env/jdbc/truck_inspect</value>
+		</property>
+	</bean>
+	<jee:jndi-lookup id="jndiDataSource" jndi-name="jdbc/test1" />
+	<bean id="JtaTxnManager" class="org.springframework.transaction.jta.JtaTransactionManager" />
+	<bean id="DbTxnManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+</beans>

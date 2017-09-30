@@ -1,0 +1,101 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+.popup_container{
+font-family: "lucida Grande",Verdana,"Microsoft YaHei";
+position: fixed;
+overflow: hidden;
+z-index: 12;
+border: 1px solid #aaa;
+box-shadow: 0 0 8px rgba(0,0,0,0.2);
+border-radius: 5px;
+max-width: 600px;
+_width: 400px;
+background-color: #eaeaea;
+}
+/***************** 头部标题栏 *************************/
+.popup_head {
+background-color: #eaeaea;
+padding: 5px 15px;
+line-height: 25px;
+font-weight: bold;
+border-radius: 5px 5px 0 0;
+border-bottom: 1px solid #ccc;
+text-align: left;
+}
+	
+.popup_title{font-size: 14px;font-weight: bold;text-align: left;color: #666;
+	cursor: default;padding:10px 0px;margin: 0;}
+.ico_close_d{ display:block;	position: absolute;right: 10px;top: 9px;
+background: url(images/mail227195.png) no-repeat -18px -240px;
+width: 18px;height: 18px;border-radius: 2px;}
+.ico_close_d:hover {
+background-position: -54px -240px;
+}
+/***************** 中间内容 *************************/
+.popup_content{background:#FFF; padding: 23px 37px 30px 30px;}
+.popup_icon {float: left;margin: 7px 12px 8px 0;}
+.icon_info_b {
+width: 32px;height: 32px; display:block;
+background: url(images/promp_info.png) no-repeat 0 0;
+}
+
+
+.jalert-info{background:url(images/promp_info.png) no-repeat 0 0;}
+.jalert-warning{background:url(images/promp_warning.png) no-repeat 0 0;}
+.jalert-error{background:url(images/promp_error.png) no-repeat 0 0;}
+ 
+.popup_message{margin-left: 44px;padding-top: 8px;
+line-height: 1.9;font-size: 14px; text-align: left;}
+.popup_panel{text-align: right;/*margin: 1em 0em 0em 1em;*/}
+.popup_prompt{margin: .5em 0em;}
+
+/***************** 底部操作区域 *************************/
+.popup_operate{
+	background-color: #eaeaea;
+padding: 5px 12px;
+text-align: right;
+line-height: 25px;
+border-top: 1px solid #ccc;
+height: 30px;
+}
+/*确认 取消按钮*/
+/* .confirm_ok,.confirm_cancel,.prompt_ok,.prompt_cancel{ border:none; float:left; background:#FFF; padding:10px 0px; cursor:pointer;}
+ .confirm_ok,.prompt_ok,.popup_ok */
+.popup_operate input{ border: 1px solid #888;
+width:80px;
+height:20px;
+color: #000000;
+color: #000000!important;
+background: #F3F3F3;
+background: -moz-linear-gradient(top,#ffffff 0%,#ebebeb 90%,#F3F3F3 100%);
+background: -webkit-linear-gradient(top,#ffffff 0%,#ebebeb 90%,#F3F3F3 100%);
+background: -o-linear-gradient(top,#ffffff 0%,#ebebeb 90%,#F3F3F3 100%);
+background: -ms-linear-gradient(top,#ffffff 0%,#ebebeb 90%,#F3F3F3 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff',endColorstr='#d7d7d7',GradientType=0 );
+background: linear-gradient(top,#ffffff 0%,#ebebeb 90%,#F3F3F3 100%);
+padding:1px 10px; cursor:pointer;
+display: inline-block;overflow: visible;
+height: 25px;line-height: 21px;vertical-align: middle;
+text-align: center;text-decoration: none;border-radius: 3px;
+-moz-border-radius: 3px;-webkit-border-radius: 3px;}
+.popOk{
+	 border: 1px solid #888;
+width:80px;
+height:20px;
+color: #000000;
+color: #000000!important;
+background: #F3F3F3;
+background: -moz-linear-gradient(top,#ffffff 0%,#ebebeb 90%,#F3F3F3 100%);
+background: -webkit-linear-gradient(top,#ffffff 0%,#ebebeb 90%,#F3F3F3 100%);
+background: -o-linear-gradient(top,#ffffff 0%,#ebebeb 90%,#F3F3F3 100%);
+background: -ms-linear-gradient(top,#ffffff 0%,#ebebeb 90%,#F3F3F3 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff',endColorstr='#d7d7d7',GradientType=0 );
+background: linear-gradient(top,#ffffff 0%,#ebebeb 90%,#F3F3F3 100%);
+padding:1px 10px; cursor:pointer;
+display: inline-block;overflow: visible;
+height: 25px;line-height: 21px;vertical-align: middle;
+text-align: center;text-decoration: none;border-radius: 3px;
+-moz-border-radius: 3px;-webkit-border-radius: 3px;
+}
