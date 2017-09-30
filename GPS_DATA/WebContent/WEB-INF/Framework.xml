@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="GB2312"?>
+<Config xmlns="http://dms/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://dms/config DefFramework.xsd">
+	<Channel id="chn_http" classname="com.infoservice.framework.channels.http.HttpChannel">
+		<ChannelContext>
+			<Data name="server_name" type="string" default_value="DMS Server" readonly="true"/>
+		</ChannelContext>
+		<SessionContext>
+			<Data name="session_id" type="string"/>
+			<Data name="session_userid" type="string" />
+			<Data name="session_empid" type="string" />
+			<Data name="session_username" type="string" />
+			<Data name="session_compid" type="string"/>
+			<Data name="session_syscode" type="string"/>
+			<Data name="session_auth_sessionid" type="string"/><!-- 安全中心会话id -->
+			<Data name="loginuser" type="object" />
+			<Data name="clentIP" type="object" />
+		</SessionContext>
+		<ExceptionHandler method="forward">/jsp/404.jsp</ExceptionHandler>
+		<DefaultPresentatoinConfig>
+			<ActionDestination return_code="*" method="forward">/jsp/404.jsp</ActionDestination>
+			<ActionDestination return_code="-9000" method="forward">/jsp/DBError.jsp</ActionDestination>
+			<ActionDestination return_code="-1000" method="forward">/jsp/AccessDenied.jsp</ActionDestination>
+			<ActionDestination return_code="1401" method="forward">/jsp/AccessDenied.jsp</ActionDestination>
+			
+		</DefaultPresentatoinConfig>
+	</Channel>
+	
+	
+	<Channel id="json" classname="com.infoservice.framework.channels.json.JsonChannel">
+		<!-- ajax传输通道 -->
+		<ChannelContext>
+			<Data name="server_name" type="string" default_value="DMS Server" readonly="true"/>
+		</ChannelContext>
+		<SessionContext>
+			<Data name="session_id" type="string"/>
+			<Data name="session_userid" type="string" />
+			<Data name="session_empid" type="string" />
+			<Data name="session_username" type="string" />
+			<Data name="session_compid" type="string"/>
+			<Data name="session_syscode" type="string"/>
+			<Data name="session_auth_sessionid" type="string"/><!-- 安全中心会话id -->
+			<Data name="loginuser" type="object" />
+			<Data name="clentIP" type="string" />
+		    <Data name="session_FAOList" type="array" /><!-- 模块菜单list -->
+			<Data name="temp_info" type="string" /><!-- 存放临时信息 -->
+		</SessionContext>
+		<ExceptionHandler method="response">RESPONSE</ExceptionHandler>
+		<DefaultPresentatoinConfig>
+			<ActionDestination return_code="*" method="response">RESPONSE</ActionDestination>
+		</DefaultPresentatoinConfig>
+	</Channel>	
+	<Channel id="chn_remote" classname="com.youbus.framework.comm.channel.RemoteParserChannel">
+		<!-- ajax接收远程请求传输通道 -->
+		<ChannelContext>
+			<Data name="server_name" type="string" default_value="DMS Server" readonly="true"/>
+		</ChannelContext>
+		<SessionContext>
+			<Data name="session_id" type="string"/>
+			<Data name="session_userid" type="string" />
+			<Data name="session_agentid" type="string" />
+			<Data name="session_agent_name" type="string" />
+			<Data name="session_compid" type="string"/>
+			<Data name="session_syscode" type="string"/>
+			<Data name="loginuser" type="object" />
+			<Data name="clentIP" type="string" />
+<!-- 		<Data name="session_FAOList" type="array" />模块菜单list -->
+			<Data name="randomvalidatecodekey" type="string" />
+<!-- 		<Data name="MENUS" type="object"/> -->
+			<Data name="temp_info" type="string" /><!-- 存放临时信息 -->
+		</SessionContext>
+		<ExceptionHandler method="response">RESPONSE</ExceptionHandler>
+		<DefaultPresentatoinConfig>
+			<ActionDestination return_code="*" method="response">RESPONSE</ActionDestination>
+		</DefaultPresentatoinConfig>
+	</Channel>	
+	<Channel id="chn_mobile" classname="com.youbus.framework.comm.channel.MobileReqParseChannel">
+		<!-- 处理移动端请求传输通道 -->
+		<ChannelContext>
+			<Data name="server_name" type="string" default_value="DMS Server" readonly="true"/>
+		</ChannelContext>
+		<SessionContext>
+			<Data name="session_username" type="string" />
+			<Data name="session_empid" type="string" />
+			<Data name="session_id" type="string"/>
+			<Data name="session_userid" type="string" />
+			<Data name="session_opt_orgid" type="string" />
+			<Data name="session_compid" type="string"/>
+			<Data name="session_syscode" type="string"/>
+			<Data name="loginuser" type="object" />
+			<Data name="clentIP" type="string" />
+<!-- 		<Data name="session_FAOList" type="array" />模块菜单list -->
+			<Data name="randomvalidatecodekey" type="string" />
+<!-- 		<Data name="MENUS" type="object"/> -->
+			<Data name="temp_info" type="string" /><!-- 存放临时信息 -->
+		</SessionContext>
+		<ExceptionHandler method="response">RESPONSE</ExceptionHandler>
+		<DefaultPresentatoinConfig>
+			<ActionDestination return_code="*" method="response">RESPONSE</ActionDestination>
+		</DefaultPresentatoinConfig>
+	</Channel>		
+	<Service id="MsgService" classname="com.infoservice.framework.services.MessageService">
+		<Param name="part1" value="DB2_part1"/>
+		<Param name="part2" value="DMSMessage"/>		
+	</Service>
+	
+<!-- 	<Service id="DBService" classname="com.infoservice.framework.services.DBService"> -->
+<!-- 		<Param name="BeanFactoryConf" value="/WEB-INF/DataAccessContext.xml"/> -->
+ 		<!-- tomcat -->	 
+<!-- 		<Param name="NoContainedTxnManager" value="DbTxnManager"/>  -->
+<!-- 		<Param name="DefaultTransaction" value="DbTxnManager"/> 	 -->
+<!-- 		<Param name="DefaultDataSource" value="dataSource"/> 	 -->
+<!-- 	</Service> -->
+<!-- 	<Service id="YoubusNativeCacheService" classname="com.youbus.framework.comm.YoubusNativeCacheService"/>	 -->
+	<Service id="YoubusFileService" classname="com.youbus.framework.comm.YoubusFileService"/>	
+	<Service id="EncryptService" classname="com.youbus.framework.comm.security.MyEncryptServiceImp"/>
+	<Service id="VehicleInfoInitService" classname="com.vehicle.service.VehicleInfoInitService"/>
+<!-- 	<Service id="ScheduleService" classname="com.infoservice.schedule.ScheduleService"> -->
+<!-- 		<Param name="StartService" value="true"/> -->
+<!-- 		<Param name="WorkerCount" value="2"/> -->
+<!-- 		<Param name="ScanTaskInterval" value="1"/> -->
+<!-- 	</Service> -->
+	<SystemContext>
+		<Data name="system_name" type="string" default_value="DMS System" readonly="true"/>		
+	</SystemContext>
+	<ActionRef id="ACLAction" fileName="action-config/ACLAction.xml" />
+	<ActionRef id="test" fileName="action-config/TestAction.xml" />
+	<ActionRef id="USERAction" fileName="action-config/UserAction.xml" />
+<!--  <AccessControlPolicy classname="com.youbus.agentcenter.auth.AgentCenterACLPolicy"/> -->
+</Config>

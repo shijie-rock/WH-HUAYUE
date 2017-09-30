@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="GBK"?>
+<Config>
+	<Action id="TESTACTION">
+		<Description>TESTACTION</Description>
+		<ActionContext>
+		    <Data name="MSG" type="string" output="true"/>
+		    <Data name="KEY" type="string" output="true"/>
+		    <Data name="BEAN" type="object" output="true"/>
+		    <Data name="BEANLIST" type="array" output="true"/>
+		    <Data name="NAME" type="string" />
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.mytestaction.Mytest2Action"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+		<PresentationConfig>
+			<ActionDestination method="forward" return_code="1">/jsp/test.jsp</ActionDestination>				
+		</PresentationConfig>
+	</Action>
+	
+	<Action id="TEST_MSG_ACTION">
+		<Description>TESTACTION</Description>
+		<ActionContext>
+		    <Data name="MSG" type="string" output="true"/>
+		    <Data name="BEAN" type="object" output="true"/>
+		    <Data name="BEANLIST" type="array" output="true"/>
+		    <Data name="NAME" type="string" />
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.mytestaction.MytestMsgInitAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+<!-- 		<PresentationConfig> -->
+<!-- 			<ActionDestination method="forward" return_code="10">/jsp/maintest.jsp</ActionDestination>				 -->
+<!-- 		</PresentationConfig> -->
+	</Action>
+	
+</Config>

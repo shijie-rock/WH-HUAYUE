@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="GBK"?>
+<Config>
+	<Action id="MQMSG_PARSE_ACTION">
+		<Description>mq消息处理</Description>
+		<ActionContext>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginInternalTransaction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.youbus.framework.comm.mq.schedule.MQMsgParseAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndInternalTransaction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="MQMSG_SEND_ACTION">
+		<Description>mq消息发送</Description>
+		<ActionContext>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginInternalTransaction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.youbus.framework.comm.mq.schedule.MQMsgSendAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndInternalTransaction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="MQMSG_RECEIVE_ACTION">
+		<Description>mq消息接收</Description>
+		<ActionContext>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginInternalTransaction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.youbus.framework.comm.mq.schedule.MQMsgReceiveAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndInternalTransaction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+
+</Config>

@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+encoding//WebContent/css/youbus-comm.css=UTF-8
+encoding//WebContent/page/content=UTF-8
+encoding//WebContent/page/content/vehicle_query.jsp=UTF-8
+encoding//src/com/youbus/framework/comm/AuthSessionFilter.java=GBK
+encoding//src/com/youbus/framework/comm/CharacterEncodingFilter.java=GBK
+encoding//src/com/youbus/framework/comm/LocalSessionRegListener.java=GBK
+encoding//src/com/youbus/framework/comm/YBPayCommonContantService.java=GBK
+encoding//src/com/youbus/framework/comm/YoubusAppCFGLoadService.java=GBK
+encoding//src/com/youbus/framework/comm/YoubusNativeCacheService.java=GBK
+encoding//src/com/youbus/framework/comm/remoteclient=GBK
+encoding//src/com/youbus/framework/util/DBConUtil.java=GBK
+encoding//src/com/youbus/framework/util/POFactoryUtil.java=GBK
+encoding/<project>=UTF-8

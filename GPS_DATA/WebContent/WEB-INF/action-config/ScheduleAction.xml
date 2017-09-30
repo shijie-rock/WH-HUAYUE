@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="GBK"?>
+<Config>
+	<Action id="AGENT_MSG_SEND_ACTION">
+		<Description>消息发送计划任务</Description>
+		<ActionContext>
+<!-- 	<Data name="token"  type="string" /> -->
+<!-- 	 <Data name="userId"  type="string" /> -->
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginInternalTransaction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.youbus.agentcenter.schedule.action.AgentMsgSendAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndInternalTransaction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="RECEIVE_SMS_ACTION">
+		<Description>定时远程接收用户回执短信</Description>
+		<ActionContext>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginInternalTransaction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.youbus.agentcenter.schedule.action.ReceiveSMSAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndInternalTransaction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="SMS_SPLIT_ACTION">
+		<Description>对接收到的回执短信进行分割</Description>
+		<ActionContext>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginInternalTransaction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.youbus.agentcenter.schedule.action.SMSMSGSplitAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndInternalTransaction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="SMS_BUSI_ACTION">
+		<Description>对分割好的短信进行业务处理（对接消息处理）</Description>
+		<ActionContext>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginInternalTransaction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.youbus.agentcenter.schedule.action.SMSBusiAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndInternalTransaction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="AGENT_MSG_COUNT_REFRESH_ACTION">
+		<Description>定时更细emp未读及未处理消息数量缓存</Description>
+		<ActionContext>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginInternalTransaction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.youbus.agentcenter.schedule.action.AgentEmpRefreshMsgCountAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndInternalTransaction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+</Config>
