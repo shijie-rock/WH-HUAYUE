@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+encoding//WebContent/jsp/index.jsp=UTF-8
+encoding//src/com/cn/gpslms/httpclient/RemoteLMSNewClient.java=UTF-8
+encoding//src/com/cn/gpslms/util/AppLog.java=GBK
+encoding//src/com/cn/gpslms/util/DBConUtil.java=GBK
+encoding//src/com/cn/gpslms/util/POFactoryUtil.java=GBK

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="GB2312"?>
+<Config xmlns="http://dms/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://dms/config DefFramework.xsd">
+	<Channel id="chn_http" classname="com.infoservice.framework.channels.http.HttpChannel">
+		<ChannelContext>
+			<Data name="server_name" type="string" default_value="DMS Server" readonly="true"/>
+		</ChannelContext>
+		<SessionContext>
+			<Data name="session_id" type="string"/>
+			<Data name="session_auth_sessionid" type="string"/><!-- 安全中心登录时会话id -->
+			<Data name="session_userid" type="string" />
+			<Data name="session_username" type="string" />
+			<Data name="session_agentid" type="string" />
+			<Data name="session_opt_orgid" type="string" />
+			<Data name="session_agent_name" type="string" />
+			<Data name="session_compid" type="string"/>
+			<Data name="session_syscode" type="string"/>
+			<Data name="loginuser" type="object" />
+			<Data name="clentIP" type="object" />
+			<Data name="randomvalidatecodekey" type="string" />
+			<Data name="MENUS" type="object"/>
+			<Data name="temp_info" type="string" /><!-- 存放临时信息 -->
+		</SessionContext>
+		<ExceptionHandler method="forward">/jsp/404.jsp</ExceptionHandler>
+		<DefaultPresentatoinConfig>
+			<ActionDestination return_code="*" method="forward">/jsp/404.jsp</ActionDestination>
+			<ActionDestination return_code="-9000" method="forward">/jsp/DBError.jsp</ActionDestination>
+			<ActionDestination return_code="-1000" method="forward">/jsp/AccessDenied.jsp</ActionDestination>
+			<ActionDestination return_code="1401" method="forward">/jsp/AccessDenied.jsp</ActionDestination>
+			
+		</DefaultPresentatoinConfig>
+	</Channel>
+	
+	
+	<Channel id="json" classname="com.infoservice.framework.channels.json.JsonChannel">
+		<!-- ajax传输通道 -->
+		<ChannelContext>
+			<Data name="server_name" type="string" default_value="DMS Server" readonly="true"/>
+		</ChannelContext>
+		<SessionContext>
+			<Data name="session_id" type="string"/>
+			<Data name="session_auth_sessionid" type="string"/><!-- 安全中心登录时会话id -->
+			<Data name="session_userid" type="string" />
+			<Data name="session_agentid" type="string" />
+			<Data name="session_opt_orgid" type="string" />
+			<Data name="session_agent_name" type="string" />
+			<Data name="session_compid" type="string"/>
+			<Data name="session_syscode" type="string"/>
+			<Data name="loginuser" type="object" />
+			<Data name="clentIP" type="string" />
+			<Data name="randomvalidatecodekey" type="string" />
+			<Data name="MENUS" type="object"/>
+			<Data name="temp_info" type="string" /><!-- 存放临时信息 -->
+		</SessionContext>
+		<ExceptionHandler method="response">RESPONSE</ExceptionHandler>
+		<DefaultPresentatoinConfig>
+			<ActionDestination return_code="*" method="response">RESPONSE</ActionDestination>
+		</DefaultPresentatoinConfig>
+	</Channel>	
+<!-- <Channel id="chn_remote" classname="com.youbus.framework.comm.channel.RemoteParserChannel"> -->
+ 		<!-- 处理远程请求传输通道 --> 
+<!-- 		<ChannelContext> -->
+<!-- 			<Data name="server_name" type="string" default_value="DMS Server" readonly="true"/> -->
+<!-- 		</ChannelContext> -->
+<!-- 		<SessionContext> -->
+<!-- 			<Data name="session_id" type="string"/> -->
+<!-- 			<Data name="session_userid" type="string" /> -->
+<!-- 			<Data name="session_agentid" type="string" /> -->
+<!-- 			<Data name="session_opt_orgid" type="string" /> -->
+<!-- 			<Data name="session_agent_name" type="string" /> -->
+<!-- 			<Data name="session_compid" type="string"/> -->
+<!-- 			<Data name="session_syscode" type="string"/> -->
+<!-- 			<Data name="loginuser" type="object" /> -->
+<!-- 			<Data name="clentIP" type="string" /> -->
+<!-- 		<Data name="session_FAOList" type="array" />模块菜单list --> -->
+<!-- 			<Data name="randomvalidatecodekey" type="string" /> -->
+<!-- 		<Data name="MENUS" type="object"/> --> -->
+<!-- 			<Data name="temp_info" type="string" />存放临时信息 -->
+<!-- 		</SessionContext> -->
+<!-- 		<ExceptionHandler method="response">RESPONSE</ExceptionHandler> -->
+<!-- 		<DefaultPresentatoinConfig> -->
+<!-- 			<ActionDestination return_code="*" method="response">RESPONSE</ActionDestination> -->
+<!-- 		</DefaultPresentatoinConfig> -->
+<!-- 	</Channel>	 -->
+
+	
+	<Service id="DBService" classname="com.infoservice.framework.services.DBService">
+		<Param name="BeanFactoryConf" value="/WEB-INF/DataAccessContext.xml"/>
+		<!-- tomcat -->	
+		<Param name="NoContainedTxnManager" value="DbTxnManager"/> 
+		<Param name="DefaultTransaction" value="DbTxnManager"/> 	
+		<Param name="DefaultDataSource" value="dataSource"/> 	
+	</Service>
+	<Service id="InitConnectParamService" classname="com.cn.gpslms.service.InitConnectParamService"></Service>
+	<Service id="SQLCommonService" classname="com.cn.gpslms.service.SQLCommonService"></Service>
+	<Service id="GetDataService" classname="com.cn.gpslms.service.GetDataService"><!-- 定时从oracle获取数据 -->
+		<Param name="SkipTime" value="30"/><!-- second -->
+		<Param name="DataSourceName" value="dataSourceOra"/><!-- 来源数据库 数据源名称 -->
+	</Service>
+	<Service id="SendBaseGPSDataToLMSService" classname="com.cn.gpslms.service.SendBaseGPSDataToLMSService"></Service><!-- 定时向LMS 发送 gps 元数据 -->
+	<Service id="ClearNewVehicleGPSDataService" classname="com.cn.gpslms.service.ClearNewVehicleGPSDataService"></Service><!-- 每10 分钟定时清理new_vehicle_gps_data，PL_DRIVE_TABLE gps时间>过期25小时 数据 -->
+	<Service id="GetSrcVehicleInfoService" classname="com.cn.gpslms.service.GetSrcVehicleInfoService"></Service><!-- 定时从oracle库中获取车辆基本信息（车牌，是否危险品车等）,同步到map中 -->
+	
+	<Service id="InitSendThreadParamService" classname="com.cn.gpslms.service.InitSendThreadParamService">
+		<Param name="ChaosuThreadPoolSize" value="10"/><!-- 向lms发送线超速线程报警池的大小  -->
+		<Param name="TingcheThreadPoolSize" value="10"/><!-- 向lms发送线停车报警线程池的大小 -->
+		<Param name="PLThreadPoolSize" value="10"/><!-- 向lms发送线疲劳报警线程池的大小 -->
+	</Service>
+	<SystemContext>
+		<Data name="system_name" type="string" default_value="GPS_LMS System" readonly="true"/>		
+	</SystemContext>
+<!-- 	<ActionRef id="base" fileName="action-config/BaseAction.xml" />	 -->
+</Config>
