@@ -10,9 +10,12 @@ package com.cn.gpslms.pofactory;
 import java.sql.Connection;
 import java.text.MessageFormat;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.cn.gpslms.po.EtVehicleGpsDataPO;
@@ -70,6 +73,7 @@ public class TargetDataPOFactory extends POFactory {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error(e);
 		}
 		return baseId;
 	}
@@ -84,6 +88,7 @@ public class TargetDataPOFactory extends POFactory {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error(e);
 		}return null;
 	}
 	
@@ -107,6 +112,7 @@ public class TargetDataPOFactory extends POFactory {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error(e);
 		}
 		
 	}
@@ -140,6 +146,7 @@ public class TargetDataPOFactory extends POFactory {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error(e);
 		}
 		return list==null||list.size()==0;
 	}
@@ -216,6 +223,7 @@ public class TargetDataPOFactory extends POFactory {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error(e);
 		}
 	}
 	
@@ -238,6 +246,7 @@ public class TargetDataPOFactory extends POFactory {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error(e);
 		}
 	}
 	
@@ -284,6 +293,7 @@ public class TargetDataPOFactory extends POFactory {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error(e);
 		}
 		return false;
 	}
@@ -317,10 +327,41 @@ public class TargetDataPOFactory extends POFactory {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error(e);
 		}
 		return false;
 	}
 	
+	/**
+	 * 查询车辆黑名单（名单车辆将不再发送报警数据到lms）
+	 * 方   法  名:queryBlackList
+	 * 方法描述:
+	 * 参         数:@param conn
+	 * 参         数:@return
+	 * 返   回  值:Map<String,String>
+	 * 创   建  人:rock
+	 * @exception
+	 * @since  1.0.0
+	 */
+	public static Map<String,String> queryBlackList(Connection conn){
+		Map<String,String> map=new Hashtable<String,String>();
+		String key=getThisClassSimpleName()+"_"+Thread.currentThread().getStackTrace()[1].getMethodName()+"_SQL";
+		String sql=SQLCommonService.getSql(key,null);
+		try {
+			List<DynaBean> list=DBConUtil.getResult(conn, sql, "EXISTS_SAME_ALARM");
+			if(list!=null&&list.size()>0)
+				for(DynaBean bean:list){
+					String license=bean.getString("LICENSE");
+					if(StringUtils.isNotBlank(license))
+						map.put(license, license);
+				}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e);
+		}
+		return map;
+	}
 	
 	/**
 	 * 方   法  名:main

@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.cn.gpslms.po.EtVehicleGpsDataPO;
@@ -153,6 +154,14 @@ class GetDataThread implements Runnable{
 				long baseId=TargetDataPOFactory.queryImportDataBaseId(targetConn);
 				//query oracle src
 				List<EtVehicleGpsDataPO> srcList= SrcDataPOFatory.querySrcData(srcConn, baseId);//取大于mysql表中大于最大id，100条数据
+				
+				//log black list begin @20171002
+				log.debug("black list begin");
+				Map<String,String> blackMap=TargetDataPOFactory.queryBlackList(targetConn);
+				int count=blackMap!=null?blackMap.size():0;
+				log.debug("black list end,& black count:="+count);
+				//log black list end
+				
 				//insert target
 				if(srcList!=null&&srcList.size()>0){
 					List<NewVehicleGpsDataPO> targetList=new ArrayList<NewVehicleGpsDataPO>();
@@ -178,6 +187,9 @@ class GetDataThread implements Runnable{
 							targetConn.commit();
 							log.debug("--TARGET DATA INSERT END [ ETVD_ID=:"+targetBean.getEtvdId()+" ]");
 							
+							String license=targetBean.getEtvdSimNo();
+							if(StringUtils.isNotBlank(license)&&(blackMap!=null&&!blackMap.containsKey(license))){
+							
 							SendBaseGPSDataToLMSService.inputCurrentGpsInfoBySimNo(targetBean);
 							
 //							AlarmFactory.chaosuJudge(temp);//
@@ -187,6 +199,11 @@ class GetDataThread implements Runnable{
 							TingcheSender.getInstance().tingcheJudge(temp);//20161203 改为 thread
 							
 							PLSender.getInstance().PLJudge(temp);
+							
+							}//end black list 
+							else{
+								log.warn("license ["+license+"] find in black list ,no need send 2 lms ");
+							}
 							
 						} catch (IllegalAccessException e) {
 							// TODO Auto-generated catch block
@@ -249,6 +266,7 @@ class GetDataThread implements Runnable{
 	private void closeConn() throws SQLException{
 		if(srcConn!=null)srcConn.close();
 		if(targetConn!=null)targetConn.close();
-	}
+	}	
+	
 	
 }
