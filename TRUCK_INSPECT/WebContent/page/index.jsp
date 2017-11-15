@@ -340,25 +340,19 @@
               <li><a href="<%=path%>/page/tmp/content-table.jsp" target="iframepage">DataTable</a></li>
             </ul>
           </li>  
-          <li class="has_sub"><a href="#"><i class="icon-user"></i> 组织管理 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+          <li class="has_sub"><a href="#"><i class="icon-user"></i>组织管理<span class="pull-right"><i class="icon-chevron-right"></i></span></a>
             <ul>
               <li><a href="<%=path%>/page/organize/role_manager.jsp" target="iframepage">角色管理</a></li>
               <li><a href="<%=path%>/page/organize/ins_group_manager.jsp" target="iframepage">检查组管理</a></li>
-              <li><a href="<%=path%>/page/organize/member_manager.jsp" target="iframepage">人员管理</a></li>
-<!--               <li><a href="support.html">帮助页</a></li> -->
-<!--               <li><a href="invoice.html">购物清单</a></li> -->
-<!--               <li><a href="profile.html">个人资料</a></li> -->
+              <li><a href="<%=path%>/page/organize/member_manager.jsp" target="iframepage">用户管理</a></li>
 <!--               <li><a href="gallery.html">相册页面</a></li> -->
             </ul>
           </li> 
-          <li class="has_sub"><a href="#"><i class="icon-file-alt"></i> 页面模块2  <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+          <li class="has_sub"><a href="#"><i class="icon-file-alt"></i>基础数据 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
             <ul>
-              <li><a href="media.html">媒体</a></li>
-              <li><a href="statement.html">描述</a></li>
-              <li><a href="error.html">错误</a></li>
-              <li><a href="error-log.html">错误日志</a></li>
-              <li><a href="calendar.html">日历</a></li>
-              <li><a href="grid.html">网格</a></li>
+              <li><a href="<%=path%>/page/base_data/position_manager.jsp" target="iframepage">检查地点</a></li>
+              <li><a href="<%=path%>/page/base_data/truck_manager.jsp" target="iframepage">车辆信息</a></li>
+<!--               <li><a href="grid.html">网格</a></li> -->
             </ul>
           </li>                             
           <li><a href="charts.html"><i class="icon-bar-chart"></i>图表</a></li> 

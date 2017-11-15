@@ -174,6 +174,10 @@ window.parent.onscroll= function(){
 		  $('#'+modal_id).find(':text').val('');//clear check box
 		  $('#'+modal_id).find('.modal-title').text('');//clear title
 		  $('#'+modal_id).find(':checkbox').removeAttr('checked');//clear check box
+		  //radio //
+		  $('#'+modal_id).find('input:radio').removeAttr('checked');
+		  //select
+		  $('#'+modal_id).find('select').val('');
 	}
 	/*模态框显示提示信息-失败或者警告*/
 	function returnErrorMsgShow(modal_id,err_msg){
@@ -242,6 +246,9 @@ window.parent.onscroll= function(){
 		$('#'+modal_id).find(":text").removeAttr('readonly');
 		$('#'+modal_id).find(":checkbox").removeAttr('disabled');
 		$('#'+modal_id).find("select").removeAttr('disabled');
+		
+		$('#'+modal_id).find(":password").removeAttr('disabled');
+		$('#'+modal_id).find(":password").removeAttr('readonly','');
 	}
 	
 //	$('body').on('mouseover',"[data-toggle='tooltip']",function(){
@@ -252,7 +259,7 @@ window.parent.onscroll= function(){
 		return value==''||value==null?'--':value;
 	}
 	
-	/**传入逗号分割的字符串（每组冒号分割），转为map。如：SE_0010:男,SE_0020:女 **/
+	/**传入逗号分割的字符串（每组冒号分割），转为map。如：SEX_0010:男,SEX_0020:女 **/
 	function parseData2Map(str){
 		var strArray=str.split(',');
 		//alert(strArray.length);

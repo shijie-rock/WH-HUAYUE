@@ -37,6 +37,7 @@ public class TruckInsCommonCanstant {
 	public static final String OPT_TYPE_MEMBER_MOD="OTC_0230";//编辑用户
 	public static final String OPT_TYPE_MEMBER_UNV="OTC_0240";//停用用户
 	public static final String OPT_TYPE_MEMBER_VAL="OTC_0250";//启用用户
+	public static final String OPT_TYPE_MEMBER_PAS="OTC_0260";//修改密码
 	
 	
 

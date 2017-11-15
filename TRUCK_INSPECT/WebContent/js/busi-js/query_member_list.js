@@ -48,7 +48,7 @@ var initMemberTable = function(tableId,aoColumns,reqData,appPath,colIdx,transeDa
 		        		"<button type='button' class='btn btn-primary btn-xs' href='javascript:void(0);' onclick='editMember(\"" + oData.MEMBER_ID+"\")'>编辑</button>&nbsp;&nbsp;"+buttonHtml
 		        		+"&nbsp;&nbsp;<button type='button' class='btn btn-danger btn-xs' href='javascript:void(0);' onclick='optConfirm(\"delete\",\""+ oData.MEMBER_NAME+"\",\"" + oData.MEMBER_ID+"\")'>删除</button>"
 		        		+"<br/>"
-		        		+"<button type='button' class='btn btn-default btn-xs btn-line2large' href='javascript:void(0);' onclick='optConfirm(\"delete\",\""+ oData.MEMBER_NAME+"\",\"" + oData.MEMBER_ID+"\")'>修改密码</button>"
+		        		+"<button type='button' class='btn btn-default btn-xs btn-line2large' href='javascript:void(0);' onclick='optModPassword(\""+ oData.MEMBER_NAME+"\",\"" + oData.MEMBER_ID+"\")'>修改密码</button>"
 		        		);
 		        }
 		      },
@@ -61,7 +61,8 @@ var initMemberTable = function(tableId,aoColumns,reqData,appPath,colIdx,transeDa
 		      {
 			        "aTargets": [1], //
 			        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-			        	return $(nTd).html("<a class='data-detail' data-toggle='tooltip' data-placement='top' title='点击查看详情' href='javascript:void(0)' onclick='detail(\"" + oData.MEMBER_ID+"\")'>"+oData.MEMBER_CODE+"</a><br/>"+oData.MEMBER_NAME+""); //dicTranse
+			        	return $(nTd).html("<a class='data-detail' data-toggle='tooltip' data-placement='top' title='点击查看详情' href='javascript:void(0)' onclick='detail(\"" + oData.MEMBER_ID+"\")'>"+oData.MEMBER_CODE+"</a><br/>"
+			        			+parseNull2Empty(oData.MEMBER_NAME)+""); //dicTranse
 			          }
 			      },
 			   {

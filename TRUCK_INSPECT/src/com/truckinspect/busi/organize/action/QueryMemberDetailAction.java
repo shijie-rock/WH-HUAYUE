@@ -34,8 +34,6 @@ public class QueryMemberDetailAction extends ActionImpl {
 	@Override
 	protected int performExecute(ActionContext atx) {
 		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
 		String memberId=atx.getStringValue("MEMBER_ID");
 		//check param
 		if(StringUtils.isBlank(memberId)){
@@ -52,7 +50,7 @@ public class QueryMemberDetailAction extends ActionImpl {
 		memberPOCon=POFactory.getByPriKey(conn, memberPOCon);
 		
 		if(memberPOCon!=null){
-			
+			memberPOCon.setPassword(null);//password ²»»Ø´«
 			atx.setObjValue("MEMBER_BEAN", memberPOCon);
 		}
 		else{

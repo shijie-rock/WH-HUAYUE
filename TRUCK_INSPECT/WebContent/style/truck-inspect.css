@@ -265,3 +265,13 @@ a{
 	text-decoration:none;	
 }
 
+/* select tag width*/
+select.subWidth{
+	width:93%;
+}
+
+/*page num button*/
+li.fg-button.ui-button.ui-state-default{
+	padding:0 0;
+}
+
