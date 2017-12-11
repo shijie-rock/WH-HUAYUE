@@ -31,7 +31,10 @@ public class TmSysMemberPOFactory extends POFactory {
 	
 	public static PageQuery queryMemberList(Connection conn,String memberName,String mobile,String memberCode,boolean includeStop,int customPageSize){
 		
-		String sql=" SELECT A.* FROM TM_SYS_MEMBER A WHERE 1=1 ";
+		String sql=" SELECT A.* "
+				+ " FROM TM_SYS_MEMBER A "
+				+ " WHERE 1=1 "
+				+ " AND STATUS='1' ";
 		if(StringUtils.isNotBlank(memberName))sql+=" AND MEMBER_NAME LIKE '%"+memberName+"%' ";
 		if(StringUtils.isNotBlank(memberCode))sql+=" AND MEMBER_CODE LIKE '%"+memberCode+"%' ";
 		if(StringUtils.isNotBlank(mobile))sql+=" AND MOBILE LIKE '%"+mobile+"%' ";

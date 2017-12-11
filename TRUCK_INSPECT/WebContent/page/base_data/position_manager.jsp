@@ -78,9 +78,9 @@
 				</div>
 							<!-- 查询按钮 begin -->
         		 <div class="form-group col-sm-3">
-						<button type="button" class="btn btn-success" id="qr_bt_query_role" onclick="dataTableInit();">查询</button>
+						<button type="button" class="btn btn-success" id="qr_bt_query_position" onclick="dataTableInit();">查询</button>
 						&nbsp;
-						<button type="button" class="btn btn-danger clear" id="qr_bt_clear_role" onclick="btnQueryReset();">清空</button>
+						<button type="button" class="btn btn-danger clear" id="qr_bt_clear_position" onclick="btnQueryReset();">清空</button>
          		 </div>
          		 <!-- 查询按钮 end-->
          		 
@@ -100,7 +100,7 @@
                 <div class="widget">
 
                 <div class="widget-head">
-                  <div class="pull-left">查询结果 &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-xs" href="javascript:void(0);" onclick="addRole();" id="bt_add_role">新增检查地点</button></div>
+                  <div class="pull-left">查询结果 &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-xs" href="javascript:void(0);" onclick="addPosition();" id="bt_add_position">新增检查地点</button></div>
                   <div class="widget-icons pull-right">
                     <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
                     <a href="#" class="wclose"><i class="icon-remove"></i></a>
@@ -111,14 +111,15 @@
                   <div class="widget-content">
                   
                     <table id="positionList"  class="table table-striped table-bordered table-hover">
-                      <thead>
+                      <thead class="table-title-normal">
                         <tr>
-                          <th width="5%"></th>
-                          <th width="10%"></th>
-                          <th width="10%"></th>
-                          <th width="30%"></th>
-                          <th width="20%"></th>
-                          <th width="25%"></th>
+                          <th width="5%">序号</th>
+                          <th width="10%">检查地点代码</th>
+                          <th width="10%">检查地点名称</th>
+                          <th width="25%">检查地点说明</th>
+                          <th width="25%">检查地点位置</th>
+                          <th width="10%">检查地点状态</th>
+                          <th width="15%">操作</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -140,7 +141,7 @@
 	<!-- delete Modal begin-->
 	<div id="optModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
-		<input  type="hidden" id="opt_confirm_position_code" value="" >
+		<input  type="hidden" id="opt_confirm_position_id" value="" >
 		<input  type="hidden" id="opt_confirm_position_name" value="" >
 		<input  type="hidden" id="opt_confirm_opt_type" value="" >
 			<div class="modal-content">
@@ -174,6 +175,8 @@
 
 				 <div class="padd">
                  	 <div class="form-horizontal">
+                 	 <input  type="hidden" id="add_input_position_coord" value="" >
+                 	 <input  type="hidden" id="add_input_position_id" value="" >
                           					<div class="form-group">
                                             <label class="control-label col-md-3" for="add_input_position_code">检查地点代码</label>
                                             <div class="col-md-3">
@@ -190,11 +193,22 @@
                                           <div class="form-group">
                                             <label class="control-label col-md-3" for="add_input_position_desc">检查地点说明</label>
                                             <div class="col-md-8">
+<!--                                          <input  type="hidden" id="add_input_position_desc_here">锚点 -->
                                               <input type="text" class="form-control" id="add_input_position_desc" placeholder="检查地点说明">
                                             </div>
                                           </div>
+                                          <div class="form-group">
+                                            <label class="control-label col-md-3" for="add_input_position_address">地点地图地址</label>
+                                            <div class="col-md-8">
+                                              	 <span class="mid-word-text" id="add_input_position_address"></span>
+                                            </div>
+                                          </div>
 										<div class="form-group"><center><hr class="modal-hr"/></center>
-											<div class="panel-body" id="role_action_option_div"><p>检查地点对应菜单列表</p>
+											<div class="panel-body" id="add_input_position_map"><p>检查地点地图位置</p>
+												<div id="add_input_position_map_content" style="height:20%;border:solid 2px #fff;margin:10 10 0 10;">
+											
+												</div>
+											
 											</div>
 								         </div>  
 								</div>
@@ -228,6 +242,9 @@
 <script src="<%=path%>/js/bootstrap.js?v=<%=staticVersion%>"></script> <!-- Bootstrap -->
 <!-- table收起 -->
 <script src="<%=path%>/js/truck-inspect-common.js?v=<%=staticVersion%>"></script> <!-- Custom codes -->
+
+<script src="<%=path%>/js/truck-inspect-lbs.js?v=<%=staticVersion%>" type="text/javascript"></script><!-- lbs -->
+
 <script src="<%=path%>/js/data-tables/jquery.dataTables.min.js?v=<%=staticVersion%>"	type="text/javascript"></script>
 <script src="<%=path%>/js/data-tables/dataTables.bootstrap.min.js?v=<%=staticVersion%>"	type="text/javascript"></script>
 <script src="<%=path%>/js/busi-js/query_position_list.js?v=<%=staticVersion%>" type="text/javascript"></script>
@@ -246,73 +263,163 @@
 		var includeStop=(true==$("#qr_cb_include_stop").is(':checked'))?"1":"0";
 		
 		//格式：列映射关系
-		var aoColumns = '[{"mDataProp" : "POSITION_CODE","sTitle" : "序号"}, '
+		var aoColumns = '[{"mDataProp" : "POSITION_ID","sTitle" : "序号"}, '
 					   + '{"mDataProp" : "POSITION_CODE","sTitle" : "检查地点代码"},'
 					   + '{"mDataProp" : "POSITION_NAME","sTitle" : "检查地点名称"},'
-					   + '{"mDataProp" : "POSITION_ADDRESS","sTitle" : "检查地点地址"},'
 					   + '{"mDataProp" : "POSITION_DESC","sTitle" : "检查地点说明"},'
+					   + '{"mDataProp" : "POSITION_ADDRESS","sTitle" : "检查地点位置"},'
 					   + '{"mDataProp" : "FREEZE_TAG","sTitle" : "检查地点状态"},'
 					   + '{"mDataProp" : "POSITION_CODE","sTitle" : "操作"}]';
 
 		var reqData = {
-			action : 'ORGANIZE_POSITION_QUERY_ACTION',
+			action : 'BASE_DATA_POSITION_QUERY_LIST_ACTION',
 			params : 'params',
-			ROLE_NAME:positionName,
-			ROLE_CODE:positionCode,
+			POSITION_NAME:positionName,
+			POSITION_CODE:positionCode,
 			INCLUDE_STOP:includeStop
 			};
 		//example为table定义id ：10：需要加入操作按钮的列；[4,5]：需要转义的列（映射数据字典值）
-		initRoleTable('positionList', aoColumns, reqData, '<%=path%>',5,[5]);
+		initPositionTable('positionList', aoColumns, reqData, '<%=path%>',6,[]); //todo
+		resetIFrameLength();//need ajax async:false,
 		} 
 	/*title tips- common method,dynamic bind*/
 	$(function () { $("[data-toggle='tooltip']").tooltip();});
 	
-	function actionOptionReset(){ //action 复位
-		$('#role_action_option').find('a[data-role_code]:first').click();
-// 		$('#role_action_option').find('a[data-role_code]').first().click();
+	/*查询条件清空重置查询*/
+	function btnQueryReset(){
+		queryBtnRestClear();
+		dataTableInit();
 	}
 	
-	function detail(role_code){
+	//baidu map init
+	var map = new BMap.Map("add_input_position_map_content");
+	var point = new BMap.Point(116.331398,39.897445);
+	map.centerAndZoom(point,12);
+
+	$(function(){
+// 		alert(1);
+		map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+// 		alert(2);
+		mapAutoComplete();
+		
+		$("#modal_add_position_content").scroll(function() {
+			if($('div.tangram-suggestion-main').is(":visible")){//baidu map div 滚动隐藏
+				$('div.tangram-suggestion-main').css("display","none");
+			}
+			});
+	});
+	//map autocomplete
+	function mapAutoComplete(){
+		//autocomplete addres
+		var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+				{"input" : "add_input_position_desc"
+				,"location" : map
+			});
+		
+		ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+			var str = "";
+				var _value = e.fromitem.value;
+				var value = "";
+				if (e.fromitem.index > -1) {
+					value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+				}    
+				str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+				value = "";
+				if (e.toitem.index > -1) {
+					_value = e.toitem.value;
+					value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+				}    
+				str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+				$("#searchResultPanel").innerHTML = str;
+			});
+
+			var myValue;
+			ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+			var _value = e.item.value;
+				myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+				$("#searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+				$("#add_input_position_address").text(myValue);
+				setPlace();
+			});
+
+			function setPlace(){
+				map.clearOverlays();    //清除地图上所有覆盖物
+				function myFun(){
+					var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+					map.centerAndZoom(pp, 15);
+					map.addOverlay(new BMap.Marker(pp));    //添加标注
+					//alert(point.lng+' '+point.lat);
+					$("#add_input_position_coord").val(pp.lng+';'+pp.lat);
+// 					$("#add_input_position_coord").val(point.lng+';'+point.lat);
+				}
+				var local = new BMap.LocalSearch(map, { //智能搜索
+				  onSearchComplete: myFun
+				});
+				local.search(myValue);
+			}
+	}
+	
+	function mapMoveTo(pointNew){
+		//延迟执行 map move
+		setTimeout(function () {
+			map.centerAndZoom(pointNew,15);
+			var mk = new BMap.Marker(pointNew);
+			map.addOverlay(mk);
+			map.panTo(pointNew);
+		},500);
+	}
+	
+	function currentCoord(){
+		var geolocation = new BMap.Geolocation();
+		geolocation.getCurrentPosition(function(r){
+			if(this.getStatus() == BMAP_STATUS_SUCCESS){
+				var mk = new BMap.Marker(r.point);
+				map.addOverlay(mk);
+				map.panTo(r.point);
+				point=r.point;//当前位置
+// 				alert('您的位置：'+r.point.lng+','+r.point.lat);
+			}
+			else {
+// 				alert('failed'+this.getStatus());
+			}        
+		},{enableHighAccuracy: true});
+	}
+
+	function detail(position_id,position_name){
 		//auto top and height
 // 		modal_auto_top($('div.modal-dialog'));
 // 		init
 		//clearMsgShow('modal_add_position');
 		myModalInit('modal_add_position');
-		
-// 		$('#myModal').modal({backdrop: 'static', keyboard: false});
-// 		$('#myModal_content').html('<span>'+window.parent.getScrollTop()+'</span><br/><span>'+$(window.parent).height()+'</span><br/><span>'+$(window.parent.document.body)[0].clientHeight+'</span>');
-// 		clearModalContent('modal_add_position');
-		actionOptionReset();
-		
 		//input readOnly
 		readOnlyModalInput('modal_add_position');
-		
+
 		//btn hide
 		$('#btn_save_position').hide();
 		$('#btn_save_position').attr('data-opt-type','QUERY');
 		
-		var reqUrl='<%=path%>/AjaxChannel?action=ORGANIZE_position_DETAIL_ACTION';
+		$('#add_input_position_address').text('');//清空
+		
+		var reqUrl='<%=path%>/AjaxChannel?action=BASE_DATA_POSITION_DETAIL_ACTION';
 		//ajax begin
 		$.ajax({
 				type : 'POST',
 				url:reqUrl,
-				data: {ROLE_CODE:role_code},
+				data: {POSITION_ID:position_id},
 				dataType : 'json',
 				success : function(json) {
 					if(json.SUCCESS=='1'){
-							$('#add_input_position_code').val(json.ROLE_BEAN.RoleCode);
-							$('#add_input_position_name').val(json.ROLE_BEAN.RoleName);
-							$('#add_input_position_desc').val(json.ROLE_BEAN.RoleDesc);
+							$('#add_input_position_code').val(json.INS_POSITION_BEAN.PositionCode);
+							$('#add_input_position_name').val(json.INS_POSITION_BEAN.PositionName);
+							$('#add_input_position_id').val(json.INS_POSITION_BEAN.Id);
+							$('#add_input_position_address').text(json.INS_POSITION_BEAN.PositionAddress);
+							//baidu map hide
+							$('#add_input_position_desc').val(json.INS_POSITION_BEAN.PositionDesc);
 							
-							if(json.ACTION_LIST!=null)
-								$.each(json.ACTION_LIST,function(i,item){
-									console.log(item.OptionCode);
-									console.log(item.ActionCode);
-									//check box :checked by action code
-									//role_action_option_div
-									var actionCode=item.ActionCode;
-									$("#role_action_option_div").find(":checkbox[value='"+actionCode+"']").prop("checked",true);
-								});
+							$('div.tangram-suggestion-main').css("z-index",0);//hide suggest
+							
+							//map move
+							mapMoveTo(new BMap.Point(json.INS_POSITION_BEAN.PositionLongitude,json.INS_POSITION_BEAN.PositionLatitude));
 // 							returnSuccessMsgShow('modal_add_position',json.MSG)
 						}else{
 // 							alert(json.MSG)	
@@ -324,46 +431,54 @@
 					}
 				});
 		//ajax end
-		$('#modal_add_position_title').text('检查地点明细['+role_code+']');
+		$('#modal_add_position_title').text('检查地点明细['+position_name+']');
 		$('#modal_add_position').modal({backdrop: 'static', keyboard: false});
-		
 	}
 	
 	//open modal
-	function editRole(role_code){
+	function editPosition(position_id,position_name){
 // 		init
 		myModalInit('modal_add_position');
-		actionOptionReset();
+// 		actionOptionReset();
 		activeModalInput('modal_add_position');
 		
 		//btn show
 		$('#btn_save_position').show();
 		$('#btn_save_position').attr('data-opt-type','EDIT');
-		//role_code readyonly
+		//position_code readyonly
 		$('#add_input_position_code').attr('readonly','');
 		
-		var reqUrl='<%=path%>/AjaxChannel?action=ORGANIZE_position_DETAIL_ACTION';
+		$('#add_input_position_address').text('');//清空
+		
+		var reqUrl='<%=path%>/AjaxChannel?action=BASE_DATA_POSITION_DETAIL_ACTION';
 		//ajax begin
 		$.ajax({
 				type : 'POST',
 				url:reqUrl,
-				data: {ROLE_CODE:role_code},
+				data: {POSITION_ID:position_id},
 				dataType : 'json',
 				success : function(json) {
 					if(json.SUCCESS=='1'){
-							$('#add_input_position_code').val(json.ROLE_BEAN.RoleCode);
-							$('#add_input_position_name').val(json.ROLE_BEAN.RoleName);
-							$('#add_input_position_desc').val(json.ROLE_BEAN.RoleDesc);
+							$('#add_input_position_code').val(json.INS_POSITION_BEAN.PositionCode);
+							$('#add_input_position_name').val(json.INS_POSITION_BEAN.PositionName);
+							$('#add_input_position_id').val(json.INS_POSITION_BEAN.Id);
+							$('#add_input_position_address').text(json.INS_POSITION_BEAN.PositionAddress);
+							$('#add_input_position_desc').val(json.INS_POSITION_BEAN.PositionDesc);
+							//map move
+							mapMoveTo(new BMap.Point(json.INS_POSITION_BEAN.PositionLongitude,json.INS_POSITION_BEAN.PositionLatitude));
 							
-							if(json.ACTION_LIST!=null)
-								$.each(json.ACTION_LIST,function(i,item){
-									console.log(item.OptionCode);
-									console.log(item.ActionCode);
-									//check box :checked by action code
-									//role_action_option_div
-									var actionCode=item.ActionCode;
-									$("#role_action_option_div").find(":checkbox[value='"+actionCode+"']").prop("checked",true);
-								});
+							//tangram-suggestion-main
+							$('div.tangram-suggestion-main').css("z-index",0);//hide suggest
+							$('#add_input_position_desc').on('input propertychange',function(){
+// 								alert('1');
+								$('div.tangram-suggestion-main').css("z-index",9999);//hide show
+								var divTop=$('div.modal-dialog').css("margin-top");
+								var addressTop=$('div.tangram-suggestion-main').css("top");//parse css top
+								$('div.tangram-suggestion-main').css("top",(parseInt(divTop)+parseInt(addressTop))+'px');
+								console.log('div.tangram-suggestion-main top'+(parseInt(divTop)+parseInt(addressTop)));
+// 								alert(divTop);
+// 								alert(addressTop);
+							});
 // 							returnSuccessMsgShow('modal_add_position',json.MSG)
 						}else{
 // 							alert(json.MSG)	
@@ -375,20 +490,19 @@
 					}
 				});
 		//ajax end
-		$('#modal_add_position_title').text('检查地点编辑['+role_code+']');
+		$('#modal_add_position_title').text('检查地点编辑['+position_name+']');
 		$('#modal_add_position').modal({backdrop: 'static', keyboard: false});
-		
 	}
 
 	
-	function addRole(){
+	function addPosition(){
 		//auto top and height
 // 		modal_auto_top($('div.modal-dialog'));
 // 		clearModalContent('modal_add_position');
 //		common init
 // 		clear modal content
 		myModalInit('modal_add_position');
-		actionOptionReset();
+// 		actionOptionReset();
 		activeModalInput('modal_add_position');
 		//btn show
 		$('#btn_save_position').show();
@@ -397,51 +511,12 @@
 		$('#modal_add_position_title').text('新增检查地点');
 		$('#modal_add_position').modal({backdrop: 'static', keyboard: false});
 		
-	}
-	//ul li a click
-	function displayActionByRoleCode(obj){
+		$('#add_input_position_address').text('');//清空
 		
-		if($(obj).parent().hasClass("active")){
-			return false;
-		}
-		var roleCode=$(obj).attr("data-role_code");
-		console.log(roleCode);
-		$(obj).parent().parent().children("li").removeClass("active");
-		$(obj).parent().addClass("active");
-		//display action list
-		$(obj).parent().parent().parent().children("div.action-checkbox-div").hide();
-		$(obj).parent().parent().parent().children("#ACTION_DIV_"+roleCode).show();
-// 		$(obj).parent().parent().parent().children("div.action-checkbox-div").hide(400);
-// 		$(obj).parent().parent().parent().children("#ACTION_DIV_"+roleCode).show(200);
+		//baidu map autocomplete event
+		currentCoord();//定位
+// 		mapMoveTo(point);//移动
 	}
-
-	/*
-	function saveRole(obj){
-		$(obj).button('loading');
-		
-		$("div.opt-result-alert").hide();//clear other alert div
-		$("div.opt-result-alert").removeClass("alert-success").removeClass("alert-danger");
-//		ajax();
-// 		callbak($(obj).button('reset');)
-		setTimeout(function (){ //callback
-			$(obj).button('reset'); 
-			//success
-// 			$("div.opt-result-alert").addClass("alert-success"); 
-			//faild
-			$("div.opt-result-alert").addClass("alert-danger");
-			
-			$("div.opt-result-alert").text("保存成功！");
-			
-// 			$("div.opt-result-alert").fadeIn(function(){
-// 				$("div.opt-result-alert").fadeToggle(3000);
-// 			});
-// 			$("div.opt-result-alert").fadeIn().delay(3000).fadeToggle();
-
-			$("div.opt-result-alert").slideDown(500).delay(3000).slideToggle(500);
-			
-			},1000);  
-	}
-	*/
 	
 	function savePositionConfirm(obj){
 		
@@ -455,25 +530,28 @@
 // 			},1000);  
 		var modalOptType=$(obj).attr('data-opt-type');//new or eidt
 
-		var role_code=$('#add_input_position_code').val();
-		var role_name=$('#add_input_position_name').val();
-		var role_desc=$('#add_input_position_desc').val();
+		var position_id=$('#add_input_position_id').val();
+		var position_code=$('#add_input_position_code').val();
+		var position_name=$('#add_input_position_name').val();
+		var position_desc=$('#add_input_position_desc').val();
+		var position_address=$('#add_input_position_address').text();
+		var position_coord=$('#add_input_position_coord').val();
 		
-		//	$(":checked")
-		var roleActionArray=[];
-		$('#role_action_option_div').find(":checked:not([value='all'])").each(function(index,item){
-			roleActionArray.push($(item).attr('value'));
-		});
-		var roleActionStr='';
-		if(roleActionArray!=null&&roleActionArray.length>0){
-			roleActionStr=roleActionArray.toString();//"xxx,xxx"
-		}
+		var data={};
+
+		data.POSITION_NAME=position_name;
+		data.POSITION_DESC=position_desc;
+		data.POSITION_ADDRESS=position_address;
+		data.POSITION_COORD=position_coord;
+		
 		var reqUrl;
 		if('NEW'==modalOptType){
-			reqUrl='<%=path%>/AjaxChannel?action=ORGANIZE_position_ADD_ACTION';
+			reqUrl='<%=path%>/AjaxChannel?action=BASE_DATA_POSITION_ADD_ACTION';
+			data.POSITION_CODE=position_code;
 		}
 		else if('EDIT'==modalOptType){
-			reqUrl='<%=path%>/AjaxChannel?action=ORGANIZE_position_EDIT_ACTION';
+			reqUrl='<%=path%>/AjaxChannel?action=BASE_DATA_POSITION_EDIT_ACTION';
+			data.POSITION_ID=position_id;
 		}
 		else{
 			returnErrorMsgShow('modal_add_position','未知操作类型，请稍后重试')
@@ -485,12 +563,12 @@
 		$.ajax({
 				type : 'POST',
 				url:reqUrl,
-				data: {ROLE_CODE:role_code,ROLE_NAME:role_name,ROLE_DESC:role_desc,ROLE_ACTION_STR:roleActionStr},
+				data:data,
 				dataType : 'json',
 				success : function(json) {
 					if(json.SUCCESS=='1'){
 							returnSuccessMsgShow('modal_add_position',json.MSG)
-							var fvTable=$("#roleList").dataTable(); //datatable init current
+							var fvTable=$("#positionList").dataTable(); //datatable init current
 							fvTable.fnDraw(false);
 							$(obj).button('reset');
 						}else{
@@ -506,10 +584,9 @@
 	}
 	
 	/*opt confirm*/
-	function optConfirm(opt_type,role_name,role_code){
+	function optConfirm(opt_type,position_name,position_id){
 		//auto top and height
 // 		modal_auto_top($('div.modal-dialog'));
-
 // 		$('#optModal').find("button.btn-primary:first").button('reset');
 // 		clearMsgShow('optModal');
 //		init common
@@ -518,36 +595,36 @@
 		var title;
 		var contentHtml;
 		
-		$("#opt_confirm_position_code").val(role_code);
-		$("#opt_confirm_position_name").val(role_name);
+		$("#opt_confirm_position_id").val(position_id);
+		$("#opt_confirm_position_name").val(position_name);
 		$("#opt_confirm_opt_type").val(opt_type);
 		
 		if("delete"==opt_type){
-			title="删除检查地点["+role_name+"]";
+			title="删除检查地点["+position_name+"]";
 			
 			contentHtml=
 				"<div class='alert alert-danger' role='alert'>"
 					+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> <span class='sr-only'>注意:</span>"
-					+"<strong>注意:</strong>检查地点["+role_name+"]将彻底删除，无法恢复 !"
+					+"<strong>注意:</strong>检查地点["+position_name+"]将彻底删除，无法恢复 !"
 				+"</div>";
 // 			$('#optModal').find("button.btn-primary:first").click(startRole);
 
 		}else if("stop"==opt_type)	{
-			title="停用检查地点["+role_name+"]";
+			title="停用检查地点["+position_name+"]";
 			
 			contentHtml=
 				"<div class='alert alert-warning' role='alert'>"
 					+"<span class='glyphicon glyphicon-question-sign' aria-hidden='true'></span> <span class='sr-only'>注意:</span>"
-					+"<strong>注意:</strong>检查地点["+role_name+"]将停用，可在检查地点管理恢复。"
+					+"<strong>注意:</strong>检查地点["+position_name+"]将停用，可在检查地点管理恢复。"
 				+"</div>";
 // 			$('#optModal').find("button.btn-primary:first").click(stopRole);
 		}else if("start"==opt_type){
-			title="启用检查地点["+role_name+"]";
+			title="启用检查地点["+position_name+"]";
 			
 			contentHtml=
 				"<div class='alert alert-info' role='alert'>"
 					+"<strong>注意:</strong><span class='glyphicon glyphicon-info-sign' aria-hidden='true'></span> <span class='sr-only'>注意:</span>"
-					+"检查地点["+role_name+"]将被启用。"
+					+"检查地点["+position_name+"]将被启用。"
 				+"</div>";
 // 			$('#optModal').find("button.btn-primary:first").click(deleteRole);
 		}
@@ -558,30 +635,27 @@
 	}
 	
 	function optConfirmDone(obj){
-		var roleCode=$("#opt_confirm_position_code").val();
-		var roleName=$("#opt_confirm_position_name").val();
+		var position_id=$("#opt_confirm_position_id").val();
+		var position_name=$("#opt_confirm_position_name").val();
 		var optType=$("#opt_confirm_opt_type").val();
 		
 		$(obj).button('loading');
-		var reqUrl='<%=path%>/AjaxChannel?action=ORGANIZE_position_MOD_ACTION';
+		var reqUrl='<%=path%>/AjaxChannel?action=BASE_DATA_POSITION_MOD_ACTION';
 		//ajax begin
 		$.ajax({
 				type : 'POST',
 				url:reqUrl,
-				data: {ROLE_CODE:roleCode,OPT_TYPE:optType},
+				data: {POSITION_ID:position_id,OPT_TYPE:optType},
 				dataType : 'json',
 				success : function(json) {
 					if(json.SUCCESS=='1'){
 							returnSuccessMsgShow('optModal',json.MSG);//alert msg
 // 							$(obj).button('complete');//button 
-							var fvTable=$("#roleList").dataTable(); //datatable init current
+							var fvTable=$("#positionList").dataTable(); //datatable init current
 							fvTable.fnDraw(false);
 							$(obj).button('reset');
 						}else{
 							returnErrorMsgShow('optModal',json.MSG);
-// 							$(obj).button('complete');//button 
-							//var fvTable=$("#roleList").dataTable();
-							//fvTable.fnDraw(false);
 							$(obj).button('reset'); 
 						}
 					},
@@ -590,25 +664,7 @@
 					}
 				});
 			//ajax end
-		//
 	}
-	/*查询条件清空重置查询*/
-	function btnQueryReset(){
-		queryBtnRestClear();
-		dataTableInit();
-	}
-	
-// 	action 全选 check box
-	$(function(){
-		$(":checkbox[value='all']").click(function() {
-			console.log($(this).parent().parent().find(":checkbox").size());
-// 			alert($(this).parent().parent().find("[type='checkbox']").size());
-			$(this).parent().parent().find(":checkbox").prop("checked",this.checked); 
-// 			$(this).parent().parent().find(":checkbox").attr("checked",this.checked); 
-//             $('input[name="subBox"]').attr("checked",this.checked); 
-        });
-	});
-
 </script>
 
 </body>

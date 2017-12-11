@@ -38,6 +38,8 @@ public class YBAESCipher {
 	private static final String IV_STRING = new SimpleDateFormat("YYYYMMdd00000000").format(new Date(System.currentTimeMillis()));//偏移量 16bit must
 	private static final String charset = "UTF-8";
 	
+	private static final String IV_STRING2="YYYYMMdd00000000";//固定值
+	
 	//加密
 	public static String aesEncryptString(String content, String key) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
 		byte[] contentBytes = content.getBytes(charset);
@@ -78,6 +80,47 @@ public class YBAESCipher {
  	 	return cipher.doFinal(contentBytes);
 	}
 	
+	//20171120-key 改为固定值 begin
+	//加密
+	public static String aesEncryptString2(String content, String key) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
+		byte[] contentBytes = content.getBytes(charset);
+		byte[] keyBytes = key.getBytes(charset);
+		byte[] encryptedBytes = aesEncryptBytes2(contentBytes, keyBytes);
+//		Encoder encoder = Base64.getEncoder();
+//	    return encoder.encodeToString(encryptedBytes);
+		return new String(new Base64().encode(encryptedBytes));
+	}
+	
+	//解密
+	public static String aesDecryptString2(String content, String key) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
+//		Decoder decoder = Base64.getDecoder();
+//	    byte[] encryptedBytes = decoder.decode(content);
+		byte[] encryptedBytes = new Base64().decode(content);
+		byte[] keyBytes = key.getBytes(charset);
+		byte[] decryptedBytes = aesDecryptBytes2(encryptedBytes, keyBytes);
+		return new String(decryptedBytes, charset);		
+	}
+	
+	public static byte[] aesEncryptBytes2(byte[] contentBytes, byte[] keyBytes) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
+		return cipherOperation2(contentBytes, keyBytes, Cipher.ENCRYPT_MODE);
+	}
+	
+	public static byte[] aesDecryptBytes2(byte[] contentBytes, byte[] keyBytes) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
+		return cipherOperation2(contentBytes, keyBytes, Cipher.DECRYPT_MODE);
+	}
+	
+	private static byte[] cipherOperation2(byte[] contentBytes, byte[] keyBytes, int mode) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+		SecretKeySpec secretKey = new SecretKeySpec(keyBytes, "AES");
+		
+		byte[] initParam = IV_STRING2.getBytes(charset);
+		IvParameterSpec ivParameterSpec = new IvParameterSpec(initParam);
+		
+		Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+		cipher.init(mode, secretKey, ivParameterSpec);
+		
+		return cipher.doFinal(contentBytes);
+	}
+	//20171120-key 改为固定值 end
 	/**
 	 * 加密
 	 * 方   法  名:aesEncryptString
@@ -178,12 +221,121 @@ public class YBAESCipher {
 		}
 		return null;
 	}
+	
+	
+	/**
+	 * 加密-兑换券：YBAESCipher(QNO+_+PIN，YYYYMMdd00000000):偏移量，key 为固定值
+	 * 方   法  名:aesEncryptString
+	 * 方法描述:
+	 * 参         数:@param obj
+	 * 参         数:@return
+	 * 返   回  值:String
+	 * 创   建  人:rock
+	 * @exception
+	 * @since  1.0.0
+	 */
+	public static String aesEncryptCoupons(String couponsNO,String pin){
+		String key = "YYYYMMdd00000000";
+		String content=couponsNO+"_"+pin;
+//		content=stringToAscii(JSONObject.fromObject(obj).toString());//String ->ascii
+		String encryptStr;
+		try {
+			encryptStr = aesEncryptString2(content, key);
+			log.debug("encryptStr:="+encryptStr);
+			return encryptStr;
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e);
+		} catch (NoSuchPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e);
+		} catch (InvalidAlgorithmParameterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e);
+		} catch (IllegalBlockSizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e);
+		} catch (BadPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e);
+		}
+		return null;
+	}
+	
+	/**
+	 * 解密 兑换券：YBAESCipher(QNO+_+PIN，YYYYMMdd00000000)偏移量，key 为固定值
+	 * 方   法  名:aesDecryptString
+	 * 方法描述:
+	 * 参         数:@param encryptStr
+	 * 参         数:@return
+	 * 返   回  值:String
+	 * 创   建  人:rock
+	 * @exception
+	 * @since  1.0.0
+	 */
+	public static String aesDecryptCoupons(String encryptStr){
+		String key = "YYYYMMdd00000000";
+		try {
+			String decryptStr=aesDecryptString2(encryptStr, key);
+			log.debug("decryptStr:="+decryptStr);
+			return decryptStr;
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e);
+		} catch (NoSuchPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e);
+		} catch (InvalidAlgorithmParameterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e);
+		} catch (IllegalBlockSizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e);
+		} catch (BadPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e);
+		}
+		return null;
+	}
+	
+	
+	
 //http://t.youbus.com.cn/qr/1?EWuciHwHuNnMtW4rODtaCeSKFytYutUIokMundeimF+TpR93dOmC7LJCwvkZOr8kBkGiOQ7f35ePxlZe3gOQtIPmx259y4LyUMN1n0ATdLQrsKOifcl11W/Rc75kvOZujlNPMJfpqqapIGZGiJoQxYVsHNzxhZ37jPPWU2s7mAA=&END=1	
 	public static void main(String[] args){
+		
+		System.out.println("1:="+aesEncryptCoupons("12345678", "1234"));
+//		System.out.println(aesDecryptCoupons(encryptStr));
 //		System.out.println(aesDecryptString("EWuciHwHuNnMtW4rODtaCeSKFytYutUIokMundeimF+TpR93dOmC7LJCwvkZOr8kBkGiOQ7f35ePxlZe3gOQtIPmx259y4LyUMN1n0ATdLQrsKOifcl11W/Rc75kvOZujlNPMJfpqqapIGZGiJoQxVLdnusPanp5MGFY2npUKkQ="));
 //		System.out.println(aesDecryptString("EWuciHwHuNnMtW4rODtaCeSKFytYutUIokMundeimF+TpR93dOmC7LJCwvkZOr8kBkGiOQ7f35ePxlZe3gOQtIPmx259y4LyUMN1n0ATdLQrsKOifcl11W/Rc75kvOZujlNPMJfpqqapIGZGiJoQxYVsHNzxhZ37jPPWU2s7mAA="));
 //		System.out.println(aesDecryptString("Z0OzRlaRDtXdoT/+yZqakQyKpAYkrM7pvEuu/ZIaFJs9dv+WJm/cC/Gqz9dhKe8iaTZrKZXvJpliloVM9Spypunvf3UXdUmTVALnS7sV615CDwjjPu/0EX+linlOwdmV0dp6vrx6bIBSUrXbGQYLh9QMGbWQvzpSH8u7G91sOXU="));
-		System.out.println(aesDecryptString("EYykcHh+2dMfK0+bgbqLvMv91/ToPGMBRY+uD0ShQ71qKKLL1RoxoZWZuXnwfH/k9Tt2lgAoh61z1lUq+ogDhqoMRX2zDHez1rOxjv5O1II3Odesl3ep/g93biNvLxJ3EvETNzi5WMy3zjoIDZCAiCrC0IrwWy0Xhdj14rF0wLc="));
+		System.out.println(aesDecryptString("0j8ru0G3NH4VkqZb1L/lc4uf1boeSnJpK1ZjNE9Vs0peguzvvD77Ge4pn7nX0CYg3sscXmWhygaaRdx+B3lwOCPmf+mUDLtDbSsr+WyLdWGOfQc2YJ3qAcQUbTQpTRVmvWnWob1YbiTOoo6vxS4aBbh0fyKJTcPDK+lGx0vR9uo="));
+//		System.out.println(aesDecryptString("EYykcHh+2dMfK0+bgbqLvMv91/ToPGMBRY+uD0ShQ71qKKLL1RoxoZWZuXnwfH/k9Tt2lgAoh61z1lUq+ogDhqoMRX2zDHez1rOxjv5O1II3Odesl3ep/g93biNvLxJ3EvETNzi5WMy3zjoIDZCAiCrC0IrwWy0Xhdj14rF0wLc="));
 		
 	CustQrCodeBean bean=new CustQrCodeBean();
 //	bean.setCodeType("T0002");

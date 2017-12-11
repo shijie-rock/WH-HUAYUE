@@ -62,20 +62,6 @@ public class AuthSessionFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) res;
 		String url=request.getRequestURL().toString();
 		String contextPath=request.getContextPath();
-		/**
-		get:
-		request action url:
-		URL：=http://192.168.0.133:8088/AGENT_CENTER/service
-  		URI：=/AGENT_CENTER/service
-  		contextPath：=/AGENT_CENTER
-		qurl：=action=DICTIONNARY
-		
-		request jsp url:
-		URL：=http://192.168.0.133:8088/AGENT_CENTER/jsp/businessData/vehicle_driver_calendar.jsp
-		URI：=/AGENT_CENTER/jsp/businessData/vehicle_driver_calendar.jsp
-		contextPath：=/AGENT_CENTER
-		qurl：=null
-		 */
 //		if(qurl!=null&&qurl.trim().length()>0)url=url+"?"+qurl.trim();
 		System.out.println("request url：="+url);
 		System.out.println("request url1：="+req.getServletContext().getServerInfo());
@@ -91,15 +77,14 @@ public class AuthSessionFilter implements Filter {
 			HttpSession session = request.getSession();
 			String sessionId=session.getId();
 			
-			String userName = (String) session.getAttribute(YBCommonContant.SESSION_USER_NAME); //TM_SYS_MEMBER LOGIN_MEMBER_ID
+			String userName = (String) session.getAttribute(YBCommonContant.SESSION_USER_NAME); //TM_SYS_MEMBER
 			
 			System.out.println("Auth-SessionFilter:userName["+userName+"] ");
 			log.debug("Auth-SessionFilter:userName["+userName+"] ");
 			
 			if (userName == null || userName.trim().length() < 1) {
 				request.setAttribute("MSG", "会话过期，请重新登录。");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/page/index.jsp");
-//				RequestDispatcher dispatcher = request.getRequestDispatcher("/page/remote_log_error.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/page/remote_log_error.jsp");
 				dispatcher.forward(request, response);
 				System.out.println("Auth-SessionFilter: Session["+sessionId+"] 过期，重新登录");
 				log.debug("Auth-SessionFilter: Session["+sessionId+"] 过期，重新登录");
@@ -137,11 +122,11 @@ public class AuthSessionFilter implements Filter {
 		if(url.endsWith(".js")||url.endsWith(".css")||url.endsWith(".png")||url.endsWith(".jpg")||url.endsWith(".woff")||url.endsWith(".ico")||url.endsWith(".ico")||url.endsWith(".map"))return true;
 		if(url.endsWith("js/uploadify/uploadify.swf"))return true;
 		//jsp	
-		if(url.endsWith("page/index.jsp"))return true;//忽略用户登录页面
-		if(url.endsWith("jsp/remote_log_error.jsp.jsp"))return true;//忽略错误跳转页面
+		if(url.endsWith("/page/login.jsp"))return true;//忽略用户登录页面
+		if(url.endsWith("jsp/remote_log_error.jsp"))return true;//忽略错误跳转页面
 		//action
-		if("SYS_LOGIN_ACTION".equals(actionId))return true;//忽略用户登录action
-		if("USER_LOGOUT_ACTION".equals(actionId))return true;//忽略用户登出action
+		if("LOGIN_ACTION".equals(actionId))return true;//忽略用户登录action
+		if("LOGOUT_ACTION".equals(actionId))return true;//忽略用户登出action
 		
 		System.out.println("URL：="+url);
 		System.out.println("sessionId1：="+request.getSession().getId());
@@ -267,12 +252,4 @@ public class AuthSessionFilter implements Filter {
 //		return false;
 //	}
 	
-	public static void main(String[] args){
-		String url="http://127.0.0.1:8088/AUTH_CENTER/110/user_center/ECC28FAA7092B05ED51441F9D05B73CC";
-		String authLogSessionId=url.substring(url.indexOf("user_center")+12);
-		String groupId=url.substring(url.indexOf("AUTH_CENTER")+12,url.indexOf("/user_center"));
-		System.out.println(authLogSessionId);
-		System.out.println(groupId);
-				
-	}
 }

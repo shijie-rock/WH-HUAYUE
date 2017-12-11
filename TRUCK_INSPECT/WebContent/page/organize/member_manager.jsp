@@ -413,6 +413,7 @@ function dicTranse(value){
 			};
 		//example为table定义id ：10：需要加入操作按钮的列；[4,5]：需要转义的列（映射数据字典值）
 		initMemberTable('memberList', aoColumns, reqData, '<%=path%>',9,[]);
+		resetIFrameLength();//need ajax async:false,
 		} 
 	/*title tips- common method,dynamic bind*/
 	$(function () { $("[data-toggle='tooltip']").tooltip();});
@@ -445,7 +446,8 @@ function dicTranse(value){
 		  elem: '#add_input_birthday', //指定元素
 		  max:0,
 // 		  theme: 'molv',
-		  theme: '#393D49'
+		  theme: '#6699CC'
+// 		  theme: '#393D49'
 // 		  theme: 'grid'
 // 		  position: 'absolute'
 // 		  fixed: true

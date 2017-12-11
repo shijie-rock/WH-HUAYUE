@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="GBK"?>
+<Config>
+	<Action id="SYS_OPT_LOGS_QUERY_LIST_ACTION">
+		<Description>查询系统操作日志列表</Description>
+		<ActionContext>
+			<Data name="sEcho" type="string"/>
+			<Data name="iDisplayStart" type="integer"/>
+			<Data name="iDisplayLength" type="integer"/>
+			
+			<Data name="OPT_NAME" type="string"/>
+			<Data name="OPT_CONTENT" type="string"/>
+			<Data name="BEGIN_TIME" type="string"/>
+			<Data name="END_TIME" type="string"/>
+			
+			<Data name="jsonResult" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.sys.action.QuerySysOptLogsListAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="SYS_OPT_LOGS_QUERY_DETAIL_ACTION">
+		<Description>查询系统操作日志明细</Description>
+		<ActionContext>
+			<Data name="LOGS_ID" type="string"/>
+			
+			<Data name="MSG" type="string" output="true"/>
+			<Data name="OPT_LOGS_BEAN" type="object" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.sys.action.QuerySysOptLogsDetailAction"  on1Do="next" onOtherDo="3"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+</Config>

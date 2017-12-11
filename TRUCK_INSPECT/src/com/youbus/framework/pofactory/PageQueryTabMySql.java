@@ -128,7 +128,8 @@ public class PageQueryTabMySql extends com.infoservice.po.PageQuery {
 	    ResultSet rs = null;
 	    try {
 	      StringBuffer sbuf = new StringBuffer();
-	      sbuf.append(MessageService.getInstance().getMessage("frm.sql.pagequery.count", new Object[] { this.sql.toUpperCase() }));
+	      sbuf.append(MessageService.getInstance().getMessage("frm.sql.pagequery.count", new Object[] { this.sql }));
+//	      sbuf.append(MessageService.getInstance().getMessage("frm.sql.pagequery.count", new Object[] { this.sql.toUpperCase() }));//not need to upper
 
 	      ps = this.conn.prepareStatement(sbuf.toString());
 	      POFactoryUtil.setParamsToPreparedStatment(ps, this.params);

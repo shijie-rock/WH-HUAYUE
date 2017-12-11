@@ -43,32 +43,37 @@
 
           <!-- Upload to server link. Class "dropdown-big" creates big dropdown -->
           <li class="dropdown dropdown-big">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-success"><i class="icon-cloud-upload"></i></span> 上传到云服务器</a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-success"><i class="glyphicon glyphicon-signal" style="margin-left:1px;"></i></span>&nbsp;业务指标</a>
             <!-- Dropdown -->
             <ul class="dropdown-menu">
               <li>
                 <!-- Progress bar -->
-                <p>图片上传进度</p>
+                <p>在途车辆</p>
                 <!-- Bootstrap progress bar -->
                 <div class="progress progress-striped active">
-					<div class="progress-bar progress-bar-info"  role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-						<span class="sr-only">完成40%</span>
+					<div class="progress-bar progress-bar-info"  role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:70%">
+						<span class="sr-only">70%</span>
 					</div>
 			    </div>
-
-                <hr />
-
+			      <hr />  
                 <!-- Progress bar -->
-                <p>视频上传进度</p>
+                <p>检车一次通过率</p>
                 <!-- Bootstrap progress bar -->
                 <div class="progress progress-striped active">
-					<div class="progress-bar progress-bar-success"  role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-						<span class="sr-only">完成80%</span>
+					<div class="progress-bar progress-bar-success"  role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:90%">
+						<span class="sr-only">90%</span>
 					</div>
 			    </div> 
-
+			      <hr />  
+			    <!-- Progress bar -->
+                <p>复检返工率</p>
+                <!-- Bootstrap progress bar -->
+                <div class="progress progress-striped active">
+					<div class="progress-bar progress-bar-danger"  role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:10%">
+						<span class="sr-only">10%</span>
+					</div>
+			    </div> 
                 <hr />             
-
                 <!-- Dropdown menu footer -->
                 <div class="drop-foot">
                   <a href="#">查看所有</a>
@@ -80,20 +85,49 @@
 
           <!-- Sync to server link -->
           <li class="dropdown dropdown-big">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-danger"><i class="icon-refresh"></i></span> 同步到服务器</a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            	<span class="label label-danger">
+            	<i class="glyphicon glyphicon-envelope"  style="margin-left: 2px;"></i>
+            	</span>
+            	&nbsp;我的消息&nbsp;<span class="badge pull-right" >3</span></a></a>
             <!-- Dropdown -->
             <ul class="dropdown-menu">
               <li>
                 <!-- Using "icon-spin" class to rotate icon. -->
-                <p><span class="label label-info"><i class="icon-cloud"></i></span>同步会员到服务器</p>
+                <p><span class="text-danger"><i class="glyphicon glyphicon-alert"></i></span>&nbsp;2017-12-1紧急通知...</p>
                 <hr />
-                <p><span class="label label-warning"><i class="icon-cloud"></i></span>同步书签到云端</p>
-
+                <p><span class="text-success"><i class="glyphicon glyphicon-star"></i></span>&nbsp;2017-12-1有新检车单生成</p>
                 <hr />
-
+                <p><span class="text-warning"><i class="glyphicon glyphicon-star"></i></span>&nbsp;提醒:危险品道路运输许可证到期</p>
+                <hr />
                 <!-- Dropdown menu footer -->
                 <div class="drop-foot">
-                  <a href="#">查看所有</a>
+                  <a href="#">查看所有消息</a>
+                </div>
+
+              </li>
+            </ul>
+          </li>
+          
+          <!-- Sync to server link my -->
+          <li class="dropdown dropdown-big">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            	<span class="label label-danger">
+            	<i class="icon-bell"  style="margin-left: 2px;"></i>
+            	</span>
+            	&nbsp;待办事项&nbsp;<span class="badge pull-right">2</span></a></a>
+            <!-- Dropdown -->
+            <ul class="dropdown-menu">
+              <li>
+                <!-- Using "icon-spin" class to rotate icon. -->
+                <p><span class="text-danger"><i class="glyphicon glyphicon-alert"></i></span>&nbsp;2017-12-1有新检车单生成</p>
+                <hr />
+                <p><span class="text-danger"><i class="glyphicon glyphicon-alert"></i></span>&nbsp;2017-12-1有新返工检车单</p>
+                <hr />
+                <hr />
+                <!-- Dropdown menu footer -->
+                <div class="drop-foot">
+                  <a href="#">查看所有待办</a>
                 </div>
 
               </li>
@@ -119,7 +153,7 @@
             <ul class="dropdown-menu">
               <li><a href="#"><i class="icon-user"></i> 资料</a></li>
               <li><a href="#"><i class="icon-cogs"></i> 设置</a></li>
-              <li><a href="login.html"><i class="icon-off"></i> 退出</a></li>
+              <li><a href="#" onclick="logout()"><i class="icon-off"></i> 退出</a></li>
             </ul>
           </li>
           
@@ -146,122 +180,7 @@
         </div>
 
         <!-- Button section -->
-        <div class="col-md-4">
-
-          <!-- Buttons -->
-          <ul class="nav nav-pills">
-
-            <!-- Comment button with number of latest comments count -->
-            <li class="dropdown dropdown-big">
-              <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                <i class="icon-comments"></i> 聊天 <span   class="label label-info">6</span> 
-              </a>
-
-                <ul class="dropdown-menu">
-                  <li>
-                    <!-- Heading - h5 -->
-                    <h5><i class="icon-comments"></i> 聊天</h5>
-                    <!-- Use hr tag to add border -->
-                    <hr />
-                  </li>
-                  <li>
-                    <!-- List item heading h6 -->
-                    <h6><a href="#">你好 :)</a> <span class="label label-warning pull-right">10:42</span></h6>
-                    <div class="clearfix"></div>
-                    <hr />
-                  </li>
-                  <li>
-                    <h6><a href="#">你怎么样?</a> <span class="label label-warning pull-right">20:42</span></h6>
-                    <div class="clearfix"></div>
-                    <hr />
-                  </li>
-                  <li>
-                    <h6><a href="#">你在干撒呢?</a> <span class="label label-warning pull-right">14:42</span></h6>
-                    <div class="clearfix"></div>
-                    <hr />
-                  </li>                  
-                  <li>
-                    <div class="drop-foot">
-                      <a href="#">查看所有</a>
-                    </div>
-                  </li>                                    
-                </ul>
-            </li>
-
-            <!-- Message button with number of latest messages count-->
-            <li class="dropdown dropdown-big">
-              <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                <i class="icon-envelope-alt"></i> 收件箱 <span class="label label-primary">6</span> 
-              </a>
-
-                <ul class="dropdown-menu">
-                  <li>
-                    <!-- Heading - h5 -->
-                    <h5><i class="icon-envelope-alt"></i> 消息</h5>
-                    <!-- Use hr tag to add border -->
-                    <hr />
-                  </li>
-                  <li>
-                    <!-- List item heading h6 -->
-                    <h6><a href="#">你好啊?</a></h6>
-                    <!-- List item para -->
-                    <p>最近咋样啊...</p>
-                    <hr />
-                  </li>
-                  <li>
-                    <h6><a href="#">今天很好啊?</a></h6>
-                    <p>相当好...</p>
-                    <hr />
-                  </li>
-                  <li>
-                    <div class="drop-foot">
-                      <a href="#">查看所有</a>
-                    </div>
-                  </li>                                    
-                </ul>
-            </li>
-
-            <!-- Members button with number of latest members count -->
-            <li class="dropdown dropdown-big">
-              <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                <i class="icon-user"></i> 用户 <span   class="label label-success">6</span> 
-              </a>
-
-                <ul class="dropdown-menu">
-                  <li>
-                    <!-- Heading - h5 -->
-                    <h5><i class="icon-user"></i> 用户</h5>
-                    <!-- Use hr tag to add border -->
-                    <hr />
-                  </li>
-                  <li>
-                    <!-- List item heading h6-->
-                    <h6><a href="#">Ravi Kumar</a> <span class="label label-warning pull-right">免费</span></h6>
-                    <div class="clearfix"></div>
-                    <hr />
-                  </li>
-                  <li>
-                    <h6><a href="#">Balaji</a> <span class="label label-important pull-right">高级</span></h6>
-                    <div class="clearfix"></div>
-                    <hr />
-                  </li>
-                  <li>
-                    <h6><a href="#">Kumarasamy</a> <span class="label label-warning pull-right">免费</span></h6>
-                    <div class="clearfix"></div>
-                    <hr />
-                  </li>                  
-                  <li>
-                    <div class="drop-foot">
-                      <a href="#">查看所有</a>
-                    </div>
-                  </li>                                    
-                </ul>
-            </li> 
-
-          </ul>
-
-        </div>
-
+        <div class="col-md-4"></div>
         <!-- Data section -->
 
         <div class="col-md-4">
@@ -271,11 +190,11 @@
             <div class="hdata">
               <div class="mcol-left">
                 <!-- Icon with red background -->
-                <i class="icon-signal bred"></i> 
+                <i class="glyphicon glyphicon-list-alt bred"></i> 
               </div>
               <div class="mcol-right">
                 <!-- Number of visitors -->
-                <p><a href="#">7000</a> <em>访问</em></p>
+                <p><a href="#">7000</a> <em>检车单</em></p>
               </div>
               <div class="clearfix"></div>
             </div>
@@ -297,11 +216,11 @@
             <div class="hdata">
               <div class="mcol-left">
                 <!-- Icon with green background -->
-                <i class="icon-money bgreen"></i> 
+                <i class="glyphicon glyphicon-send bgreen"></i> 
               </div>
               <div class="mcol-right">
                 <!-- Number of visitors -->
-                <p><a href="#">5000</a><em>订单</em></p>
+                <p><a href="#">5000</a><em>车辆</em></p>
               </div>
               <div class="clearfix"></div>
             </div>                        
@@ -329,9 +248,9 @@
             <ul>
               <li><a href="#">Submenu #1</a></li>
               <li><a href="#">Submenu #2</a></li>
-              <li><a href="#">Submenu #3</a></li>
             </ul>-->
           </li>
+          <!-- 
           <li class="has_sub"><a href="#"><i class="icon-list-alt"></i> 插件页面  <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
             <ul>
               <li><a href="<%=path%>/page/index-content.jsp" target="iframepage">首页</a></li>
@@ -339,7 +258,8 @@
               <li><a href="<%=path%>/page/tmp/tree-demo2.jsp" target="iframepage">树#2</a></li>
               <li><a href="<%=path%>/page/tmp/content-table.jsp" target="iframepage">DataTable</a></li>
             </ul>
-          </li>  
+          </li> 
+           --> 
           <li class="has_sub"><a href="#"><i class="icon-user"></i>组织管理<span class="pull-right"><i class="icon-chevron-right"></i></span></a>
             <ul>
               <li><a href="<%=path%>/page/organize/role_manager.jsp" target="iframepage">角色管理</a></li>
@@ -348,18 +268,51 @@
 <!--               <li><a href="gallery.html">相册页面</a></li> -->
             </ul>
           </li> 
-          <li class="has_sub"><a href="#"><i class="icon-file-alt"></i>基础数据 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+          <li class="has_sub"><a href="#"><i class="icon-book"></i>基础数据 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
             <ul>
               <li><a href="<%=path%>/page/base_data/position_manager.jsp" target="iframepage">检查地点</a></li>
               <li><a href="<%=path%>/page/base_data/truck_manager.jsp" target="iframepage">车辆信息</a></li>
-<!--               <li><a href="grid.html">网格</a></li> -->
+              <li><a href="<%=path%>/page/base_data/driver_manager.jsp" target="iframepage">司机信息</a></li>
             </ul>
-          </li>                             
+          </li>
+           <li class="has_sub"><a href="#"><i class="icon-list"></i>项目管理<span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+            <ul>
+              <li><a href="<%=path%>/page/busi_data/project_class_manager.jsp" target="iframepage">对象大类</a></li>
+              <li><a href="<%=path%>/page/busi_data/project_class_sub_manager.jsp" target="iframepage">对象小类</a></li>
+              <li><a href="<%=path%>/page/busi_data/project_item_manager.jsp" target="iframepage">检查项目</a></li>
+            </ul>
+          </li> 
+           <li class="has_sub"><a href="#"><i class="glyphicon glyphicon-edit"></i>业务数据<span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+            <ul>
+              <li><a href="<%=path%>/page/ins_order/ins_order_manager.jsp" target="iframepage">检车单管理</a></li>
+              <li><a href="<%=path%>/page/ins_order/ins_order_item_manager.jsp" target="iframepage">检车单明细</a></li>
+            </ul>
+          </li> 
+          <li class="has_sub"><a href="#"><i class="glyphicon glyphicon-send"></i>消息管理<span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+            <ul>              
+            <li><a href="<%=path%>/page/message/wx_msg_manager.jsp" target="iframepage">微信消息</a></li>
+            <li><a href="<%=path%>/page/message/sms_msg_manager.jsp" target="iframepage">短信消息</a></li>
+            </ul>
+          </li> 
+          <li class="has_sub"><a href="#"><i class="icon-align-left"></i>报表管理<span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+            <ul>              
+            <li><a href="<%=path%>/page/report/ins_check_report.jsp" target="iframepage">检车通过率</a></li>
+            <li><a href="<%=path%>/page/report/ins_check_repeat_report.jsp" target="iframepage">检车复检率</a></li>
+            </ul>
+          </li>
+          <li class="has_sub"><a href="#"><i class="icon-eye-open"></i>系统监控<span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+            <ul>              
+            <li><a href="<%=path%>/page/system/task_manager.jsp" target="iframepage">计划任务</a></li>
+            <li><a href="<%=path%>/page/system/sys_log_manager.jsp" target="iframepage">日志查询</a></li>
+            </ul>
+          </li> 
+          <!--                          
           <li><a href="charts.html"><i class="icon-bar-chart"></i>图表</a></li> 
           <li><a href="tables.html"><i class="icon-table"></i>表格</a></li>
           <li><a href="forms.html"><i class="icon-tasks"></i>表单</a></li>
           <li><a href="ui.html"><i class="icon-magic"></i>UI图标</a></li>
           <li><a href="calendar.html"><i class="icon-calendar"></i>日历</a></li>
+           -->
         </ul>
     </div>
 
@@ -371,7 +324,7 @@
 <!--             <input type="hidden" id="CurrentDriverId" value=""> -->
 <!--             <input type="hidden" id="CurrentDriverName" value=""> -->
 
-				<iframe src="<%=path%>/page/index-content.jsp" id="iframepage" name="iframepage" height="760px" 
+				<iframe src="<%=path%>/page/index-content.jsp" id="iframepage" name="iframepage" height="560px" 
 					style="background-color: #fff;overflow-x:no;overflow-y:no;border-top:0px solid;min-width:1100px;"
 					marginheight="0" marginwidth="10" frameborder="0" scrolling="yes"  width="100%"  onLoad="iFrameHeight(this)"></iframe> 
     </div>
@@ -584,6 +537,31 @@ $(function () {
     });
 
 });
+
+function logout(){
+	if(confirm('是否要退出系统?')){
+	var reqUrl='<%=path%>/AjaxChannel?action=LOGOUT_ACTION';
+	$.ajax({
+		type : 'POST',
+		url:reqUrl,
+		data: {},
+		dataType : 'json',
+		success : function(json) {
+			if(json.SUCCESS=='1'){
+				location.href='<%=path%>/page/login.jsp';	
+//					jAlert(json.MSG, '提示',null,function(){
+<%-- 						location.href='<%=path%>/page/index.jsp';	 --%>
+//					}); 
+			}else{
+				 jAlert(json.MSG, '提示'); 
+			}
+		},
+		error : function(e) {
+			console.log(e);
+		}
+	});
+  }
+}
 
 /* Curve chart ends */
 </script>

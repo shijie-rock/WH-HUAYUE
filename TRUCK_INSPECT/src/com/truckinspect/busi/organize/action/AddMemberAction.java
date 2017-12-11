@@ -15,7 +15,6 @@ import com.info.base.po.TmSysMemberPO;
 import com.infoservice.framework.ActionImpl;
 import com.infoservice.framework.datacontext.ActionContext;
 import com.infoservice.po.POFactory;
-import com.truckinspect.busi.organize.po.TmInspactGroupPO;
 import com.truckinspect.common.TruckInsCommonCanstant;
 import com.truckinspect.common.util.OptLogUtil;
 import com.youbus.framework.comm.YBUtility;
@@ -55,20 +54,20 @@ public class AddMemberAction extends ActionImpl {
 		//check param
 		if(StringUtils.isBlank(memberCode)||StringUtils.isBlank(memberName)){
 			logger.error(" PARAM IS EMTPY .");
-			atx.setErrorContext("ORGANIZE_INS_MEMBER_ADD_ACTION_ERR_1000", "新增员工：参数为空", null);
+			atx.setErrorContext("ORGANIZE_INS_MEMBER_ADD_ACTION_ERR_1000", "新增用户：参数为空", null);
 			return 0;
 		}
 		
 		if(StringUtils.isNotBlank(password)){//PASS IS NOT EMPTY
 			if(!password.equals(passwordCfg)){
 				logger.error(" PASSWORD NOT EQ PASSWORD_CFG .");
-				atx.setErrorContext("ORGANIZE_INS_MEMBER_ADD_ACTION_ERR_1010", "新增员工：密码与确认密码不一致", null);
+				atx.setErrorContext("ORGANIZE_INS_MEMBER_ADD_ACTION_ERR_1010", "新增用户：密码与确认密码不一致", null);
 				return 0;
 			}
 		}else{//PASS IS EMPTY
 			if(StringUtils.isNotBlank(passwordCfg)){
 				logger.error(" PASSWORD_CFG IS NOT EMPTY.");
-				atx.setErrorContext("ORGANIZE_INS_MEMBER_ADD_ACTION_ERR_1020", "新增员工：确认密码不为空", null);
+				atx.setErrorContext("ORGANIZE_INS_MEMBER_ADD_ACTION_ERR_1020", "新增用户：确认密码不为空", null);
 				return 0;
 			}
 		}
@@ -85,10 +84,18 @@ public class AddMemberAction extends ActionImpl {
 		TmSysMemberPO memberPOResult=POFactory.getByPriKey(conn, memberPOCon);
 		if(memberPOResult!=null){
 			logger.error(" MEMBER CODE EXIST ALREADY .");
-			atx.setErrorContext("ORGANIZE_MEMBER_ADD_ACTION_ERR_2000", "新增员工：员工代码["+memberCode+"]已经存在", null);
+			atx.setErrorContext("ORGANIZE_INS_MEMBER_ADD_ACTION_ERR_2000", "新增用户：用户代码["+memberCode+"]已经存在", null);
 			return 0;
 		}
-		
+		if(StringUtils.isNotBlank(memberMobile)){
+		memberPOCon.setMobile(memberMobile);
+		memberPOResult=POFactory.getByPriKey(conn, memberPOCon);
+			if(memberPOResult!=null){
+				logger.error(" MEMBER MOBILE EXIST ALREADY .");
+				atx.setErrorContext("ORGANIZE_INS_MEMBER_ADD_ACTION_ERR_3000", "新增用户：用户手机号["+memberMobile+"]已经存在", null);
+				return 0;
+			}
+		}
 		memberPOCon.setCreateBy(optMemberId);
 		memberPOCon.setCreateTime(YBUtility.now());
 		memberPOCon.setFreezeTag("0");
@@ -121,10 +128,10 @@ public class AddMemberAction extends ActionImpl {
 		POFactory.insert(conn, memberPOCon);
 		
 		//build optInfo
-		OptLogUtil.bindOptContext(atx, TruckInsCommonCanstant.OPT_TYPE_MEMBER_ADD, "", "新增员工");
+		OptLogUtil.bindOptContext(atx, TruckInsCommonCanstant.OPT_TYPE_MEMBER_ADD, "", "新增用户["+memberName+"]");
 		
 		//set return msg
-		atx.setStringValue("MSG", "新增员工["+memberName+"]成功");
+		atx.setStringValue("MSG", "新增用户["+memberName+"]成功");
 		return 1;
 	}
 

@@ -31,7 +31,10 @@ public class TmInspactGroupPOFactory extends POFactory {
 		
 	public static PageQuery queryInsGroupList(Connection conn,String groupName,boolean includeStop,int customPageSize){
 		
-		String sql=" SELECT A.*,A.INS_GROUP_DESC AS INS_GROUP_ITEM ,A.ID AS INS_GROUP_ID FROM TM_INSPACT_GROUP A WHERE 1=1 ";
+		String sql=" SELECT A.*,A.INS_GROUP_DESC AS INS_GROUP_ITEM ,A.ID AS INS_GROUP_ID "
+				 + " FROM TM_INSPACT_GROUP A "
+				 + " WHERE 1=1 "
+				 + " AND STATUS='1' ";
 		if(StringUtils.isNotBlank(groupName))sql+=" AND INS_GROUP_NAME LIKE '%"+groupName+"%' ";
 		if(!includeStop)sql+=" AND FREEZE_TAG ='0' ";
 		sql+=" ORDER BY ID ASC ";

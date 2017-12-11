@@ -72,7 +72,7 @@ public class AddInsGroupAction extends ActionImpl {
 		POFactory.insert(conn, groupPOCon);
 		
 		//build optInfo
-		OptLogUtil.bindOptContext(atx, TruckInsCommonCanstant.OPT_TYPE_INSGROUP_ADD, "", "新增检查组");
+		OptLogUtil.bindOptContext(atx, TruckInsCommonCanstant.OPT_TYPE_INSGROUP_ADD, "", "新增检查组["+groupName+"]");
 		
 		//set return msg
 		atx.setStringValue("MSG", "新增检查组["+groupName+"]成功");

@@ -2,6 +2,9 @@ body.index-body{
 	padding-top:27px;
 }
 
+#index-content{
+	min-height:700px;
+}
 div.navbar.navbar-fixed-top.bs-docs-nav{
 	min-height:30px;
 }
@@ -18,7 +21,7 @@ div.hdata>div.mcol-left>i{
 /*µ¯¿òÌáÐÑ*/
 .popup_operate{
 	padding: 5px 5px;
-	height: 35px;
+	height: 35px !important;
 }
 header{
 /* 	padding-top:15px; */
@@ -67,9 +70,9 @@ div.page-head {
     border-bottom: 1px solid #fff;
     box-shadow: inset 0px 1px 1px #fff;
 }
-div.page-head h2 {
+div.page-head>h2.pull-left {
     font-weight: normal;
-    font-size: 20px;
+    font-size: 16px;
 }
 /*content head behide*/
 div.matter {
@@ -275,3 +278,17 @@ li.fg-button.ui-button.ui-state-default{
 	padding:0 0;
 }
 
+/**/
+span.mid-word-text{
+	line-height: 34px;
+}
+
+/*baidu map*/
+div.tangram-suggestion-main{
+	z-index: 9999;
+}
+
+/**/
+thead.table-title-normal>tr>th{
+	font-weight:normal;
+}

@@ -44,6 +44,7 @@ public class YBCommonContant {
 	public static final String SESSION_AGENT_INFO = "session_agentinfo"; //车队基本信息
 	public static final String SESSION_ID = "session_id";
 	public static final String SESSION_COMP_ID = "session_compid";
+	public static final String SESSION_USER_CODE = "session_usercode";
 	public static final String SESSION_AGENT_ID = "session_agentid";
 	public static final String SESSION_AUTH_SESSION_ID = "session_auth_sessionid";//安全中心登录时会话id
 	public static final String SESSION_AGENT_NAME = "session_agent_name";

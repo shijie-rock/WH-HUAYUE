@@ -1,95 +1,34 @@
 <?xml version="1.0" encoding="GBK"?>
 <Config>
-	<Action id="USER_LOGIN">
-		<Description>支付网关管理员登录action</Description>
+	<Action id="LOGIN_ACTION">
+		<Description>系统登录</Description>
 		<ActionContext>
-		    <Data name="USER_CODE" type="string" />
-		    <Data name="PASSWORD" type="string" />
-			<Data name="ip" type="string"/>
-		</ActionContext>
-		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
-		<ActionParam>
-			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
-			<ActionStep id="2" classname="com.youbus.payframe.action.LoginAction"  on1Do="next" onOtherDo="next"/>
-			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
-		</ActionParam>
-		<PresentationConfig>
-		    <ActionDestination method="forward" return_code="0">jsp/login/index.jsp</ActionDestination>	
-			<ActionDestination method="forward" return_code="1">jsp/login/workbench.jsp</ActionDestination>				
-		</PresentationConfig>
-	</Action>
-
-	<Action id="REMOTE_LOGIN_REGISTER">
-		<Description>接收安全中心登录信息</Description>
-		<ActionContext>
-		    <Data name="token"  type="string" />
-		    <Data name="userId"  type="string" />
-		</ActionContext>
-		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
-		<ActionParam>
-			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
-			<ActionStep id="2" classname="com.youbus.agentcenter.auth.AuthRemoteLoginInfoRegAction"  on1Do="next" onOtherDo="next"/>
-			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
-		</ActionParam>
-	</Action>
-	<Action id="REMOTE_LOGIN">
-		<Description>远程页面跳转校验</Description>
-		<ActionContext>
-		    <Data name="token"  type="string" />
-		    <Data name="id"  type="string" />
-		    <Data name="agentId"  type="string" />
-		    <Data name="auth_sessionId"  type="string" />
+		    <Data name="NAME"  type="string"/>
+		    <Data name="PASS"  type="string"/>
+		    
+		   <Data name="OPT_LOG_BEAN" type="object" output="true"/>
 		    <Data name="MSG"  type="string" output="true"/>
-		    <Data name="AUTH_CENTER"  type="string" output="true"/>
 		</ActionContext>
 		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
 		<ActionParam>
 			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
-			<ActionStep id="2" classname="com.youbus.agentcenter.auth.AuthRemoteLoginCheckAction"  on1Do="next" onOtherDo="next"/>
-			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+			<ActionStep id="2" classname="com.truckinspect.system.action.LoginAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
 		</ActionParam>
-		<PresentationConfig>
-			<!-- <ActionDestination method="forward" return_code="1">/</ActionDestination>	 -->
-			<ActionDestination method="forward" return_code="1">/jsp/remote_log_success.jsp</ActionDestination>	
-			<ActionDestination method="forward" return_code="2">/jsp/remote_log_error.jsp</ActionDestination>			
-		</PresentationConfig>
 	</Action>
-	
 	<Action id="LOGOUT_ACTION">
 		<Description>系统登出</Description>
 		<ActionContext>
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
 		    <Data name="MSG"  type="string" output="true"/>
-		    <Data name="AUTH_CENTER"  type="string" output="true"/>
 		</ActionContext>
 		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
 		<ActionParam>
 			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
-			<ActionStep id="2" classname="com.youbus.agentcenter.auth.AgentCenterUserLogoutAction"  on1Do="next" onOtherDo="next"/>
-			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
-		</ActionParam>
-		<PresentationConfig>
-			<!-- <ActionDestination method="forward" return_code="1">/</ActionDestination>	 -->
-			<ActionDestination method="forward" return_code="1">/jsp/remote_log_error.jsp</ActionDestination>	
-<!-- 			<ActionDestination method="forward" return_code="2">/jsp/remote_log_error.jsp</ActionDestination>			 -->
-		</PresentationConfig>
-	</Action>
-	
-	<Action id="DRIVER_MOBILE_LOGIN_ACTION">
-		<Description>司机端远程登录</Description>
-		<ActionContext>
-		    <Data name="token"  type="string" />
-		    <Data name="MEMBER_ID"  type="string" />
-		    <Data name="AGENT_ID"  type="string" />
-		    <Data name="auth_sessionId"  type="string" />
-		    <Data name="MSG"  type="string" output="true"/>
-		    <Data name="HELP_URL"  type="string" output="true"/>
-		    <Data name="AUTH_CENTER"  type="string" output="true"/>
-		</ActionContext>
-		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
-		<ActionParam>
-			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
-			<ActionStep id="2" classname="com.youbus.agentcenter.auth.DriverMobileLoginCheckAction"  on1Do="next" onOtherDo="next"/>
-			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+			<ActionStep id="2" classname="com.truckinspect.system.action.LogoutAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
 		</ActionParam>
 	</Action>
 </Config>

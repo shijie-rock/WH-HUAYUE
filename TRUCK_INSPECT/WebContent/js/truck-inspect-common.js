@@ -1,5 +1,10 @@
 /* Widget close */
 
+var HY_CONSTANT={};
+
+HY_CONSTANT.MAP_AK='XoEid9f6nHRuSxHEULZTvYwEdvK1Uhq1';/*百度地图ak*/
+
+
 $('.wclose').click(function(e){
   e.preventDefault();
   var $wbox = $(this).parent().parent().parent();
@@ -13,11 +18,16 @@ window.parent.onscroll= function(){
 	console.log('left'+$('div.modal-dialog').position().left);
 	console.log('top'+$('div.modal-dialog').position().top);
 	console.log('margin-top'+$('div.modal-dialog').css("margin-top"));
+	if($('div.tangram-suggestion-main').is(":visible")){//baidu map 随动
+//		$('div.tangram-suggestion-main').css("margin-top",window.parent.getScrollTop()+"px");
+		$('div.tangram-suggestion-main').css("display","none");//hide suggest //改为隐藏
+	}
+	
 	//滚动时 不显示时间控件
 //	$('div.datetimepicker').parent("body").click();
 //	$('div.datetimepicker').css("display","none");
 	$('div.layui-laydate').css("display","none");
-	$('input.layer-date').blur();
+	$('input.layer-date').blur();//失焦，下次再次激活
 //	$('div.layui-laydate').css("margin-top",window.parent.getScrollTop()+20+"px");
 	console.log('div margin-top'+$('div.layui-laydate').css("margin-top"));
 }
@@ -28,8 +38,6 @@ window.parent.onscroll= function(){
 //	modal_auto_top(this);
 //	alert();
 //})
-
-
 
 
 /* Widget minimize */
@@ -163,8 +171,6 @@ window.parent.onscroll= function(){
 		
 	}
 	
-	
-	
 	/*清理输入*/
 	function clearModalContent(modal_id){
 // 		  $("#"+obj).find("input.form-control");
@@ -238,6 +244,7 @@ window.parent.onscroll= function(){
 	function readOnlyModalInput(modal_id){
 		$('#'+modal_id).find(":text").attr('readonly','');
 		$('#'+modal_id).find(":password").attr('readonly','');
+		$('#'+modal_id).find(":radio").attr('disabled','disabled');
 		$('#'+modal_id).find(":checkbox").attr('disabled','disabled');
 		$('#'+modal_id).find("select").attr('disabled','disabled');
 	}
@@ -248,7 +255,7 @@ window.parent.onscroll= function(){
 		$('#'+modal_id).find("select").removeAttr('disabled');
 		
 		$('#'+modal_id).find(":password").removeAttr('disabled');
-		$('#'+modal_id).find(":password").removeAttr('readonly','');
+		$('#'+modal_id).find(":radio").removeAttr('disabled');
 	}
 	
 //	$('body').on('mouseover',"[data-toggle='tooltip']",function(){
@@ -290,4 +297,21 @@ window.parent.onscroll= function(){
 			$(obj).children('span').text('收起');
 			$(obj).children('i').removeClass('glyphicon-menu-left').addClass('glyphicon-menu-right');
 		}
+	}
+	
+	//重新设置iframe的高度，在dataTable 返回结果 回调 执行调用。
+	function resetIFrameLength(){
+		console.log('(document).height()1:='+$("div.page-head").css("height"));
+		console.log('(document).height()2:='+$("div.matter").css("height"));
+		
+		console.log('$(iframepage).height() set before:='+$('#iframepage',window.parent.document).css("height"));
+		
+		var headHeight=parseInt($("div.page-head").css("height"));
+		var tableHeight=parseInt($("div.matter").css("height"));
+		var bufferHeight=150;
+		
+		$('#iframepage',window.parent.document).css("height",(headHeight+tableHeight+bufferHeight)+'px');
+		
+		console.log('$(iframepage).height() set finish:='+$('#iframepage',window.parent.document).css("height"));
+		
 	}

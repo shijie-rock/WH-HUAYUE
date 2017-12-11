@@ -128,15 +128,15 @@
     <filter-name>CharacterEncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-<!--   <filter> -->
-<!-- 		<display-name>SessionCheckFilter</display-name> -->
-<!-- 		<filter-name>SessionCheckFilter</filter-name> -->
-<!-- 		<filter-class>com.youbus.framework.comm.AuthSessionFilter</filter-class> -->
-<!-- 	</filter> -->
-<!-- 	<filter-mapping> -->
-<!-- 		<filter-name>SessionCheckFilter</filter-name> -->
-<!-- 		<url-pattern>/*</url-pattern> -->
-<!-- 	</filter-mapping>  -->
+  <filter>
+		<display-name>SessionCheckFilter</display-name>
+		<filter-name>SessionCheckFilter</filter-name>
+		<filter-class>com.youbus.framework.comm.AuthSessionFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>SessionCheckFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> 
   <listener>
     <listener-class>com.youbus.framework.comm.LocalSessionRegListener</listener-class>
   </listener>
@@ -161,7 +161,7 @@
   
   <error-page>
     <error-code>404</error-code>
-    <location>/page/tmp/404.jsp</location>
+    <location>/page/404-error.jsp</location>
 <!--     <location>/ErrorPage404.jsp</location> -->
 </error-page>
   <session-config>

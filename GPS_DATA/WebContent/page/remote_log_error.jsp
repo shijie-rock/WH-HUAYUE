@@ -36,9 +36,9 @@ margin-bottom: 10px;
 $(function(){
 	jAlert('<div class=" row-fluid" style="margin: 0px"><div class="span12 " style="text-align: center">${MSG}</div></div>','消息提示',null,function(){
 		if (self != top) {  
-			window.parent.location.href='<%=path%>/page/index.jsp';
+			window.parent.location.href='<%=path%>/page/login.jsp';
 		}else{
-			window.location.href='<%=path%>/page/index.jsp';
+			window.location.href='<%=path%>/page/login.jsp';
 		}
 	}); 
 })

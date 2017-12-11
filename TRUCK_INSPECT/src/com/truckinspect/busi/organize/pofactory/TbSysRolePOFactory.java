@@ -64,7 +64,7 @@ public class TbSysRolePOFactory extends POFactory {
 	 */
 	public static PageQuery queryRoleList(Connection conn,String roleName,String roleCode,boolean includeStop,int customPageSize){
 		
-		String sql=" SELECT * FROM TB_SYS_ROLE WHERE 1=1 ";
+		String sql=" SELECT * FROM TB_SYS_ROLE WHERE 1=1 AND STATUS='1'  ";
 		if(StringUtils.isNotBlank(roleName))sql+=" AND ROLE_NAME LIKE '%"+roleName+"%' ";
 		if(StringUtils.isNotBlank(roleCode))sql+=" AND ROLE_CODE LIKE '%"+roleCode+"%' ";
 		if(!includeStop)sql+=" AND FREEZE_TAG ='0' ";

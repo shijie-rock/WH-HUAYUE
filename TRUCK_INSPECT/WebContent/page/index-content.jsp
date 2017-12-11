@@ -36,7 +36,7 @@
       
 	    <!-- Page heading -->
 	    <div class="page-head">
-	      <h2 class="pull-left"><i class="icon-home"></i> 首页</h2>
+	      <h2 class="pull-left"><i class="icon-home"></i> 首页-示例</h2>
 
         <!-- Breadcrumb -->
         <div class="bread-crumb pull-right">
@@ -92,6 +92,119 @@
           </div>
 
           <!-- Today status ends -->
+          
+       <div class="row">
+            <!-- Task widget -->
+            <div class="col-md-6">
+              <div class="widget">
+                <!-- Widget title -->
+                <div class="widget-head">
+                  <div class="pull-left">待办事项-示例</div>
+                  <div class="widget-icons pull-right">
+                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
+                    <a href="#" class="wclose"><i class="icon-remove"></i></a>
+                  </div>  
+                  <div class="clearfix"></div>
+                </div>
+                <div class="widget-content">
+                  <!-- Widget content -->
+                  <!-- Task list starts -->
+                  <ul class="task">
+
+                    <li>
+                      <!-- Checkbox -->
+                      <span class="uni"><input value="check1" type="checkbox"></span> 
+                      <!-- Task -->
+                      	有10张检车单待复审...&nbsp;&nbsp;<span class="label label-danger">Important</span>
+                      <!-- Delete button -->
+                      <a href="#" class="pull-right" onclick="hideLi(this);"><i class="icon-remove"></i></a>
+                    </li>
+
+                    <li>
+                      <!-- Checkbox -->
+                      <span class="uni"><input value="check1" type="checkbox"></span> 
+                      <!-- Task -->
+                       	有10辆车任务结束待入库...
+                      <!-- Delete button -->
+                      <a href="#" class="pull-right"  onclick="hideLi(this);"><i class="icon-remove"></i></a>
+                    </li>
+
+                    <li>
+                      <!-- Checkbox -->
+                      <span class="uni"><input value="check1" type="checkbox"></span> 
+                      <!-- Task -->
+                       	复审单待审核、确认...&nbsp;&nbsp;<span class="label label-warning">Warn</span>
+                      <!-- Delete button -->
+                      <a href="#" class="pull-right"  onclick="hideLi(this);"><i class="icon-remove"></i></a>
+                    </li>
+
+                    <li>
+                      <!-- Checkbox -->
+                      <span class="uni"><input value="check1" type="checkbox"></span> 
+                      <!-- Task -->
+                       	张三账户信息需更新...
+                      <!-- Delete button -->
+                      <a href="#" class="pull-right" onclick="hideLi(this);"><i class="icon-remove"></i></a>
+                    </li>
+
+                    <li>
+                      <!-- Checkbox -->
+                      <span class="uni"><input value="check1" type="checkbox"></span> 
+                      <!-- Task -->
+                       	有10张质检报表待导出...
+                      <!-- Delete button -->
+                      <a href="#" class="pull-right"  onclick="hideLi(this);"><i class="icon-remove"></i></a>
+                    </li>                                                                                                             
+                  </ul>
+                  <div class="clearfix"></div>  
+
+                  <div class="widget-foot">
+                  </div>
+
+                </div>
+              </div>
+            </div><!-- Task widget end-->
+            <!-- Recent News begin -->
+            <div class="col-md-6" style="max-height:314px">
+              <div class="widget">
+                <!-- Widget title -->
+                <div class="widget-head">
+                  <div class="pull-left">我的消息-示例</div>
+                  <div class="widget-icons pull-right">
+                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
+                    <a href="#" class="wclose"><i class="icon-remove"></i></a>
+                  </div>  
+                  <div class="clearfix"></div>
+                </div>
+                <div class="widget-content referrer">
+                  <!-- Widget content -->
+                  <div class="padd">
+                    <ul class="latest-news">
+                      <li>
+                        <!-- Title and date -->
+                        <h6><a href="#">紧急通知 </a> - <span>2017-12-1</span>&nbsp;&nbsp;<span class="label label-danger" style="color:#fff;font-weight: bold;">Important</span></h6>
+                        <p>安全生产工作紧急通知... ...</p>
+                      </li>
+
+                      <li>
+                        <!-- Title and date -->
+                        <h6><a href="#">人事变动通知</a> - <span>2017-12-1</span></h6>
+                        <p>关于相关人员岗位调动的通知 为了更好的协调工作,提高工作效率。经公司决定现安排以下 人员工作岗... </p>
+                      </li>
+
+                      <li>
+                        <!-- Title and date -->
+                        <h6><a href="#">开展安全生产培训的通知</a> - <span>2017-12-1</span></h6>
+                        <p>2017年1月20日 - 为进一步贯彻落实国务院安委办、省安委办、省国资委、集团公司《关于切实做好春节期间安全生产工作的通知》... </p>
+                      </li>                                        
+                    </ul> 
+                  </div>
+                  <div class="widget-foot">
+                  </div>
+                </div>
+              </div>
+            </div><!-- Recent News end-->
+          </div>
 
           <!-- Dashboard Graph starts -->
 
@@ -102,7 +215,7 @@
               <div class="widget">
                 <!-- Widget head -->
                 <div class="widget-head">
-                  <div class="pull-left">图表</div>
+                  <div class="pull-left">图表-示例</div>
                   <div class="widget-icons pull-right">
                     <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
                     <a href="#" class="wclose"><i class="icon-remove"></i></a>
@@ -136,7 +249,7 @@
               <div class="widget">
 
                 <div class="widget-head">
-                  <div class="pull-left">今天统计</div>
+                  <div class="pull-left">今天统计-示例</div>
                   <div class="widget-icons pull-right">
                     <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
                     <a href="#" class="wclose"><i class="icon-remove"></i></a>
@@ -183,405 +296,69 @@
 
           <!-- Chats, File upload and Recent Comments -->
           <div class="row">
+           <!-- Realtime chart starts -->
+				<div class="col-md-12">
+                <div class="widget">
 
-            <div class="col-md-4">
-              <!-- Widget -->
-              <div class="widget">
-                <!-- Widget title -->
                 <div class="widget-head">
-                  <div class="pull-left">图表</div>
+                  <div class="pull-left">在线人数-示例</div>
                   <div class="widget-icons pull-right">
                     <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
                     <a href="#" class="wclose"><i class="icon-remove"></i></a>
                   </div>  
                   <div class="clearfix"></div>
-                </div>
+                </div>             
 
-                <div class="widget-content">
-                  <!-- Widget content -->
-                  <div class="padd">
-                    
-                    <ul class="chats">
+                  <div class="widget-content">
+                    <div class="padd">
 
-                      <!-- Chat by us. Use the class "by-me". -->
-                      <li class="by-me">
-                        <!-- Use the class "pull-left" in avatar -->
-                        <div class="avatar pull-left">
-                          <img src="img/user.jpg" alt=""/>
-                        </div>
+                      <div id="live-chart"></div>
+                      <hr />
+                      	采样时间间隔: <input id="updateInterval" type="text" class="span3" value="">
 
-                        <div class="chat-content">
-                          <!-- In meta area, first include "name" and then "time" -->
-                          <div class="chat-meta">Ashok <span class="pull-right">3 hours ago</span></div>
-                          Vivamus diam elit diam, consectetur dapibus adipiscing elit.
-                          <div class="clearfix"></div>
-                        </div>
-                      </li> 
-
-                      <!-- Chat by other. Use the class "by-other". -->
-                      <li class="by-other">
-                        <!-- Use the class "pull-right" in avatar -->
-                        <div class="avatar pull-right">
-                          <img src="img/user.jpg" alt=""/>
-                        </div>
-
-                        <div class="chat-content">
-                          <!-- In the chat meta, first include "time" then "name" -->
-                          <div class="chat-meta">3 hours ago <span class="pull-right">Ravi</span></div>
-                          Vivamus diam elit diam, consectetur fconsectetur dapibus adipiscing elit.
-                          <div class="clearfix"></div>
-                        </div>
-                      </li>   
-
-                      <li class="by-me">
-                        <div class="avatar pull-left">
-                          <img src="img/user.jpg" alt=""/>
-                        </div>
-
-                        <div class="chat-content">
-                          <div class="chat-meta">Ashok <span class="pull-right">4 hours ago</span></div>
-                          Vivamus diam elit diam, consectetur fermentum sed dapibus eget, Vivamus consectetur dapibus adipiscing elit.
-                          <div class="clearfix"></div>
-                        </div>
-                      </li>  
-
-                      <li class="by-other">
-                        <!-- Use the class "pull-right" in avatar -->
-                        <div class="avatar pull-right">
-                          <img src="img/user.jpg" alt=""/>
-                        </div>
-
-                        <div class="chat-content">
-                          <!-- In the chat meta, first include "time" then "name" -->
-                          <div class="chat-meta">3 hours ago <span class="pull-right">Ravi</span></div>
-                          Vivamus diam elit diam, consectetur fermentum sed dapibus eget, Vivamus consectetur dapibus adipiscing elit.
-                          <div class="clearfix"></div>
-                        </div>
-                      </li>                                                                                  
-
-                    </ul>
-
-                  </div>
-                  <!-- Widget footer -->
-                  <div class="widget-foot">
-                      
-                      <form class="form-inline">
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Type your message here...">
-						</div>
-                        <button type="submit" class="btn btn-primary">Send</button>
-                      </form>
-
-
+                    </div>
                   </div>
                 </div>
+			</div>
+           <!-- Realtime chart ends -->
 
-
-              </div> 
-            </div>
-
-
-            <!-- File Upload widget -->
-            <div class="col-md-4">
-              <div class="widget">
-                <!-- Widget title -->
-                <div class="widget-head">
-                  <div class="pull-left">文件上传</div>
-                  <div class="widget-icons pull-right">
-                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
-                    <a href="#" class="wclose"><i class="icon-remove"></i></a>
-                  </div>  
-                  <div class="clearfix"></div>
-                </div>
-
-                <div class="widget-content">
-                  <!-- Widget content -->
-                  <ul class="file-upload">
-
-                    <li>
-                      <strong><i class="icon-upload-alt"></i> File_Name_Here.Mp3</strong>
-                      <div class="file-meta">3.3 of 5MB - 5 mins - 1MB/Sec</div>
-
-                      <div class="progress progress-animated progress-striped">
-						  <div class="progress-bar progress-bar-success" data-percentage="100">
-							<span class="sr-only">100 % completed</span>
-						  </div>
-					  </div>
-                    </li>
-
-                    <li>
-                      <strong><i class="icon-ok"></i> Third_File_Here.Mp3</strong>
-                      <div class="file-meta">5MB - 5 mins - Stopped</div>
-                    </li>                        
-
-                    <li>
-                      <strong><i class="icon-ok"></i> Third_File_Here.Mp3</strong>
-                      <div class="file-meta">5MB - 5 mins - Stopped</div>
-                    </li>                                                                                                                      
-                  </ul>
-
-                  <div class="widget-foot">
-                  </div>
-
-                </div>
-              </div>
-
-              <div class="widget">
-                <!-- Widget title -->
-                <div class="widget-head">
-                  <div class="pull-left">浏览器统计</div>
-                  <div class="widget-icons pull-right">
-                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
-                    <a href="#" class="wclose"><i class="icon-remove"></i></a>
-                  </div>  
-                  <div class="clearfix"></div>
-                </div>
-                <div class="widget-content referrer">
-                  <!-- Widget content -->
-                  
-                  <table class="table table-striped table-bordered table-hover">
-                    <tr>
-                      <th><center>#</center></th>
-                      <th>Browsers</th>
-                      <th>Visits</th>
-                    </tr>
-                    <tr>
-                      <td><img src="img/icons/chrome.png" alt="" />
-                      <td>Google Chrome</td>
-                      <td>3,005</td>
-                    </tr> 
-                    <tr>
-                      <td><img src="img/icons/firefox.png" alt="" />
-                      <td>Mozilla Firefox</td>
-                      <td>2,505</td>
-                    </tr> 
-                    <tr>
-                      <td><img src="img/icons/ie.png" alt="" />
-                      <td>Internet Explorer</td>
-                      <td>1,405</td>
-                    </tr> 
-                    <tr>
-                      <td><img src="img/icons/opera.png" alt="" />
-                      <td>Opera</td>
-                      <td>4,005</td>
-                    </tr> 
-                    <tr>
-                      <td><img src="img/icons/safari.png" alt="" />
-                      <td>Safari</td>
-                      <td>505</td>
-                    </tr>                                                                    
-                  </table>
-
-                  <div class="widget-foot">
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-
-            <div class="col-md-4">
-              <!-- Widget -->
-              <div class="widget">
-                <!-- Widget title -->
-                <div class="widget-head">
-                  <div class="pull-left">最近评论</div>
-                  <div class="widget-icons pull-right">
-                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
-                    <a href="#" class="wclose"><i class="icon-remove"></i></a>
-                  </div>  
-                  <div class="clearfix"></div>
-                </div>
-                <div class="widget-content">
-                  <!-- Widget content -->
-                  <div class="padd">
-
-                    <ul class="recent">
-
-
-                      <li>
-
-                        <div class="recent-content">
-                          <div class="recent-meta">Posted on 25/1/2120 by Ashok</div>
-                          <div>Vivamus diam elit diam, consectetur fermentum sed dapibus eget, Vivamus consectetur dapibus adipiscing elit.
-                          </div>
-
-                          <div class="btn-group">
-                            <button class="btn btn-xs btn-default"><i class="icon-ok"></i> </button>
-                            <button class="btn btn-xs btn-default"><i class="icon-pencil"></i> </button>
-                            <button class="btn btn-xs btn-default"><i class="icon-remove"></i> </button>
-                          </div>
-
-                          <button class="btn btn-xs btn-danger pull-right">Spam</button>
-
-                          <div class="clearfix"></div>
-                        </div>
-                      </li>
-
-                      <li>
-
-                        <div class="recent-content">
-                          <div class="recent-meta">Posted on 25/1/2120 by Ashok</div>
-                          <div>Vivamus diam elit diam, consectetur fermentum sed dapibus eget, Vivamus consectetur dapibus adipiscing elit.
-                          </div>
-
-                          <div class="btn-group">
-                            <button class="btn btn-xs btn-default"><i class="icon-ok"></i> </button>
-                            <button class="btn btn-xs btn-default"><i class="icon-pencil"></i> </button>
-                            <button class="btn btn-xs btn-default"><i class="icon-remove"></i> </button>
-                          </div>
-
-                          <button class="btn btn-xs btn-danger pull-right">Spam</button>
-
-                          <div class="clearfix"></div>
-                        </div>
-                      </li>
-
-
-
-                      <li>
-
-                        <div class="recent-content">
-                          <div class="recent-meta">Posted on 25/1/2120 by Ashok</div>
-                          <div>Vivamus diam elit diam, consectetur fermentum sed dapibus eget, Vivamus consectetur dapibus adipiscing elit.
-                          </div>
-
-                          <div class="btn-group">
-                            <button class="btn btn-xs btn-default"><i class="icon-ok"></i> </button>
-                            <button class="btn btn-xs btn-default"><i class="icon-pencil"></i> </button>
-                            <button class="btn btn-xs btn-default"><i class="icon-remove"></i> </button>
-                          </div>
-
-                          <button class="btn btn-xs btn-danger pull-right">Spam</button>
-
-                          <div class="clearfix"></div>
-                        </div>
-                      </li>                                        
-
-
-                    </ul>
-
-                  </div>
-                  <!-- Widget footer -->
-                  <div class="widget-foot">
-                    
-                    
-                      <ul class="pagination pull-right">
-                        <li><a href="#">Prev</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">Next</a></li>
-                      </ul>
-                   
-                    <div class="clearfix"></div>
-
-                  </div>
-                </div>  
-
-              </div> 
-
-            </div>
-          </div>
-
-
-          <div class="row">
-            <div class="col-md-6">
-              <div class="widget wblack">
-                <div class="widget-head">
-                  <div class="pull-left">黑色图表</div>
-                  <div class="widget-icons pull-right">
-                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
-                    <a href="#" class="wclose"><i class="icon-remove"></i></a>
-                  </div>  
-                  <div class="clearfix"></div>
-                </div>
-                <div class="widget-content">
-                  <div class="padd">
-                    
-                   <div id="bar-chart"></div>
-
-                  </div>
-                  <div class="widget-foot">
-                    <!-- Footer goes here -->
-                  </div>
-                </div>
-              </div> 
-            </div>
-            <div class="col-md-6">
-              <div class="widget">
-                <div class="widget-head">
-                  <div class="pull-left">快速提交</div>
-                  <div class="widget-icons pull-right">
-                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
-                    <a href="#" class="wclose"><i class="icon-remove"></i></a>
-                  </div>  
-                  <div class="clearfix"></div>
-                </div>
-                <div class="widget-content">
-                  <div class="padd">
-                    
-                      <div class="form quick-post">
-                                      <!-- Edit profile form (not working)-->
-                                      <form class="form-horizontal">
-                                          <!-- Title -->
-                                          <div class="form-group">
-                                            <label class="control-label col-lg-3" for="title">Title</label>
-                                            <div class="col-lg-9"> 
-                                              <input type="text" class="form-control" id="title">
-                                            </div>
-                                          </div>   
-                                          <!-- Content -->
-                                          <div class="form-group">
-                                            <label class="control-label col-lg-3" for="content">Content</label>
-                                            <div class="col-lg-9">
-                                              <textarea class="form-control" id="content"></textarea>
-                                            </div>
-                                          </div>                           
-                                          <!-- Cateogry -->
-                                          <div class="form-group">
-                                            <label class="control-label col-lg-3">Category</label>
-                                            <div class="col-lg-9">                               
-                                                <select class="form-control">
-                                                  <option value="">- Choose Cateogry -</option>
-                                                  <option value="1">General</option>
-                                                  <option value="2">News</option>
-                                                  <option value="3">Media</option>
-                                                  <option value="4">Funny</option>
-                                                </select>  
-                                            </div>
-                                          </div>              
-                                          <!-- Tags -->
-                                          <div class="form-group">
-                                            <label class="control-label col-lg-3" for="tags">Tags</label>
-                                            <div class="col-lg-9">
-                                              <input type="text" class="form-control" id="tags">
-                                            </div>
-                                          </div>
-                                          
-                                          <!-- Buttons -->
-                                          <div class="form-group">
-                                             <!-- Buttons -->
-											 <div class="col-lg-offset-2 col-lg-9">
-												<button type="submit" class="btn btn-success">Publish</button>
-												<button type="submit" class="btn btn-danger">Save Draft</button>
-												<button type="reset" class="btn btn-default">Reset</button>
-											 </div>
-                                          </div>
-                                      </form>
-                                    </div>
-                  
-
-                  </div>
-                  <div class="widget-foot">
-                    <!-- Footer goes here -->
-                  </div>
-                </div>
-              </div> 
-            </div>            
           </div>  
+          
+          <div class="row">
+			<div class="col-md-12">    
+              <!-- Pie chart starts -->
+                <div class="widget">
 
+                <div class="widget-head">
+                  <div class="pull-left">饼图-示例</div>
+                  <div class="widget-icons pull-right">
+                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
+                    <a href="#" class="wclose"><i class="icon-remove"></i></a>
+                  </div>  
+                  <div class="clearfix"></div>
+                </div>
+
+                  <div class="widget-content">
+                    <div class="padd">
+
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div id="pie-chart"></div>
+                        </div>
+                        <div class="col-md-4">
+                          <div id="pie-chart2"></div>
+                        </div>
+                        <div class="col-md-4">
+                          <div id="pie-chart3"></div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+               <!-- Pie chart ends -->
+			</div>
+          </div>  
 
         </div>
 		  </div>
@@ -652,23 +429,23 @@ $(function () {
     var stack = 0, bars = true, lines = false, steps = false;
     
     function plotWithOptions() {
-        $.plot($("#bar-chart"), [ d1, d2 ], {
-            series: {
-                stack: stack,
-                lines: { show: lines, fill: true, steps: steps },
-                bars: { show: bars, barWidth: 0.8 }
-            },
-            grid: {
-                borderWidth: 0, hoverable: true, color: "#777"
-            },
-            colors: ["#ff6c24", "#ff2424"],
-            bars: {
-                  show: true,
-                  lineWidth: 0,
-                  fill: true,
-                  fillColor: { colors: [ { opacity: 0.9 }, { opacity: 0.8 } ] }
-            }
-        });
+//         $.plot($("#bar-chart"), [ d1, d2 ], {
+//             series: {
+//                 stack: stack,
+//                 lines: { show: lines, fill: true, steps: steps },
+//                 bars: { show: bars, barWidth: 0.8 }
+//             },
+//             grid: {
+//                 borderWidth: 0, hoverable: true, color: "#777"
+//             },
+//             colors: ["#ff6c24", "#ff2424"],
+//             bars: {
+//                   show: true,
+//                   lineWidth: 0,
+//                   fill: true,
+//                   fillColor: { colors: [ { opacity: 0.9 }, { opacity: 0.8 } ] }
+//             }
+//         });
     }
 
     plotWithOptions();
@@ -690,7 +467,12 @@ $(function () {
 
 });
 
-
+/**
+ * 点击X，隐藏待办Li
+ */
+function hideLi(obj){
+	$(obj).parent('li').hide(500);
+}
 /* Curve chart starts */
 
 $(function () {
@@ -701,7 +483,7 @@ $(function () {
     }
 
     var plot = $.plot($("#curve-chart"),
-           [ { data: sin, label: "sin(x)"}, { data: cos, label: "cos(x)" } ], {
+           [ { data: sin, label: "检车通过率"}, { data: cos, label: "复检通过率" } ], {
                series: {
                    lines: { show: true, fill: true},
                    points: { show: true }
@@ -759,7 +541,131 @@ $(function () {
 
 });
 
-/* Curve chart ends */
+/* Curve chart end/
+/* Realtime chart starts */
+$(function () {
+    // we use an inline data source in the example, usually data would
+    // be fetched from a server
+    var data = [], totalPoints = 300;
+    function getRandomData() {
+        if (data.length > 0)
+            data = data.slice(1);
+
+        // do a random walk
+        while (data.length < totalPoints) {
+            var prev = data.length > 0 ? data[data.length - 1] : 50;
+            var y = prev + Math.random() * 10 - 5;
+            if (y < 10)
+                y = 10;
+            if (y > 70)
+                y = 70;
+            data.push(y);
+        }
+
+        // zip the generated y values with the x values
+        var res = [];
+        for (var i = 0; i < data.length; ++i)
+            res.push([i, data[i]])
+        return res;
+    }
+
+    // setup control widget
+    var updateInterval = 300;
+    $("#updateInterval").val(updateInterval).change(function () {
+        var v = $(this).val();
+        if (v && !isNaN(+v)) {
+            updateInterval = +v;
+            if (updateInterval < 1)
+                updateInterval = 1;
+            if (updateInterval > 2000)
+                updateInterval = 2000;
+            $(this).val("" + updateInterval);
+        }
+    });
+
+    // setup plot
+    var options = {
+        series: { shadowSize: 0 }, // drawing is faster without shadows
+        lines: {fill: true},
+        grid: {borderWidth:0 },
+        yaxis: { min: 0, max: 100 },
+        colors: ["#ff2424"]
+    };
+    var plot = $.plot($("#live-chart"), [ getRandomData() ], options);
+
+    function update() {
+        plot.setData([ getRandomData() ]);
+        // since the axes don't change, we don't need to call plot.setupGrid()
+        plot.draw();
+        
+        setTimeout(update, updateInterval);
+    }
+
+    update();
+});
+
+/* Realtime charts ends */
+
+/* Pie chart starts */
+
+$(function () {
+
+    var data = [];
+    var series = Math.floor(Math.random()*10)+1;
+    for( var i = 0; i<series; i++)
+    {
+        data[i] = { label: "指标:"+(i+1), data: Math.floor(Math.random()*100)+1 }
+    }
+
+    $.plot($("#pie-chart"), data,
+    {
+        series: {
+            pie: {
+                show: true,
+                radius: 1,
+                label: {
+                    show: true,
+                    radius: 3/4,
+                    formatter: function(label, series){
+                        return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">'+label+'<br/>'+Math.round(series.percent)+'%</div>';
+                    },
+                    background: { opacity: 0 }
+                }
+            }
+        },
+        grid: {hoverable: true},
+        legend: {
+            show: false
+        }
+    }); 
+
+    $.plot($("#pie-chart2"), data,
+    {
+        series: {
+            pie: {
+                show: true
+            }
+        },
+        grid: {hoverable: true}
+    });
+
+
+    $.plot($("#pie-chart3"), data,
+    {
+        series: {
+            pie: {
+                show: true
+            }
+        },
+        grid: {hoverable: true},
+        legend: {
+            show: false
+        }
+    });   
+
+/* Pie chart ends */
+
+});
 </script>
 
 </body>

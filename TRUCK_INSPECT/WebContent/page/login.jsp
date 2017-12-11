@@ -31,7 +31,7 @@
             <div class="widget worange">
               <!-- Widget head -->
               <div class="widget-head">
-                <i class="icon-lock"></i> 登录 
+                <i class="icon-lock"></i> 登录 华悦检车系统
               </div>
 
               <div class="widget-content">
@@ -74,7 +74,7 @@
                 </div>
               
                 <div class="widget-foot">
-                 	 您还没注册？<a href="#">请注册</a>
+<!--                  	 您还没注册？<a href="#">请注册</a> -->
                 </div>
             </div>  
       </div>
@@ -103,17 +103,18 @@ function login(){
 		return;
 	}
 	
-	var reqUrl='<%=path%>/AjaxChannel?action=SYS_LOGIN_ACTION';
+	var reqUrl='<%=path%>/AjaxChannel?action=LOGIN_ACTION';
 	$.ajax({
 			type : 'POST',
 			url:reqUrl,
-			data: {pass:pass,name:name},
+			data: {PASS:pass,NAME:name},
 			dataType : 'json',
 			success : function(json) {
 				if(json.SUCCESS=='1'){
-					jAlert(json.MSG, '提示',null,function(){
-						location.href='<%=path%>/page/content/vehicle_query.jsp';	
-					}); 
+					location.href='<%=path%>/page/index.jsp';	
+// 					jAlert(json.MSG, '提示',null,function(){
+<%-- 						location.href='<%=path%>/page/index.jsp';	 --%>
+// 					}); 
 				}else{
 					 jAlert(json.MSG, '提示'); 
 				}

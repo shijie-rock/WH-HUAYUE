@@ -291,6 +291,7 @@
 			};
 		//example为table定义id ：10：需要加入操作按钮的列；[4,5]：需要转义的列（映射数据字典值）
 		initInsGroupTable('insGroupList', aoColumns, reqData, '<%=path%>',5,[5]);
+		resetIFrameLength();//need ajax async:false,
 		} 
 	/*title tips- common method,dynamic bind*/
 	$(function () { $("[data-toggle='tooltip']").tooltip();});
