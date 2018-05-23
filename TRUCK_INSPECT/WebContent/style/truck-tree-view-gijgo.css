@@ -1,0 +1,30 @@
+li.list-group-item{
+	background: none;
+}
+li.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus{
+	background: none;
+}
+li.list-group-item.active>div>span{
+	color: #333;
+}
+
+/* li checked
+li.list-group-item.active>div{
+	background-color:#4f8bc5; 
+}
+*/
+
+li.list-group-item>div:hover{
+	color: #fff;
+	background-color:#4f8bc5;
+}
+
+/*
+li.list-group-item disabled{
+	background-color:
+}*/
+
+div.check-item-fault{
+	background: red;
+	color: yellow;
+}

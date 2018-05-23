@@ -1,0 +1,311 @@
+<%@ page language="java" contentType="text/html;charset=utf-8" pageEncoding="utf-8"%>
+<%@ include file="../page/comm/iframeHead.jsp"%>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="java.util.Date"%>
+<%
+String nowTime=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date(System.currentTimeMillis()));
+
+%>	
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" /><!-- 兼容手机端 -->
+<title>CanvasTest</title>
+</head>
+<body>
+
+<div id="file-bar" class="btn-group" style="left:0px;position:fixed; top:0px; width:100%; height:50px; 
+/* background-color:#e5e5e5; */
+background-color:rgba(229,229,2229,0.5);
+/*filter:alpha(Opacity=80);-moz-opacity:0.5;opacity: 0.5;*/
+z-index:9999;text-align:center;line-height: 50px;padding-top:3px;">
+<input id="upload" type="file" accept="image/*;" capture="camera" >
+</div>
+<!-- <p>Canvas:</p> -->
+<div id="canvas" style="margin-top:40px;">
+<canvas id="myCanvas" width="0" height="0" style="border:1px solid #d3d3d3;">您的浏览器不支持 HTML5 canvas 标签。</canvas>
+</div>
+
+<div id="button-bar" class="btn-group" style="display:none; position:fixed; left:0px; bottom:0px; width:100%; height:50px; 
+/* background-color:#e5e5e5; */
+background-color:rgba(229,229,2229,0.5);/*filter:alpha(Opacity=80);-moz-opacity:0.5;opacity: 0.5;*/
+z-index:9999;text-align:center;line-height: 50px;padding-top:3px;">
+<button  class="btn btn-lg btn-default" id="pencial" onclick="pencial();" style="position: relative;">画笔 </button><!-- 点击 画笔=》释放 -->
+<button  class="btn btn-lg btn-default" id="drag" onclick="pencial();" style="position: relative;display:none;">拖动 </button><!-- 点击 画笔=》释放 -->
+<button  class="btn btn-lg btn-default" id="redraw" onclick="redraw();" style="position: relative;">刷新 </button>
+<button  class="btn btn-lg btn-default" id="see" onclick="see();" style="position: relative;">预览 </button>
+<button  class="btn btn-lg btn-default" id="uploadBt"   onclick="upload();" style="position: relative;"> 上传 </button>  
+
+	<!-- Modal -->
+	<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		<img id="scream"/>
+		</div>
+	</div>
+
+</div>
+</body>
+<script src="<%=path%>/js/jquery.js?v=<%=staticVersion%>"></script>
+<script src="<%=path%>/js/bootstrap.js?v=<%=staticVersion%>"></script>
+<script type="text/javascript">
+var div=document.getElementById("canvas");
+
+// div.addEventListener('touchmove',function(event){
+//     event.preventDefault();//阻止浏览器的默认事件
+// });
+
+// alert($(document).width());  //浏览器当前窗口文档对象宽度//浏览器当前窗口文档的高度 用于控制图片长度，高度
+var drawing=false;//false 可拖动 ture 可画图
+var flag=false; //滑动时，手指（或者鼠标）是否未抬起（继续画笔）
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+var dateTime="<%=nowTime%>";//from sever
+// var dateTime="2017-7-1 15:47";//from sever
+var img;//选中的图片
+var dataUrl ;//base64 
+var canvasHeight=$(document).height()*1.5; //用于控制图片长度，高度
+var canvasWidth=$(document).width()*1.5;
+var modalImgHeight=$(document).height()-100; //手机modal框的高度
+var modalImgWidth=$(document).width()-50;
+
+var fileSize;//文件大小
+var allowMaxSize=0.5//最大允许图片大小0.5M
+//鼠标拖动
+c.onmousedown = function (e) {
+	if(drawing==false)return false;
+    flag = true;
+//e是鼠标按下事件，this是画布canvas.
+//pageX是相对于浏览器的，offsetLeft是相对于父级容器的
+    var startx = e.pageX-this.offsetLeft;
+    var starty = e.pageY-this.offsetTop;
+    ctx.moveTo(startx,starty);
+}
+
+c.onmousemove = function (e) {
+	if(drawing==false)return false;
+    var endx = e.pageX-this.offsetLeft;
+    var endy = e.pageY-this.offsetTop;
+    if(flag){
+    	ctx.lineTo(endx,endy);
+        ctx.stroke();
+    }
+}
+c.onmouseup = function(){
+    flag = false;
+}
+
+c.onmouseout = function(){
+    flag = false;
+}
+
+//手指滑动
+c.addEventListener('touchstart',function(e){
+	if(drawing==false)return false;
+    flag = true;
+  //e是鼠标按下事件，this是画布canvas.
+  //pageX是相对于浏览器的，offsetLeft是相对于父级容器的
+      var startx = e.touches[0].pageX-this.offsetLeft;
+      var starty = e.touches[0].pageY-this.offsetTop;
+      ctx.moveTo(startx,starty);
+});
+
+c.addEventListener('touchmove',function(e){
+	
+	if(drawing==false)return false;
+	
+// 	e.preventDefault();//阻止浏览器的默认事件
+    var endx = e.touches[0].pageX-this.offsetLeft;
+    var endy = e.touches[0].pageY-this.offsetTop;
+    if(flag){
+    	ctx.lineTo(endx,endy);
+        ctx.stroke();
+    }
+});
+
+c.touchend = function(){
+    flag = false;
+}
+function redraw(){
+	ctx.clearRect(0,0,c.width,c.height);//通常我们还会在此时执行下一步绘图操作  
+	ctx.beginPath();//开始新线条
+	
+	ctx.drawImage(img,0,0,img.width, img.height);//等比例缩小
+	ctx.font="20px Verdana";
+	ctx.strokeText(dateTime,10,50);
+}
+
+function upload(){
+// 	var imgData=canvas.toDataURL(“image/png”); 
+// 	imgData格式如下：”data:image/png;base64,xxxxx“ 
+// 	真正图像数据是base64编码逗号之后的部分
+//  c.toDataURL('image/jpeg',1)//照片压缩
+//  dataUrl = c.toDataURL('image/jpeg');
+    dataUrl = c.toDataURL('image/jpeg',getCompressRate(fileSize));
+//     alert("file size:="+fileSize+": rate :="+getCompressRate(fileSize))
+//  console.log("upload:"+dataUrl);//处理之后的图片//--会导致图片上传不完整--！！！
+// 	return false;
+	var reqData = {image_data:dataUrl,type:'base64'};
+	var reqUrl='/TRUCK_INSPECT/fileUploadChannel';
+    $.ajax({
+        url : reqUrl,//这个就是请求地址对应sAjaxSource
+        data :reqData ,  //这个是把datatable的一些基本数据传给后台,比如起始位置,每页显示的行数 
+        type : 'post',
+        dataType : 'json',
+        async : false,
+        success : function(jsonResult) {
+//         	alert(jsonResult.srcFilePath);
+			alert('上传成功');
+//         	alert(jQuery.parseJSON(jsonResult));
+     		//fnCallback(jQuery.parseJSON(jsonResult.jsonResult));//把返回的数据传给这个方法就可以了,datatable会自动绑定数据的
+        },
+        error : function(msg) {
+     	   alert("msg:" + msg);
+        }
+    });
+}
+
+$("#upload").change(function(){
+	$("#button-bar").show(2000);//显示按钮栏
+	queryServerTime();
+	console.log('dateTime:='+dateTime);
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      img = new Image(),maxW  = canvasWidth;//最大宽度
+      
+	  console.log("canvasHeight:="+canvasHeight);
+	  console.log("canvasWidth:="+canvasWidth);
+	  
+      img.onload = function () {
+    	  console.log("1 img.height:="+img.height);
+    	  console.log("1 img.width:="+img.width);
+    	  
+    	  if(img.width > maxW) {
+              img.height *= maxW / img.width;
+              img.width = maxW;
+          }
+          c.width = img.width;
+          c.height = img.height;
+          ctx.strokeStyle="	#FF0000";//画笔颜色
+//        ctx.strokeStyle="#000";//画笔颜色
+          ctx.lineWidth=2;//画笔宽度
+          
+      	  ctx.drawImage(img,0,0,img.width, img.height);//等比例
+    	  ctx.font="20px Verdana";
+    	  ctx.strokeText(dateTime,10,50); 
+    	  
+    	  console.log("2 img.height:="+img.height);
+    	  console.log("2 img.width:="+img.width);
+    	  
+//     	  dataUrl = c.toDataURL('image/jpeg',1);//未压缩 存储	
+//     	  console.log("3:"+dataUrl);
+    	  console.log("4:"+getCompressRate(fileSize));
+//     	  alert(ctx);
+     	 };
+      img.src = e.target.result; 
+     }
+    
+    reader.readAsDataURL(this.files[0]);
+    fileSize = Math.round( this.files[0].size/1024/1024) ;//m
+// 	alert(this.files[0].size);
+// 	alert(fileSize);
+});
+	
+function getCompressRate(fileSize){ //计算压缩比率，size单位为MB
+    var compressRate = 1;
+
+    if(fileSize/allowMaxSize > 4){
+         compressRate = 0.6;
+    } else if(fileSize/allowMaxSize >3){
+         compressRate = 0.7;
+    } else if(fileSize/allowMaxSize >2){
+         compressRate = 0.8;
+    } else if(fileSize > allowMaxSize){
+         compressRate = 0.9;
+    } else{
+         compressRate = 1;
+    }
+    return compressRate;
+}
+
+var preHandler = function(e){e.preventDefault();}
+
+function pencial(){
+	if(drawing==true){//置为拖动
+		$("#drag").hide();
+		$("#pencial").show();
+		
+		div.removeEventListener('touchmove',preHandler,false); //取消阻止
+		
+		drawing=false;
+	}
+	else{//置为可画图
+		$("#drag").show();
+		$("#pencial").hide();
+// 		div.addEventListener('touchmove',function(event){
+// 		    event.preventDefault();//阻止浏览器的默认事件
+// 		});
+		div.addEventListener('touchmove', preHandler, false);////阻止浏览器的默认事件
+		
+		drawing=true;
+	}
+	
+}
+
+function see(){ //预览时 按钮停用，预览结束，按钮启用
+// 	var image = new Image(); 
+// 	image.src = c.toDataURL("image/png");
+	// var canvasHeight=$(document).height()-100; //用于控制图片长度，高度
+	// var canvasWidth=$(document).width()-50;
+	$('#scream').attr('src',c.toDataURL("image/png")); 
+	$('#scream').css("width",modalImgWidth); 
+	$('#scream').css("height",modalImgHeight); 
+	console.log(modalImgWidth+":"+modalImgHeight);
+// 	$('#scream').src=(image); 
+	$('#myModal').modal();
+	
+	//按钮停用
+	$("#pencial").attr("disabled","disabled"); 
+	$("#drag").attr("disabled","disabled"); 
+	$("#redraw").attr("disabled","disabled"); 
+	$("#uploadBt").attr("disabled","disabled"); 
+	
+}
+
+//绑定任意键关闭
+$(function(){
+	$('#myModal').on('click',function(){
+		$('#myModal').modal('hide');
+		//按钮启用
+		$("#pencial").removeAttr("disabled"); 
+		$("#drag").removeAttr("disabled"); 
+		$("#redraw").removeAttr("disabled"); 
+		$("#uploadBt").removeAttr("disabled"); 
+		
+		});
+});
+
+function queryServerTime(){
+	var reqUrl='<%=path%>/AjaxChannel?action=SYS_QUERY_SERVER_TIME_ACTION';
+	$.ajax({
+			type : 'POST',
+			url:reqUrl,
+			data: {},
+			async : false,
+			dataType : 'json',
+			success : function(json) {
+				if(json.SUCCESS=='1'){
+					console.log(json.NOW_TIME); 
+					dateTime=json.NOW_TIME;
+				}else{
+					 alert(json.MSG);
+				}
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
+}
+
+</script>
+</html>

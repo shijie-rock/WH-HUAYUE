@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="GBK"?>
+<Config>
+	<Action id="BUSI_DATA_ENT_SUP_QUERY_LIST_ACTION">
+		<Description>查询检查对象大类列表</Description>
+		<ActionContext>
+			<Data name="sEcho" type="string"/>
+			<Data name="iDisplayStart" type="integer"/>
+			<Data name="iDisplayLength" type="integer"/>
+			
+			<Data name="ENT_NAME" type="string"/>
+			<Data name="ENT_CODE" type="string"/>
+			
+			<Data name="INCLUDE_STOP" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="jsonResult" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.entity.action.QueryEntitySupListAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="BUSI_DATA_ENT_MID_QUERY_LIST_ACTION">
+		<Description>查询检查对象中类列表</Description>
+		<ActionContext>
+			<Data name="sEcho" type="string"/>
+			<Data name="iDisplayStart" type="integer"/>
+			<Data name="iDisplayLength" type="integer"/>
+			
+			<Data name="ENT_NAME" type="string"/>
+			<Data name="ENT_CODE" type="string"/>
+			<Data name="SUP_CODE" type="string"/>
+			
+			<Data name="INCLUDE_STOP" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="jsonResult" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.entity.action.QueryEntityMidListAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="BUSI_DATA_ENT_SUB_QUERY_LIST_ACTION">
+		<Description>查询检查对象小类分类列表</Description>
+		<ActionContext>
+			<Data name="sEcho" type="string"/>
+			<Data name="iDisplayStart" type="integer"/>
+			<Data name="iDisplayLength" type="integer"/>
+			
+			<Data name="ENT_NAME" type="string"/>
+			<Data name="ENT_CODE" type="string"/>
+			<Data name="MID_CODE" type="string"/>
+			
+			<Data name="INCLUDE_STOP" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="jsonResult" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.entity.action.QueryEntitySubListAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BUSI_DATA_ENT_SUP_ADD_ACTION">
+		<Description>新增检查对象大类明细</Description>
+		<ActionContext>
+			<Data name="ENT_SUP_NAME" type="string"/>
+			<Data name="ENT_SUP_CODE" type="string"/>
+			<Data name="ENT_SUP_DESC" type="string"/>
+			<Data name="ENT_TYPE" type="string"/>
+			<Data name="ENT_SUP_SORT" type="integer"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.entity.action.AddEntitySupAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BUSI_DATA_ENT_SUP_DETAIL_ACTION">
+		<Description>查询检查对象大类明细</Description>
+		<ActionContext>
+			<Data name="ENT_SUP_ID" type="string"/>
+			
+			<Data name="MSG" type="string" output="true"/>
+			<Data name="ENT_SUP_BEAN" type="object" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.entity.action.QueryEntitySupDetailAction"  on1Do="next" onOtherDo="3"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+		
+	<Action id="BUSI_DATA_ENT_SUP_EDIT_ACTION">
+		<Description>检查对象大类编辑</Description>
+		<ActionContext>
+			<Data name="ENT_SUP_ID" type="integer"/>
+			
+			<Data name="ENT_SUP_NAME" type="string"/>
+			<Data name="ENT_SUP_CODE" type="string"/>
+			<Data name="ENT_TYPE" type="string"/>
+			<Data name="ENT_SUP_DESC" type="string"/>
+			<Data name="ENT_SUP_SORT" type="integer"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.entity.action.EditEntitySupAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BUSI_DATA_ENT_SUP_MOD_ACTION">
+		<Description>检查对象大类停用启用删除</Description>
+		<ActionContext>
+			<Data name="ENT_SUP_ID" type="integer"/>
+			<Data name="OPT_TYPE" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.entity.action.ModEntitySupAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BUSI_DATA_ENT_MID_ADD_ACTION">
+		<Description>新增对象中类明细</Description>
+		<ActionContext>
+			<Data name="ENT_MID_NAME" type="string"/>
+			<Data name="ENT_MID_CODE" type="string"/>
+			<Data name="ENT_SUP_CODE" type="string"/>
+			<Data name="ENT_MID_DESC" type="string"/>
+			<Data name="ENT_MID_SORT" type="integer"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.entity.action.AddEntityMidAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BUSI_DATA_ENT_MID_DETAIL_ACTION">
+		<Description>查询对象中类明细</Description>
+		<ActionContext>
+			<Data name="ENT_MID_ID" type="integer"/>
+			
+			<Data name="MSG" type="string" output="true"/>
+			<Data name="ENT_MID_BEAN" type="object" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.entity.action.QueryEntityMidDetailAction"  on1Do="next" onOtherDo="3"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+		
+	<Action id="BUSI_DATA_ENT_MID_EDIT_ACTION">
+		<Description>对象中类编辑</Description>
+		<ActionContext>
+			<Data name="ENT_MID_ID" type="integer"/>
+			
+			<Data name="ENT_MID_NAME" type="string"/>
+			<Data name="ENT_SUP_CODE" type="string"/>
+			<Data name="ENT_MID_CODE" type="string"/>
+			<Data name="ENT_MID_DESC" type="string"/>
+			<Data name="ENT_MID_SORT" type="integer"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.entity.action.EditEntityMidAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BUSI_DATA_ENT_MID_MOD_ACTION">
+		<Description>对象中类停用启用删除</Description>
+		<ActionContext>
+			<Data name="ENT_MID_ID" type="integer"/>
+			<Data name="OPT_TYPE" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.entity.action.ModEntityMidAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+		
+	<Action id="BUSI_DATA_ENT_SUB_ADD_ACTION">
+		<Description>新增检查对象小类明细</Description>
+		<ActionContext>
+			<Data name="ENT_SUB_NAME" type="string"/>
+			<Data name="ENT_MID_CODE" type="string"/>
+			<Data name="ENT_SUB_CODE" type="string"/>
+			<Data name="ENT_SUB_DESC" type="string"/>
+			<Data name="ENT_SUB_SORT" type="integer"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.entity.action.AddEntitySubAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BUSI_DATA_ENT_SUB_DETAIL_ACTION">
+		<Description>查询检查对象小类明细</Description>
+		<ActionContext>
+			<Data name="ENT_SUB_ID" type="integer"/>
+			
+			<Data name="MSG" type="string" output="true"/>
+			<Data name="ENT_SUB_BEAN" type="object" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.entity.action.QueryEntitySubDetailAction"  on1Do="next" onOtherDo="3"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+		
+	<Action id="BUSI_DATA_ENT_SUB_EDIT_ACTION">
+		<Description>检查对象小类编辑</Description>
+		<ActionContext>
+			<Data name="ENT_SUB_ID" type="integer"/>
+			
+			<Data name="ENT_SUB_NAME" type="string"/>
+			<Data name="ENT_SUB_CODE" type="string"/>
+			<Data name="ENT_MID_CODE" type="string"/>
+			<Data name="ENT_SUB_DESC" type="string"/>
+			<Data name="ENT_SUB_SORT" type="integer"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.entity.action.EditEntitySubAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BUSI_DATA_ENT_SUB_MOD_ACTION">
+		<Description>检查对象小类停用启用删除</Description>
+		<ActionContext>
+			<Data name="ENT_SUB_ID" type="integer"/>
+			<Data name="OPT_TYPE" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.entity.action.ModEntitySubAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BUSI_DATA_OBJ_QUERY_TREE_ACTION">
+		<Description>获取检查项目树状结构，用于前台展示拼接树状结构图</Description>
+		<ActionContext>
+			<Data name="INCLUDE_STOP" type="string"/>
+			
+			<Data name="MSG" type="string" output="true"/>
+			<Data name="OBJECT_LIST" type="array" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.object.action.QueryObjTreeBeanListAction"  on1Do="next" onOtherDo="3"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BUSI_DATA_OBJ_QUERY_TREE_HTML_ACTION">
+		<Description>获取检查项目树状结构，用于前台展示html</Description>
+		<ActionContext>
+			<Data name="INCLUDE_STOP" type="string"/>
+			
+			<Data name="MSG" type="string" output="true"/>
+			<Data name="OBJ_ITEM_TREE_DATA" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.object.action.QueryObjTreeDataAction"  on1Do="next" onOtherDo="3"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+		<PresentationConfig>
+			<ActionDestination method="forward" return_code="1">/page/busi_data/object_item_tree_manager.jsp</ActionDestination>	
+			<ActionDestination method="forward" return_code="0">/page/busi_data/object_item_tree_manager.jsp</ActionDestination>			
+		</PresentationConfig>
+	</Action>
+	
+</Config>

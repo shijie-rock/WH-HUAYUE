@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="GBK"?>
+<Config>
+	<Action id="BUSI_DATA_CHECK_ORDER_QUERY_LIST_ACTION">
+		<Description>查询检车单列表</Description>
+		<ActionContext>
+			<Data name="sEcho" type="string"/>
+			<Data name="iDisplayStart" type="integer"/>
+			<Data name="iDisplayLength" type="integer"/>
+			
+			<Data name="CHECK_ORDER_NO" type="string"/>
+			<Data name="ADDRESS" type="string"/>
+			<Data name="TARGET_NAME" type="string"/>
+			<Data name="PLAN_BEGIN_DATE" type="string"/>
+			<Data name="PLAN_END_DATE" type="string"/>
+			<Data name="CHECK_BEGIN_DATE" type="string"/>
+			<Data name="CHECK_END_DATE" type="string"/>
+			
+			<Data name="CHECK_OPT_NAME" type="string"/>
+			<Data name="CHECK_RESULT" type="string"/>
+			<Data name="CHECK_STATUS" type="string"/>
+			
+			<Data name="INCLUDE_STOP" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="jsonResult" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.order.action.QueryInsCheckOrderListAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="BUSI_DATA_CHECK_ORDER_QUERY_ITEM_TREE_ACTION">
+		<Description>查询检查项目树json内容</Description>
+		<ActionContext>
+<!-- 		<Data name="ORDER_NO" type="string"/> -->
+			<Data name="ENT_TYPE_CODE" type="string"/>
+			
+<!-- 		<Data name="ITEM_LIST" type="array" output="true"/> -->
+			<Data name="TREE_DATA" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.order.action.QueryOrderCheckItemTreeAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BUSI_DATA_CHECK_ORDER_DETAIL_ACTION">
+		<Description>根据检查单号查询检查单明细</Description>
+		<ActionContext>
+			<Data name="ORDER_NO" type="string"/>
+			
+			<Data name="ITEM_LIST" type="array" output="true"/>
+			<Data name="CHECK_ORDER_BEAN" type="object" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.order.action.QueryInsCheckOrderDetailAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BUSI_DATA_QUERY_BASEDATA_AUTO_COMPLETE_ACTION">
+		<Description>模糊输入，查询检查人，检查地点，检查对象信息等</Description>
+		<ActionContext>
+			<Data name="QUERY_TYPE" type="string"/>
+			<Data name="QUERY_NAME" type="string"/>
+			<Data name="RESULT_LIST" type="array" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.order.action.QueryBaseDataAutoCompleteAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BUSI_DATA_QUERY_TURCK_CHECK_OBJ_ITEM_ACTION">
+		<Description>根据车辆id查询车辆对应的检查项目</Description>
+		<ActionContext>
+			<Data name="TRUCK_ID" type="string"/>
+			<Data name="TRUCK_CHECK_ITEM_LIST" type="array" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.order.action.QueryInsTruckCheckItemListAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="BUSI_DATA_CHECK_ORDER_ADD_ACTION">
+		<Description>页面新增检查单</Description>
+		<ActionContext>
+			<Data name="CHECK_TARGET_ID" type="string"/>
+			<Data name="CHECK_TARGET_NAME" type="string"/>
+			<Data name="CHECK_PL_MEMBER_ID" type="string"/>
+			<Data name="CHECK_R_MEMBER_ID" type="string"/>
+			<Data name="CHECK_PL_BEGIN_TIME" type="string"/>
+			<Data name="CHECK_PL_END_TIME" type="string"/>
+			
+			<Data name="CHECK_R_BEGIN_TIME" type="string"/>
+			<Data name="CHECK_R_END_TIME" type="string"/>
+			<Data name="POSITION_CODE" type="string"/>
+			<Data name="POSITION_NAME" type="string"/>
+			<Data name="POSITION_ADDRESS" type="string"/>
+			
+			<Data name="CHECK_ITEM_COUNT" type="string"/>
+			<Data name="CHECK_PASS_COUNT" type="string"/>
+			<Data name="CHECK_ORDER_STATUS" type="string"/>
+			<Data name="CHECK_ORDER_RESULT" type="string"/>
+			<Data name="CHECK_ORDER_DESC" type="string"/>
+			
+			<Data name="ITEM_LIST" type="string"/>
+			
+			<Data name="CHECK_ORDER_NO" type="string" output="true"/>
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.order.action.AddInsCheckOrderAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="BUSI_DATA_CHECK_ORDER_EDIT_ACTION">
+		<Description>页面编辑检查单</Description>
+		<ActionContext>
+			<Data name="CHECK_ORDER_NO" type="string"/>
+			<Data name="CHECK_TARGET_ID" type="string"/>
+			<Data name="CHECK_TARGET_NAME" type="string"/>
+			<Data name="CHECK_PL_MEMBER_ID" type="string"/>
+			<Data name="CHECK_R_MEMBER_ID" type="string"/>
+			<Data name="CHECK_PL_BEGIN_TIME" type="string"/>
+			<Data name="CHECK_PL_END_TIME" type="string"/>
+			
+			<Data name="CHECK_R_BEGIN_TIME" type="string"/>
+			<Data name="CHECK_R_END_TIME" type="string"/>
+			<Data name="POSITION_CODE" type="string"/>
+			<Data name="POSITION_NAME" type="string"/>
+			<Data name="POSITION_ADDRESS" type="string"/>
+			
+			<Data name="CHECK_ITEM_COUNT" type="string"/>
+			<Data name="CHECK_PASS_COUNT" type="string"/>
+			<Data name="CHECK_ORDER_STATUS" type="string"/>
+			<Data name="CHECK_ORDER_RESULT" type="string"/>
+			<Data name="CHECK_ORDER_DESC" type="string"/>
+			
+			<Data name="ITEM_LIST" type="string"/>
+		
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.order.action.EditInsCheckOrderAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BUSI_DATA_CHECK_ORDER_MOD_ACTION">
+		<Description>检查单停用启用删除</Description>
+		<ActionContext>
+			<Data name="CHECK_ORDER_NO" type="string"/>
+			<Data name="OPT_TYPE" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.order.action.ModInsCheckOrderAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BUSI_DATA_CHECK_ORDER_ITEM_QUERY_LIST_ACTION">
+		<Description>查询检车单检查项目列表</Description>
+		<ActionContext>
+			<Data name="sEcho" type="string"/>
+			<Data name="iDisplayStart" type="integer"/>
+			<Data name="iDisplayLength" type="integer"/>
+			
+			<Data name="CHECK_ORDER_NO" type="string"/>
+			<Data name="ITEM_CODE" type="string"/>
+			<Data name="TARGET_NAME" type="string"/>
+			<Data name="PLAN_BEGIN_DATE" type="string"/>
+			<Data name="PLAN_END_DATE" type="string"/>
+			<Data name="CHECK_BEGIN_DATE" type="string"/>
+			<Data name="CHECK_END_DATE" type="string"/>
+			
+			<Data name="ITEM_NAME" type="string"/>
+			<Data name="CHECK_ITEM_RESULT" type="string"/>
+			<Data name="CHECK_ITEM_STATUS" type="string"/>
+			
+			<Data name="INCLUDE_STOP" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="jsonResult" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.order.action.QueryInsCheckOrderItemListAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BUSI_DATA_CHECK_ORDER_ITEM_DETAIL_ACTION">
+		<Description>检查单项目详情</Description>
+		<ActionContext>
+			<Data name="CHECK_ORDER_NO" type="string"/>
+			<Data name="CHECK_ORDER_ITEM_ID" type="string"/>
+			
+			<Data name="CHECK_ORDER_ITEM_BEAN" type="object" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.order.action.QueryInsCheckOrderItemDetailAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BUSI_DATA_CHECK_ORDER_ITEM_EDIT_ACTION">
+		<Description>页面编辑检查单项目</Description>
+		<ActionContext>
+			<Data name="CHECK_ORDER_NO" type="string"/>
+			<Data name="CHECK_ORDER_ITEM_ID" type="string"/>
+			
+			<Data name="ITEM_COMLIANCE" type="string"/>
+			<Data name="ITEM_TOUBLE_DESC" type="string"/>
+			<Data name="ITEM_CHECK_STATUS" type="string"/>
+			<Data name="ITEM_CHECK_RESULT" type="string"/>
+		
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.order.action.EditInsCheckOrderItemAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="BUSI_DATA_CHECK_ORDER_ITEM_MOD_ACTION">
+		<Description>检查单检查项目明细停用启用删除</Description>
+		<ActionContext>
+			<Data name="CHECK_ORDER_NO" type="string"/>
+			<Data name="CHECK_ORDER_ITEM_ID" type="string"/>
+			<Data name="OPT_TYPE" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.order.action.ModInsCheckOrderItemAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BUSI_DATA_CHECK_ORDER_ITEM_PIC_DETAIL_ACTION">
+		<Description>查询车辆图片列表</Description>
+		<ActionContext>
+			<Data name="CHECK_ITEM_ID" type="string"/>
+			<Data name="CHECK_ORDER_NO" type="string"/>
+			
+			<Data name="MSG" type="string" output="true"/>
+			<Data name="PIC_LIST" type="array" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.order.action.QueryInsCheckOrderItemPicDetailAction"  on1Do="next" onOtherDo="3"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BUSI_DATA_CHECK_ORDER_MEMBER_CALENDAR_ACTION">
+		<Description>查询检查单检查人日历</Description>
+		<ActionContext>
+			<Data name="START" type="string"/>
+			<Data name="END" type="string"/>
+			<Data name="MEMBER_NAME" type="string"/>
+			<Data name="LICENSE" type="string"/>
+			
+			<Data name="MSG" type="string" output="true"/>
+			<Data name="CALENDAR_TASK_LIST" type="array" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.order.action.QueryInsCheckOrderMemberCalendarAction"  on1Do="next" onOtherDo="3"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="BUSI_DATA_CHECK_ORDER_CALENDAR_UPDATE_PL_TIME_ACTION">
+		<Description>检查单任务日志更改计划检查时间</Description>
+		<ActionContext>
+			<Data name="NEW_START" type="string"/>
+			<Data name="NEW_END" type="string"/>
+			<Data name="CHECK_ORDER_ID" type="string"/>
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.order.action.UpdateInsCheckOrderPLTimeByCalendarAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+</Config>
