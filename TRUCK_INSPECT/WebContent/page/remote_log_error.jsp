@@ -9,6 +9,9 @@
 body{
 background: #fff;
 }
+div.popup_overlay{
+ background: #fff !important;
+}
 .logo{
 margin-bottom: 10px;
     width: 507px;
@@ -21,7 +24,10 @@ margin-bottom: 10px;
 }
 </style>
  <link rel="stylesheet" href="<%=path%>/js/jqueryAlert/jquery.alerts.css" />
-				<div id="J_videoContainer"  style="position: absolute;width:100%;height:100%; top: 0%; left: 0px; background-image: url(&quot;/AUTH_CENTER/img/img/page-1.jpg&quot;);" >
+				<div id="J_videoContainer"  style="position: absolute;width:100%;height:100%; top: 0%; left: 0px; 
+/* 				background-image: url(&quot;/AUTH_CENTER/img/img/page-1.jpg&quot;) */
+				background: url(img/back.png) repeat;
+				;" >
   
                <div class="main-content">
                 <div class="laymid">

@@ -130,5 +130,8 @@
 	<ActionRef id="Busi_SystemDataAction" fileName="action-config/Busi_SystemDataAction.xml" />
 	<ActionRef id="test" fileName="action-config/TestAction.xml" />
 	<ActionRef id="USERAction" fileName="action-config/UserAction.xml" />
+	<ActionRef id="Busi_ObjectAction" fileName="action-config/Busi_ObjectAction.xml" />
+	<ActionRef id="Busi_EntityAction" fileName="action-config/Busi_EntityAction.xml" />
+	<ActionRef id="Busi_InsOrderAction" fileName="action-config/Busi_InsOrderAction.xml" />
 <!--  <AccessControlPolicy classname="com.youbus.agentcenter.auth.AgentCenterACLPolicy"/> -->
 </Config>

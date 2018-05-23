@@ -30,12 +30,14 @@ public class CustQrCodeBean implements Serializable {
 	private Integer custId;
 	private String name;
 //	private String custType;
-	private String custStatus;
-	private Double custBalance;
+	private String status;
+	private Double money;
 //	private String codeType;
 	private String valiTime;
 	private String mobile;
+	private String ext;
 	
+//	private Double money;
 	/**
 	 * custId
 	 *
@@ -91,14 +93,14 @@ public class CustQrCodeBean implements Serializable {
 	 * @since   1.0.0
 	 */
 	
-	public String getCustStatus() {
-		return custStatus;
+	public String getStatus() {
+		return status;
 	}
 	/**
 	 * @param custStatus the custStatus to set
 	 */
-	public void setCustStatus(String custStatus) {
-		this.custStatus = custStatus;
+	public void setStatus(String custStatus) {
+		this.status = custStatus;
 	}
 	/**
 	 * custBalance
@@ -107,14 +109,14 @@ public class CustQrCodeBean implements Serializable {
 	 * @since   1.0.0
 	 */
 	
-	public Double getCustBalance() {
-		return custBalance;
+	public Double getMoney() {
+		return money;
 	}
 	/**
 	 * @param custBalance the custBalance to set
 	 */
-	public void setCustBalance(Double custBalance) {
-		this.custBalance = custBalance;
+	public void setMoney(Double money) {
+		this.money = money;
 	}
 	/**
 	 * codeType
@@ -163,6 +165,31 @@ public class CustQrCodeBean implements Serializable {
 	 */
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+	/**
+	 * 方   法  名:setMoney
+	 * 方法描述:
+	 * 参         数:@param d
+	 * 返   回  值:void
+	 * 创   建  人:rock
+	 * @exception
+	 * @since  1.0.0
+	*/
+	/**
+	 * ext
+	 *
+	 * @return  the ext
+	 * @since   1.0.0
+	*/
+	
+	public String getExt() {
+		return ext;
+	}
+	/**
+	 * @param ext the ext to set
+	 */
+	public void setExt(String ext) {
+		this.ext = ext;
 	}
 
 

@@ -1,11 +1,14 @@
 package com.truckinspect.test;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -16,17 +19,18 @@ import javax.crypto.spec.SecretKeySpec;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 
 /**
- * ¼æÈÝios --Éú²ú
- * ÀàÃû³Æ:AESCipher
- * ÀàÃèÊö:
- * ´´½¨ÈË:rock
- * ÐÞ¸ÄÈË:rock
- * ÐÞ¸ÄÊ±¼ä:2017Äê8ÔÂ23ÈÕ ÏÂÎç8:27:09
- * ÐÞ¸Ä±¸×¢:
+ * å…¼å®¹ios --ç”Ÿäº§(é€‚ç”¨äºŽä¾›åº”å•†-åˆ¸)
+ * ç±»åç§°:AESCipher
+ * ç±»æè¿°:
+ * åˆ›å»ºäºº:rock
+ * ä¿®æ”¹äºº:rock
+ * ä¿®æ”¹æ—¶é—´:2017å¹´8æœˆ23æ—¥ ä¸‹åˆ8:27:09
+ * ä¿®æ”¹å¤‡æ³¨:
  * @version 1.0.0
  */
 public class YBAESCipher {
@@ -34,13 +38,13 @@ public class YBAESCipher {
 	private static Logger log=Logger.getLogger(YBAESCipher.class);
 	
 //	private static final String IV_STRING = "A-16-Byte-String";
-//	private static final String IV_STRING = "1234567887654321";//Æ«ÒÆÁ¿ 16bit must
-	private static final String IV_STRING = new SimpleDateFormat("YYYYMMdd00000000").format(new Date(System.currentTimeMillis()));//Æ«ÒÆÁ¿ 16bit must
+//	private static final String IV_STRING = "1234567887654321";//åç§»é‡ 16bit must
+	private static final String IV_STRING = new SimpleDateFormat("YYYYMMdd00000000").format(new Date(System.currentTimeMillis()));//åç§»é‡ 16bit must
 	private static final String charset = "UTF-8";
 	
-	private static final String IV_STRING2="YYYYMMdd00000000";//¹Ì¶¨Öµ
+	private static final String IV_STRING2="YYYYMMdd00000000";//å›ºå®šå€¼
 	
-	//¼ÓÃÜ
+	//åŠ å¯†
 	public static String aesEncryptString(String content, String key) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
 		byte[] contentBytes = content.getBytes(charset);
 		byte[] keyBytes = key.getBytes(charset);
@@ -50,7 +54,7 @@ public class YBAESCipher {
 		return new String(new Base64().encode(encryptedBytes));
 	}
 	
-	//½âÃÜ
+	//è§£å¯†
 	public static String aesDecryptString(String content, String key) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
 //		Decoder decoder = Base64.getDecoder();
 //	    byte[] encryptedBytes = decoder.decode(content);
@@ -80,8 +84,8 @@ public class YBAESCipher {
  	 	return cipher.doFinal(contentBytes);
 	}
 	
-	//20171120-key ¸ÄÎª¹Ì¶¨Öµ begin
-	//¼ÓÃÜ
+	//20171120-key æ”¹ä¸ºå›ºå®šå€¼ begin
+	//åŠ å¯†
 	public static String aesEncryptString2(String content, String key) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
 		byte[] contentBytes = content.getBytes(charset);
 		byte[] keyBytes = key.getBytes(charset);
@@ -91,7 +95,7 @@ public class YBAESCipher {
 		return new String(new Base64().encode(encryptedBytes));
 	}
 	
-	//½âÃÜ
+	//è§£å¯†
 	public static String aesDecryptString2(String content, String key) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
 //		Decoder decoder = Base64.getDecoder();
 //	    byte[] encryptedBytes = decoder.decode(content);
@@ -120,15 +124,15 @@ public class YBAESCipher {
 		
 		return cipher.doFinal(contentBytes);
 	}
-	//20171120-key ¸ÄÎª¹Ì¶¨Öµ end
+	//20171120-key æ”¹ä¸ºå›ºå®šå€¼ end
 	/**
-	 * ¼ÓÃÜ
-	 * ·½   ·¨  Ãû:aesEncryptString
-	 * ·½·¨ÃèÊö:
-	 * ²Î         Êý:@param obj
-	 * ²Î         Êý:@return
-	 * ·µ   »Ø  Öµ:String
-	 * ´´   ½¨  ÈË:rock
+	 * åŠ å¯†
+	 * æ–¹   æ³•  å:aesEncryptString
+	 * æ–¹æ³•æè¿°:
+	 * å‚         æ•°:@param obj
+	 * å‚         æ•°:@return
+	 * è¿”   å›ž  å€¼:String
+	 * åˆ›   å»º  äºº:rock
 	 * @exception
 	 * @since  1.0.0
 	 */
@@ -174,13 +178,13 @@ public class YBAESCipher {
 	}
 	
 	/**
-	 * ½âÃÜ
-	 * ·½   ·¨  Ãû:aesDecryptString
-	 * ·½·¨ÃèÊö:
-	 * ²Î         Êý:@param encryptStr
-	 * ²Î         Êý:@return
-	 * ·µ   »Ø  Öµ:String
-	 * ´´   ½¨  ÈË:rock
+	 * è§£å¯†
+	 * æ–¹   æ³•  å:aesDecryptString
+	 * æ–¹æ³•æè¿°:
+	 * å‚         æ•°:@param encryptStr
+	 * å‚         æ•°:@return
+	 * è¿”   å›ž  å€¼:String
+	 * åˆ›   å»º  äºº:rock
 	 * @exception
 	 * @since  1.0.0
 	 */
@@ -224,13 +228,13 @@ public class YBAESCipher {
 	
 	
 	/**
-	 * ¼ÓÃÜ-¶Ò»»È¯£ºYBAESCipher(QNO+_+PIN£¬YYYYMMdd00000000):Æ«ÒÆÁ¿£¬key Îª¹Ì¶¨Öµ
-	 * ·½   ·¨  Ãû:aesEncryptString
-	 * ·½·¨ÃèÊö:
-	 * ²Î         Êý:@param obj
-	 * ²Î         Êý:@return
-	 * ·µ   »Ø  Öµ:String
-	 * ´´   ½¨  ÈË:rock
+	 * åŠ å¯†-å…‘æ¢åˆ¸ï¼šYBAESCipher(QNO+_+PINï¼ŒYYYYMMdd00000000):åç§»é‡ï¼Œkey ä¸ºå›ºå®šå€¼
+	 * æ–¹   æ³•  å:aesEncryptString
+	 * æ–¹æ³•æè¿°:
+	 * å‚         æ•°:@param obj
+	 * å‚         æ•°:@return
+	 * è¿”   å›ž  å€¼:String
+	 * åˆ›   å»º  äºº:rock
 	 * @exception
 	 * @since  1.0.0
 	 */
@@ -276,13 +280,13 @@ public class YBAESCipher {
 	}
 	
 	/**
-	 * ½âÃÜ ¶Ò»»È¯£ºYBAESCipher(QNO+_+PIN£¬YYYYMMdd00000000)Æ«ÒÆÁ¿£¬key Îª¹Ì¶¨Öµ
-	 * ·½   ·¨  Ãû:aesDecryptString
-	 * ·½·¨ÃèÊö:
-	 * ²Î         Êý:@param encryptStr
-	 * ²Î         Êý:@return
-	 * ·µ   »Ø  Öµ:String
-	 * ´´   ½¨  ÈË:rock
+	 * è§£å¯† å…‘æ¢åˆ¸ï¼šYBAESCipher(QNO+_+PINï¼ŒYYYYMMdd00000000)åç§»é‡ï¼Œkey ä¸ºå›ºå®šå€¼
+	 * æ–¹   æ³•  å:aesDecryptString
+	 * æ–¹æ³•æè¿°:
+	 * å‚         æ•°:@param encryptStr
+	 * å‚         æ•°:@return
+	 * è¿”   å›ž  å€¼:String
+	 * åˆ›   å»º  äºº:rock
 	 * @exception
 	 * @since  1.0.0
 	 */
@@ -327,41 +331,206 @@ public class YBAESCipher {
 	
 	
 //http://t.youbus.com.cn/qr/1?EWuciHwHuNnMtW4rODtaCeSKFytYutUIokMundeimF+TpR93dOmC7LJCwvkZOr8kBkGiOQ7f35ePxlZe3gOQtIPmx259y4LyUMN1n0ATdLQrsKOifcl11W/Rc75kvOZujlNPMJfpqqapIGZGiJoQxYVsHNzxhZ37jPPWU2s7mAA=&END=1	
-	public static void main(String[] args){
+	public static void main(String[] args) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException, EncoderException{
 		
 		System.out.println("1:="+aesEncryptCoupons("12345678", "1234"));
-//		System.out.println(aesDecryptCoupons(encryptStr));
+		System.out.println(aesDecryptCoupons("yoSGxGpoOEY7+lpAsCSQjw=="));
 //		System.out.println(aesDecryptString("EWuciHwHuNnMtW4rODtaCeSKFytYutUIokMundeimF+TpR93dOmC7LJCwvkZOr8kBkGiOQ7f35ePxlZe3gOQtIPmx259y4LyUMN1n0ATdLQrsKOifcl11W/Rc75kvOZujlNPMJfpqqapIGZGiJoQxVLdnusPanp5MGFY2npUKkQ="));
 //		System.out.println(aesDecryptString("EWuciHwHuNnMtW4rODtaCeSKFytYutUIokMundeimF+TpR93dOmC7LJCwvkZOr8kBkGiOQ7f35ePxlZe3gOQtIPmx259y4LyUMN1n0ATdLQrsKOifcl11W/Rc75kvOZujlNPMJfpqqapIGZGiJoQxYVsHNzxhZ37jPPWU2s7mAA="));
 //		System.out.println(aesDecryptString("Z0OzRlaRDtXdoT/+yZqakQyKpAYkrM7pvEuu/ZIaFJs9dv+WJm/cC/Gqz9dhKe8iaTZrKZXvJpliloVM9Spypunvf3UXdUmTVALnS7sV615CDwjjPu/0EX+linlOwdmV0dp6vrx6bIBSUrXbGQYLh9QMGbWQvzpSH8u7G91sOXU="));
-		System.out.println(aesDecryptString("0j8ru0G3NH4VkqZb1L/lc4uf1boeSnJpK1ZjNE9Vs0peguzvvD77Ge4pn7nX0CYg3sscXmWhygaaRdx+B3lwOCPmf+mUDLtDbSsr+WyLdWGOfQc2YJ3qAcQUbTQpTRVmvWnWob1YbiTOoo6vxS4aBbh0fyKJTcPDK+lGx0vR9uo="));
+//		System.out.println(aesDecryptString("PWKkuUXlUf/M6jVXEqq8N0JRZBGSAk49UaEwy0ifNBMNLYB3s8i5wzo5oybeXKAJb0oPKT1f1db2IqfrVucDDQv6xtvq/dghj6RiqtWrpGpX5VFsxsb84RzqfQdkLzvcI5+6La+ZQ9FD+4ZV7n+T4Ly9YP0S8tS//nOMjBbfWCQ="));
+//		System.out.println(aesDecryptString("3s91/ipSmjy4hdh3gLCP7J/0jgDR0pfQdn3kggWIPZ2PnAavEcEuI9er/JTpxK0bQha1OO61sDjtr16tN4cGtpWiZoFE/hAgZ4ft9ilI/VfcEIDte0jEi52T34neOW4eRZD4gps71Q+XDac4Y4Wou/54PZCF4hX4VoqfqEM28+lwRCR1VucSh+T9KcCMeWKF"));
 //		System.out.println(aesDecryptString("EYykcHh+2dMfK0+bgbqLvMv91/ToPGMBRY+uD0ShQ71qKKLL1RoxoZWZuXnwfH/k9Tt2lgAoh61z1lUq+ogDhqoMRX2zDHez1rOxjv5O1II3Odesl3ep/g93biNvLxJ3EvETNzi5WMy3zjoIDZCAiCrC0IrwWy0Xhdj14rF0wLc="));
 		
 	CustQrCodeBean bean=new CustQrCodeBean();
-//	bean.setCodeType("T0002");
-	bean.setCustBalance(499490d);
-	bean.setCustId(1830);
-	bean.setCustStatus("1");
-//	bean.setCustType("CT_0012");
-	bean.setName("ÖÜºêÏè");
-	bean.setValiTime(String.valueOf(1504166181477l));
-//	bean.setValiTime(String.valueOf(System.currentTimeMillis()));
-	bean.setMobile("173****2599");
+	bean.setExt(null);
+	bean.setCustId(4764);
+	bean.setStatus("1");
+	bean.setName("å¦‚è‹¥ä¸è§äº¦ä¸å¿µ");
+	bean.setValiTime(String.valueOf(1515654759847l));
+	bean.setMobile("182****8906");
+	bean.setMoney(1.41d);
+
+	String old="{\"ext\":\"\",\"id\":4764,\"mobile\":\"182****8906\",\"money\":1.41,\"name\":\"å¦‚è‹¥ä¸è§äº¦ä¸å¿µ\",\"status\":\"1\",\"valiTime\":\"1515654759847\"}";
 	
-	System.out.println(aesEncryptString(bean));
+	System.out.println(aesEncryptString(old));
+//	System.out.println(aesDecryptString(aesEncryptString(old)));
+//	System.out.println(aesEncryptString(bean));
 	//base->ascii
 	//ascii->encrypt
 	//encrypt->base64
+	String key = new SimpleDateFormat("YYYYMMdd00000000").format(new Date(System.currentTimeMillis()));
 	
-	
+	for(int j=0;j<2;j++){
+		CustQrCodeBean bean1=new CustQrCodeBean();
+		bean1.setExt(null);
+//		bean1.setExt(String.valueOf(new Random().nextInt(10000)));
+		bean1.setCustId(new Random().nextInt(10000));
+		bean1.setStatus("1");
+//		bean1.setName(new Random().nextInt(10000)+1+j+"");
+		bean1.setName(URLEncoder.encode((new Random().nextInt(10110000)+"å¦‚è‹¥ä¸è§äº¦ä¸å¿µ"+"1"),"UTF-8"));
+		bean1.setValiTime(String.valueOf(System.currentTimeMillis()+j*60*1000));
+		bean1.setMobile("182****8906");
+		bean1.setMoney(1.41d+new Random().nextInt(100));
 		
+
+//		String old="{\"ext\":\"\",\"id\":4764,\"mobile\":\"182****8906\",\"money\":1.41,\"name\":\"å¦‚è‹¥ä¸è§äº¦ä¸å¿µ\",\"status\":\"1\",\"valiTime\":\"1515654759847\"}";
+		
+		String src1=new String(JSONObject.fromObject(bean1).toString().getBytes(),"UTF-8");
+//		System.out.println(new Base64().encodeToString(src.getBytes("UTF-8")));
+		
+		
+//		String miwen=aesEncryptString(src,key);
+//		String newWen=aesDecryptString(miwen,key);
+		
+//		System.out.println("["+i+"]åŽŸæ–‡ï¼š"+src);
+//		System.out.println("å¯†æ–‡ï¼š"+miwen);
+//		System.out.println("æ˜Žæ–‡ï¼š"+newWen);
+//		System.out.println(JSONObject.fromObject(newWen));
+		
+//		src=new String("å¦‚è‹¥ä¸è§äº¦ä¸å¿µ$$$182****8906$$$600".getBytes("UTF-8"),"UTF-8");
+		
+//		src= string2Unicode("å¦‚è‹¥ä¸è§äº¦ä¸å¿µ$$$182****8906$$$600");
+		
+		String src=src1;
+//		String src=URLEncoder.encode(src1, "UTF-8");
+		System.out.println("src:="+src);
+		
+	    char[] c = src.toCharArray();
+	    //ä½¿ç”¨forå¾ªçŽ¯ç»™å­—ç¬¦æ•°ç»„åŠ å¯†
+	    for(int i=0;i<c.length;i++){
+	        c[i] = (char)(c[i]^1);
+	    }
+	    //è¾“å‡ºåŠ å¯†æˆ–è€…è§£å¯†ç»“æžœ
+	    System.out.println("srcï¼š"+new String(c));
+		
+	    String x=new Base64().encodeToString(new String(c).getBytes());
+	    System.out.println(x);
+	    
+	    x=new String(Base64.decodeBase64(x));
+	    System.out.println(x);
+	    
+	    char[] xc=x.toCharArray();
+		for(int i=0;i<xc.length;i++){
+			
+			 c[i] = (char)(xc[i]^1);
+		}
+		String newSrc=new String(new String(c).getBytes("UTF-8"),"UTF-8");
+	    	System.out.println("oldï¼š"+newSrc);
+//	    	newSrc=URLDecoder.decode(newSrc,"UTF-8");
+	    	System.out.println("old2ï¼š"+newSrc);
+			System.out.println("["+j+"]:="+JSONObject.fromObject(newSrc));
+			JSONObject o=JSONObject.fromObject(newSrc);
+			String name=(String) o.get("name");
+			System.out.println(URLDecoder.decode(name,"UTF-8"));
+			if(!JSONObject.fromObject(newSrc).toString().equals(src1)){
+				System.out.println("åŽŸæ–‡ æ˜Žæ–‡ ä¸ä¸€è‡´");
+				break;
+			}
+			
+		}
+//	if(!src.equals(newWen)||!JSONObject.fromObject(newWen).toString().equals(src)){
+//		
+//		System.out.println("åŽŸæ–‡ æ˜Žæ–‡ ä¸ä¸€è‡´");
+//		break;
+//	}
+
 	}
+	
+//	CustQrCodeBean bean1=new CustQrCodeBean();
+//	bean1.setExt(null);
+////	bean1.setExt(String.valueOf(new Random().nextInt(10000)));
+//	bean1.setCustId(new Random().nextInt(10000));
+//	bean1.setStatus("1");
+//	bean1.setName(new Random().nextInt(10000)+"å¦‚è‹¥ä¸è§äº¦ä¸å¿µ");
+//	bean1.setValiTime(String.valueOf(System.currentTimeMillis()));
+//	bean1.setMobile("182****8906");
+//	bean1.setMoney(1.41d+new Random().nextInt(100));
+//	
+//	String src=JSONObject.fromObject(bean1).toString();
+//	byte[] byteArr=src.getBytes("UTF-8");
+//	byte[] byteArr1=new byte[byteArr.length/2];
+//	byte[] byteArr2=new byte[byteArr.length-byteArr1.length];
+//	for(int j=0;j<=byteArr.length-1;j++){
+//		if(j%2==0){
+//			byteArr1[j/2+j%2]=byteArr[j];
+//		}
+//		else{
+//			byteArr2[j/2]=byteArr[j];	
+//		}
+//	}
+	
+//	byte[] both = (byte[]) ArrayUtils.addAll(byteArr1, byteArr2);
+	
+	
+//	for(int j=byteArr.length-1;j>=0;j--){
+//		
+//		byteArr1[byteArr.length-1-j]=byteArr[j];
+//	}
+//	System.out.println(new Base64().encodeToString(both));
+	
+//    char[] c = src.toCharArray();
+//    //ä½¿ç”¨forå¾ªçŽ¯ç»™å­—ç¬¦æ•°ç»„åŠ å¯†
+//    for(int i=0;i<c.length;i++){
+//        c[i] = (char)(c[i]^100);
+//    }
+//    //è¾“å‡ºåŠ å¯†æˆ–è€…è§£å¯†ç»“æžœ
+//    System.out.println("srcï¼š"+new String(c));
+//	
+//    String x=new Base64().encodeToString(new String(c).getBytes());
+//    System.out.println(x);
+//    
+//    x=new String(Base64.decodeBase64(x));
+//    System.out.println(x);
+//    
+//    char[] xc=x.toCharArray();
+//	for(int i=0;i<xc.length;i++){
+//		
+//		 c[i] = (char)(xc[i]^100);
+//	}
+//    	System.out.println("oldï¼š"+new String(c));
+    
+//	}
+	
+	public static String string2Unicode(String string) {  
+		   
+	    StringBuffer unicode = new StringBuffer();  
+	   
+	    for (int i = 0; i < string.length(); i++) {  
+	   
+	        // å–å‡ºæ¯ä¸€ä¸ªå­—ç¬¦  
+	        char c = string.charAt(i);  
+	   
+	        // è½¬æ¢ä¸ºunicode  
+	        unicode.append("\\u" + Integer.toHexString(c));  
+	    }  
+	   
+	    return unicode.toString();  
+	} 
+	
+	public static String unicode2String(String unicode) {  
+		   
+	    StringBuffer string = new StringBuffer();  
+	   
+	    String[] hex = unicode.split("\\\\u");  
+	   
+	    for (int i = 1; i < hex.length; i++) {  
+	   
+	        // è½¬æ¢å‡ºæ¯ä¸€ä¸ªä»£ç ç‚¹  
+	        int data = Integer.parseInt(hex[i], 16);  
+	   
+	        // è¿½åŠ æˆstring  
+	        string.append((char) data);  
+	    }  
+	   
+	    return string.toString();  
+	} 
 	
 	//test
 	public static void main1(String args[]){
 		String key = new SimpleDateFormat("YYYYMMdd00000000").format(new Date(System.currentTimeMillis()));
 		System.out.println(key);
-		String content = "hello world. ÄãºÃ£¬DES";
+		String content = "hello world. ä½ å¥½ï¼ŒDES";
 		
 //		CustQrCodeBean bean=new CustQrCodeBean();
 ////		bean.setCodeType("T0002");
@@ -369,25 +538,25 @@ public class YBAESCipher {
 //		bean.setCustId(123);
 //		bean.setCustStatus("1");
 ////		bean.setCustType("CT_0012");
-//		bean.setName("ÕÅÈý");
+//		bean.setName("å¼ ä¸‰");
 //		bean.setValiTime(String.valueOf(System.currentTimeMillis()));
 //		bean.setMobile("13212345678");
 //		
 //		content=JSONObject.fromObject(bean).toString();
 
-		System.out.println("¼ÓÃÜÇ°£º"+content);
+		System.out.println("åŠ å¯†å‰ï¼š"+content);
 
 		
 		String encryptStr;
 		try {
-			System.out.println("¼ÓÃÜÇ° base64£º"+new String(new Base64().encode(content.getBytes(charset))));
+			System.out.println("åŠ å¯†å‰ base64ï¼š"+new String(new Base64().encode(content.getBytes(charset))));
 			
 			encryptStr = aesEncryptString(content, key);
 			
-			System.out.println("¼ÓÃÜºó£¨base64+AES£©£º"+encryptStr);
+			System.out.println("åŠ å¯†åŽï¼ˆbase64+AESï¼‰ï¼š"+encryptStr);
 //			encryptStr=aesDecryptString("1ayP2OhwZqoW6kFzqR9nbz1+1GD5WdBhyKlKFj0+bAI=", key);
 			encryptStr=aesDecryptString(encryptStr, key);
-			System.out.println("½âÃÜºó£º"+encryptStr);
+			System.out.println("è§£å¯†åŽï¼š"+encryptStr);
 			
 		} catch (InvalidKeyException e) {
 			// TODO Auto-generated catch block

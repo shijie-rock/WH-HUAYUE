@@ -144,6 +144,63 @@ public class YoubusFileServerImpl implements FileServer {
 		return finfo;
 	}
 	
+	/**
+	 * 
+	 * 方   法  名:writeFileReturnObj
+	 * 方法描述:
+	 * 参         数:@param conn
+	 * 参         数:@param AppID
+	 * 参         数:@param owner 增加对象标示 比如车牌
+	 * 参         数:@param fname
+	 * 参         数:@param ins
+	 * 参         数:@param expireDate
+	 * 参         数:@param supType 增加大类 比如 CET_0010	CHECK_ENT_TYPE
+	 * 参         数:@return
+	 * 参         数:@throws Exception
+	 * 返   回  值:FsFileInfoPO
+	 * 创   建  人:rock
+	 * @exception
+	 * @since  1.0.0
+	 */
+	public FsFileInfoPO writeFileReturnObj(Connection conn,String AppID,String owner,String fname,InputStream ins,Date expireDate,String supCode) throws Exception{
+		FsFileSpacePO space= FsFileSpacePOFactory.getValidSpaceByAppidAndFSize(conn,AppID,defFileSize);
+		if ( space==null ) throw new FileServerException(ErrCode,"没有找到可以利用的存储空间或空间不足！[AppId="+AppID+"]",null);
+		
+		FsFileInfoPO finfo = new FsFileInfoPO();
+		finfo.setFileSpaceId(space.getSpaceId());
+		finfo.setAppId(AppID);
+		finfo.setFileCreateDate(new Date());
+		finfo.setFileId(POFactory.getLongPriKey(conn,finfo));
+		finfo.setFileInvalidDate(expireDate);
+		finfo.setFileName(fname);
+		finfo.setFileOwner(owner);
+		finfo.setNeedDelete(new Integer(0));
+		
+		String path= AppID==null?"":(File.separator+AppID);
+//		path += File.separator+sdf.format(new Date());
+		path += supCode==null?"":(File.separator+supCode);	
+		path += owner==null?"":(File.separator+owner);	
+		finfo.setFileRelationPath(path);
+		
+		String postFix = "";
+		if ( fname.lastIndexOf(".") > 0 ){
+			postFix = fname.substring(fname.lastIndexOf("."));
+		}
+		String newFileNameStr=UUID.randomUUID().toString().concat(postFix);
+		finfo.setFileDiskName(newFileNameStr);
+		File dir = new File(space.getSpacePath()+File.separator+finfo.getFileRelationPath());
+		dir.mkdirs();
+		try{
+			int len=FileServerUtil.write2FileSpace(ins,dir.getAbsolutePath()+File.separator+finfo.getFileDiskName());
+			finfo.setFileLength(new Long(len));
+		}catch(Exception e){
+			throw new FileServerException(ErrCode,"写文件失败!",e);
+		}
+		POFactory.insert(conn,finfo);
+		//FsFileSpacePOFactory.updateFileSpaceUseSpace(conn,space,finfo.getFileLength().longValue());
+		return finfo;
+	}
+	
 	
 	/**
 	 * 保存缩略图功能

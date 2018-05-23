@@ -54,11 +54,11 @@
 .tree li:last-child::before {
   height:30px
 }
-.tree li.parent_li>span:hover, .tree li.parent_li>span:hover+ul li span {
-  background:#eee;
-  border:1px solid #94a0b4;
-  color:#000
-}
+/* .tree li.parent_li>span:hover, .tree li.parent_li>span:hover+ul li span { */
+/*   background:#eee; */
+/*   border:1px solid #94a0b4; */
+/*   color:#000 */
+/* } */
 
 div.tree.well{
     background-color:transparent;
@@ -85,4 +85,54 @@ to { -webkit-box-shadow: 0 0 5px #bbb; }
 -webkit-animation-name: shineBlue;   
 -webkit-animation-duration:1s;  
 -webkit-animation-iteration-count: infinite;   
+}
+
+span>span.tree_level{
+	border:none;
+    border-radius:20px;
+/*  padding: 4px 6px; */
+    font-size: 11px;
+    display: inline-block;
+    text-shadow: none !important;
+    margin-right: 5px;
+}
+a.tree_a{
+	margin-left:0px; /* 	缩短按钮组长度 */
+	color: #bbb; /*淡化按钮图标*/
+	display: none;/*初始隐藏*/
+	padding: 6px 6px;
+}
+a.tree_a_see{
+	margin-left:2px;
+	color: #bbb; /*淡化按钮图标*/
+	padding: 6px 6px;
+}
+
+a.tree_a>i.glyphicon{
+	/*top:0px;*/
+	line-height: 13px;
+}
+a.tree_a_see>i.glyphicon{
+	/*top:0px;*/
+	line-height: 13px;
+}
+button.tree_btn{
+	padding: 4px 15px !important;
+	
+}
+span.data-detail>i{
+	margin-right: 3px;
+}
+
+li.drag-on-doing{
+	background: #fff ;
+	color: red;
+}
+span.drag-on-doing{
+	background: #fff;
+	color: red;
+}
+span.drag-on-scope{
+	background: #fff;
+	color: blue;
 }

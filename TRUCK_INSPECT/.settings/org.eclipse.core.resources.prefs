@@ -1,3 +1,10 @@
 eclipse.preferences.version=1
+encoding//WebContent/mobile-page=UTF-8
+encoding//WebContent/mobile-page/common/common-soure.jsp=UTF-8
+encoding//WebContent/mobile-page/common/main-common-footer.jsp=UTF-8
+encoding//WebContent/mobile-page/common/main-common-head.jsp=UTF-8
+encoding//WebContent/mobile-page/common/main-panel.jsp=UTF-8
+encoding//WebContent/mobile-page/order-info/order-list.jsp=UTF-8
 encoding//WebContent/page=UTF-8
 encoding//WebContent/page/login.jsp=UTF-8
+encoding//src/com/truckinspect/test/YBAESCipher.java=UTF-8

@@ -138,11 +138,12 @@ function upload(){
 // 	imgData格式如下：”data:image/png;base64,xxxxx“ 
 // 	真正图像数据是base64编码逗号之后的部分
 // c.toDataURL('image/jpeg',1)//照片压缩
-    dataUrl = c.toDataURL('image/jpeg',1);
-//     dataUrl = c.toDataURL('image/jpeg',getCompressRate(fileSize));
+//     dataUrl = c.toDataURL('image/jpeg');
+//     dataUrl = c.toDataURL('image/jpeg',1);
+    dataUrl = c.toDataURL('image/jpeg',getCompressRate(fileSize));
     alert("file size:="+fileSize+": rate :="+getCompressRate(fileSize))
-    console.log("upload:"+dataUrl);//处理之后的图片
-//     alert(dataUrl);
+//  console.log("upload:"+dataUrl);//处理之后的图片//--会导致图片上传不完整--！！！
+//  alert(dataUrl);
 // 	return false;
 	var reqData = {image_data:dataUrl,type:'base64'};
 	var reqUrl='/TRUCK_INSPECT/fileUploadChannel';
@@ -168,7 +169,14 @@ $("#upload").change(function(){
     var reader = new FileReader();
     reader.onload = function (e) {
       img = new Image(),maxW  = canvasWidth;//最大宽度
+      
+	  console.log("canvasHeight:="+canvasHeight);
+	  console.log("canvasWidth:="+canvasWidth);
+	  
       img.onload = function () {
+    	  
+    	  console.log("1 img.height:="+img.height);
+    	  console.log("1 img.width:="+img.width);
     	  
 //     	  alert(img.height+":"+img.width);
     	  if(img.width > maxW) {
@@ -186,6 +194,9 @@ $("#upload").change(function(){
     	  ctx.font="20px Verdana";
     	  ctx.strokeText(dateTime,10,50); 
     	  
+    	  console.log("2 img.height:="+img.height);
+    	  console.log("2 img.width:="+img.width);
+    	  
 // 		  console.log("1:"+dataUrl);
 //     	  dataUrl = c.toDataURL('image/jpeg',1);//未压缩 存储	
 //     	  console.log("2:"+dataUrl);
@@ -198,8 +209,9 @@ $("#upload").change(function(){
      }
     
     reader.readAsDataURL(this.files[0]);
-    fileSize = Math.round( this.files[0].size/1024/1024) ;
-// 	alert(fileSize);
+    fileSize = Math.round( this.files[0].size/1024/1024) ;//m
+	alert(this.files[0].size);
+	alert(fileSize);
 });
 	
 function getCompressRate(fileSize){ //计算压缩比率，size单位为MB
@@ -214,7 +226,7 @@ function getCompressRate(fileSize){ //计算压缩比率，size单位为MB
     } else if(fileSize > allowMaxSize){
          compressRate = 0.9;
     } else{
-         compressRate = 0.9;
+         compressRate = 1;
     }
     return compressRate;
 }

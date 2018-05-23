@@ -38,4 +38,18 @@
 		</ActionParam>
 	</Action>
 	
+	<Action id="SYS_QUERY_SERVER_TIME_ACTION">
+		<Description>查询服务器时间</Description>
+		<ActionContext>
+			<Data name="MSG" type="string" output="true"/>
+			<Data name="NOW_TIME" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.sys.action.GetNowTimeFromServerAction"  on1Do="next" onOtherDo="3"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
 </Config>

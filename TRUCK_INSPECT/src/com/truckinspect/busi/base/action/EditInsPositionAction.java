@@ -15,7 +15,6 @@ import com.infoservice.framework.ActionImpl;
 import com.infoservice.framework.datacontext.ActionContext;
 import com.infoservice.po.POFactory;
 import com.truckinspect.busi.base.po.TmInsPositionInfoPO;
-import com.truckinspect.busi.organize.po.TmInspactGroupPO;
 import com.truckinspect.common.TruckInsCommonCanstant;
 import com.truckinspect.common.util.OptLogUtil;
 import com.youbus.framework.comm.YBUtility;
@@ -75,9 +74,13 @@ public class EditInsPositionAction extends ActionImpl {
 		
 		positionPOValue.setUpdateBy(optMemberId);
 		positionPOValue.setUpdateTime(YBUtility.now());
+		positionPOValue.setVer(version+1);
+		
 		positionPOValue.setPositionAddress(positionAddress);
 		positionPOValue.setPositionDesc(positionDesc);
 		positionPOValue.setPositionName(positionName);
+		
+		
 		if(StringUtils.isNotBlank(positionCoord)&&positionCoord.split(";").length==2){
 			positionPOValue.setPositionLatitude(positionCoord.split(";")[1]);
 			positionPOValue.setPositionLongitude(positionCoord.split(";")[0]);

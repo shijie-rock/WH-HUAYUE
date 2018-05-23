@@ -179,12 +179,12 @@
                  	 <input  type="hidden" id="add_input_position_id" value="" >
                           					<div class="form-group">
                                             <label class="control-label col-md-3" for="add_input_position_code">检查地点代码</label>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                               <input type="text" class="form-control required-input" id="add_input_position_code" placeholder="检查地点代码">
                                               <span class="text-danger" >*</span>
                                             </div>
                                             <label class="control-label col-md-3" for="add_input_position_name">检查地点名称</label>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                               <input type="text" class="form-control required-input" id="add_input_position_name" placeholder="检查地点名称">
                                               <span class="text-danger">*</span>
                                             </div>

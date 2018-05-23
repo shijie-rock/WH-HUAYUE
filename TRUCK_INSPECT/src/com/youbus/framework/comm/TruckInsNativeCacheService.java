@@ -21,6 +21,7 @@ import net.sf.ehcache.Element;
 
 import org.apache.log4j.Logger;
 
+import com.info.base.po.TbAppInfoPO;
 import com.info.base.po.TsDataDicPO;
 import com.infoservice.framework.FrameworkConstant;
 import com.infoservice.framework.Service;
@@ -85,6 +86,8 @@ public class TruckInsNativeCacheService implements Service {
 	public static String APP_NO_PREFIX;
 	public static String APP_NAME;
 	public static String APP_TYPE;
+	public static String SERVER_URL;
+	public static String FILE_SERVER_PRIFIX_URL;
 	
 	/* (non-Javadoc)
 	 * @see com.infoservice.framework.Service#destroyService()
@@ -132,7 +135,7 @@ public class TruckInsNativeCacheService implements Service {
 		log.debug("initDataDic end");
 		
 		log.debug("initAppInfo begin");
-//		initAppInfo(conn);
+		initAppInfo(conn);
 		log.debug("initAppInfo end :="+TruckInsNativeCacheService.APP_NO_PREFIX);
 		
 		//
@@ -263,16 +266,18 @@ public class TruckInsNativeCacheService implements Service {
 	}
 
 	
-//	private void initAppInfo(Connection conn){
-//		TbAppInfoPO tAPO=POFactory.getByPriKey(conn, new TbAppInfoPO());
-//		if(tAPO!=null){
-//			APP_CODE=tAPO.getAppCode(); //对应 TB_APP_INFO
-//			APP_NO_PREFIX=tAPO.getNoPrefix();
-//			APP_NAME=tAPO.getAppName();
-//			APP_TYPE=tAPO.getAppType();
-//		}
-//		
-//	}
+	private void initAppInfo(Connection conn){
+		TbAppInfoPO tAPO=POFactory.getByPriKey(conn, new TbAppInfoPO());
+		if(tAPO!=null){
+			APP_CODE=tAPO.getAppCode(); //对应 TB_APP_INFO
+			APP_NO_PREFIX=tAPO.getNoPrefix();
+			APP_NAME=tAPO.getAppName();
+			APP_TYPE=tAPO.getAppType();
+			SERVER_URL=tAPO.getServerUrl();
+			FILE_SERVER_PRIFIX_URL=tAPO.getFileServerPrifixUrl();
+		}
+		
+	}
 	
 	/**
 	 * 初始化emp 未处理，未读消息数量

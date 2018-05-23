@@ -2,7 +2,7 @@
 * License version 1.0, a copy of which has been included with this
 * distribution in the LICENSE.txt file.
 *
-* CreateDate : 2017-12-09 23:05:19
+* CreateDate : 2018-02-28 17:32:21
 * CreateBy   : rock
 * Comment    : generate by com.infoservice.po.POGen
 */
@@ -10,7 +10,6 @@
 package com.truckinspect.busi.base.po;
 
 import java.util.Date;
-
 import com.infoservice.po.DataBean;
 import com.infoservice.po.POFactoryUtil;
 
@@ -36,6 +35,9 @@ public class TmInsTruckInfoPO implements DataBean{
 	private Integer driverId;
 	private String color;
 	private String truckDangerLevel;
+	private Float truckWidth;
+	private String truckStatus;
+	private String checkEntCode;
 	private String truckLicense;
 	private String seriesName;
 	private String confirmNo;
@@ -43,51 +45,15 @@ public class TmInsTruckInfoPO implements DataBean{
 	private Float truckLength;
 	private Date updateTime;
 	private String modelName;
-	private String truckStatus;
+	private String freezeTag;
 	private String truckType;
 	private Date licenseDate;
+	private String checkEntTypeCode;
 	private Date makeDate;
+	private Integer ver;
 	private String seriesCode;
 	private String brandCode;
-	
-	/**
-	 * freezeTag
-	 *
-	 * @return  the freezeTag
-	 * @since   1.0.0
-	 */
-	
-	public String getFreezeTag() {
-		return freezeTag;
-	}
-
-	/**
-	 * @param freezeTag the freezeTag to set
-	 */
-	public void setFreezeTag(String freezeTag) {
-		this.freezeTag = freezeTag;
-	}
-
-	/**
-	 * ver
-	 *
-	 * @return  the ver
-	 * @since   1.0.0
-	 */
-	
-	public Integer getVer() {
-		return ver;
-	}
-
-	/**
-	 * @param ver the ver to set
-	 */
-	public void setVer(Integer ver) {
-		this.ver = ver;
-	}
-
-	private String freezeTag;
-	private Integer ver;
+	private String driverName;
 
 	public void setConfirmExpDate(Date confirmExpDate){
 		this.confirmExpDate=confirmExpDate;
@@ -241,6 +207,30 @@ public class TmInsTruckInfoPO implements DataBean{
 		return this.truckDangerLevel;
 	}
 
+	public void setTruckWidth(Float truckWidth){
+		this.truckWidth=truckWidth;
+	}
+
+	public Float getTruckWidth(){
+		return this.truckWidth;
+	}
+
+	public void setTruckStatus(String truckStatus){
+		this.truckStatus=truckStatus;
+	}
+
+	public String getTruckStatus(){
+		return this.truckStatus;
+	}
+
+	public void setCheckEntCode(String checkEntCode){
+		this.checkEntCode=checkEntCode;
+	}
+
+	public String getCheckEntCode(){
+		return this.checkEntCode;
+	}
+
 	public void setTruckLicense(String truckLicense){
 		this.truckLicense=truckLicense;
 	}
@@ -297,6 +287,14 @@ public class TmInsTruckInfoPO implements DataBean{
 		return this.modelName;
 	}
 
+	public void setFreezeTag(String freezeTag){
+		this.freezeTag=freezeTag;
+	}
+
+	public String getFreezeTag(){
+		return this.freezeTag;
+	}
+
 	public void setTruckType(String truckType){
 		this.truckType=truckType;
 	}
@@ -313,12 +311,28 @@ public class TmInsTruckInfoPO implements DataBean{
 		return this.licenseDate;
 	}
 
+	public void setCheckEntTypeCode(String checkEntTypeCode){
+		this.checkEntTypeCode=checkEntTypeCode;
+	}
+
+	public String getCheckEntTypeCode(){
+		return this.checkEntTypeCode;
+	}
+
 	public void setMakeDate(Date makeDate){
 		this.makeDate=makeDate;
 	}
 
 	public Date getMakeDate(){
 		return this.makeDate;
+	}
+
+	public void setVer(Integer ver){
+		this.ver=ver;
+	}
+
+	public Integer getVer(){
+		return this.ver;
 	}
 
 	public void setSeriesCode(String seriesCode){
@@ -342,20 +356,20 @@ public class TmInsTruckInfoPO implements DataBean{
 	}
 
 	/**
-	 * truckStatus
+	 * driverName
 	 *
-	 * @return  the truckStatus
+	 * @return  the driverName
 	 * @since   1.0.0
 	*/
 	
-	public String getTruckStatus() {
-		return truckStatus;
+	public String getDriverName() {
+		return driverName;
 	}
 
 	/**
-	 * @param truckStatus the truckStatus to set
+	 * @param driverName the driverName to set
 	 */
-	public void setTruckStatus(String truckStatus) {
-		this.truckStatus = truckStatus;
+	public void setDriverName(String driverName) {
+		this.driverName = driverName;
 	}
 }

@@ -11,6 +11,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -462,4 +463,43 @@ public class YBUtility {
 	  public static Date now(){
 		  return new Date(System.currentTimeMillis());
 	  }
+	  
+	  private static String newOrderNo(String orderType){
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmssSSS");
+			String retStrFormatNowDate = sdf.format(new Date(System.currentTimeMillis()));
+//			String orderNo=YoubusNativeCacheService.APP_CODE+orderType+retStrFormatNowDate+YBUtility.getRandomString(6);
+			String orderNo=orderType+retStrFormatNowDate+getRandomString(6);
+//			String orderNo=YoubusNativeCacheService.APP_CODE+orderType+String.valueOf(System.currentTimeMillis())+YBUtility.getRandomString(6);
+			return orderNo;
+	  }
+	  
+	  /**
+	   * web端新建检查单，获取单号
+	   * 方   法  名:getWEBCheckOrderNo
+	   * 方法描述:
+	   * 参         数:@return
+	   * 返   回  值:String
+	   * 创   建  人:rock
+	   * @exception
+	   * @since  1.0.0
+	   */
+	  public static String getWEBCheckOrderNo(){
+		  return newOrderNo("WK");
+	  }
+	  
+	  /**
+	   * 计划任务自动生成检查单，获取单号
+	   * 方   法  名:getAutoCheckOrderNo
+	   * 方法描述:
+	   * 参         数:@return
+	   * 返   回  值:String
+	   * 创   建  人:rock
+	   * @exception
+	   * @since  1.0.0
+	   */
+	  public static String getAutoCheckOrderNo(){
+		  return newOrderNo("CK");
+	  }
+	  
+	  
 }

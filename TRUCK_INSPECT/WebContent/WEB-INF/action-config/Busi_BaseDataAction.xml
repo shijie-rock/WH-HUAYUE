@@ -99,4 +99,174 @@
 		</ActionParam>
 	</Action>
 	
+	<Action id="BASE_DATA_INS_TRUCK_LIST_QUERY_ACTION">
+		<Description>查询车辆信息列表</Description>
+		<ActionContext>
+			<Data name="sEcho" type="string"/>
+			<Data name="iDisplayStart" type="integer"/>
+			<Data name="iDisplayLength" type="integer"/>
+			
+			<Data name="TRUCK_TYPE" type="string"/>
+			<Data name="TRUCK_STATUS" type="string"/>
+			<Data name="TRUCK_LICENSE" type="string"/>
+			
+			<Data name="INCLUDE_STOP" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="jsonResult" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.base.action.QueryInsTruckListAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BASE_DATA_INS_TRUCK_ADD_ACTION">
+		<Description>新增车辆信息</Description>
+		<ActionContext>
+
+			<Data name="TRUCK_IMG_DATA" type="string"/>
+			<Data name="TRUCK_IMG_FILE_NAME" type="string"/>
+			
+			<Data name="TRUCK_TYPE" type="string"/>
+			<Data name="TRUCK_LICENSE" type="string"/>
+			<Data name="TRUCK_VIN" type="string"/>
+			<Data name="TRUCK_D_LEVEL" type="string"/>
+			<Data name="TRUCK_DRIVER_NAME" type="string"/>
+			<Data name="TRUCK_BELONG_TYPE" type="string"/>
+			<Data name="TRUCK_BRAND" type="string"/>
+			<Data name="TRUCK_MODEL" type="string"/>
+			<Data name="TRUCK_MAKE_DATE" type="string"/>
+			<Data name="TRUCK_LICENSE_DATE" type="string"/>
+			<Data name="TRUCK_DESC" type="string"/>
+			<Data name="TRUCK_LENGTH" type="string"/>
+			<Data name="TRUCK_HEIGHT" type="string"/>
+			<Data name="TRUCK_WEIGHT" type="string"/>
+			<Data name="TRUCK_WIDTH" type="string"/>
+			<Data name="TRUCK_COLOR" type="string"/>
+			
+			<Data name="SUB_OBJ_STR" type="string"/>
+			<Data name="SUB_ENT_STR" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.base.action.AddInsTruckAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+		
+	<Action id="BASE_DATA_INS_TRUCK_DETAIL_ACTION">
+		<Description>查询车辆明细</Description>
+		<ActionContext>
+			<Data name="TRUCK_ID" type="string"/>
+			
+			<Data name="MSG" type="string" output="true"/>
+			<Data name="INS_TRUCK_BEAN" type="object" output="true"/>
+			<Data name="ENT_MAP_LIST" type="array" output="true"/>
+			<Data name="OBJ_MAP_LIST" type="array" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.base.action.QueryInsTruckDetailAction"  on1Do="next" onOtherDo="3"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="BASE_DATA_INS_TRUCK_MOD_ACTION">
+		<Description>车辆信息停用启用删除</Description>
+		<ActionContext>
+			<Data name="TRUCK_ID" type="string"/>
+			<Data name="OPT_TYPE" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.base.action.ModInsTruckAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BASE_DATA_INS_TRUCK_EDIT_ACTION">
+		<Description>编辑车辆信息</Description>
+		<ActionContext>
+			<Data name="TRUCK_ID" type="integer"/>
+			
+			<Data name="TRUCK_IMG_DATA" type="string"/>
+			<Data name="TRUCK_IMG_FILE_NAME" type="string"/>
+			
+			<Data name="TRUCK_TYPE" type="string"/>
+<!-- 		<Data name="TRUCK_LICENSE" type="string"/> -->
+
+			<Data name="TRUCK_VIN" type="string"/>
+			<Data name="TRUCK_D_LEVEL" type="string"/>
+			<Data name="TRUCK_DRIVER_NAME" type="string"/>
+			<Data name="TRUCK_BELONG_TYPE" type="string"/>
+			<Data name="TRUCK_BRAND" type="string"/>
+			<Data name="TRUCK_MODEL" type="string"/>
+			<Data name="TRUCK_MAKE_DATE" type="string"/>
+			<Data name="TRUCK_LICENSE_DATE" type="string"/>
+			<Data name="TRUCK_DESC" type="string"/>
+			<Data name="TRUCK_LENGTH" type="string"/>
+			<Data name="TRUCK_HEIGHT" type="string"/>
+			<Data name="TRUCK_WEIGHT" type="string"/>
+			<Data name="TRUCK_WIDTH" type="string"/>
+			<Data name="TRUCK_COLOR" type="string"/>
+			
+			<Data name="SUB_OBJ_STR" type="string"/>
+			<Data name="SUB_ENT_STR" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.base.action.EditInsTruckAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="BASE_DATA_INS_TRUCK_CHECK_OBJ_DETAIL_ACTION">
+		<Description>查询车辆检查项目小类</Description>
+		<ActionContext>
+			<Data name="TRUCK_ID" type="integer"/>
+			
+			<Data name="MSG" type="string" output="true"/>
+			<Data name="SUB_LIST_HTML" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.base.action.QueryInsTruckCheckObjDetailAction"  on1Do="next" onOtherDo="3"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="BASE_DATA_INS_TRUCK_PIC_DETAIL_ACTION">
+		<Description>查询车辆图片列表</Description>
+		<ActionContext>
+			<Data name="TRUCK_ID" type="string"/>
+			
+			<Data name="MSG" type="string" output="true"/>
+			<Data name="PIC_LIST" type="array" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.base.action.QueryInsTruckPicDetailAction"  on1Do="next" onOtherDo="3"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
 </Config>

@@ -33,6 +33,7 @@ body.content-body{
     padding-top:0px;
     border-top:0px;	
     background: #eee url(../img/main-back.png) repeat;
+    overflow: hidden;
 /*  background: #343434 url(../img/back.png) repeat; */ /*内容页底图*/
 }
 
@@ -94,6 +95,9 @@ div.col-md-12>div.widget{
 div.col-md-12>div.widget>div.query-condition{
 	height:50px;
 }
+div.col-md-12>div.widget>div.query-condition.double-size{
+	height:135px;
+}
 
 div.query-condition >div.form-group{
 	margin:8px 0px;
@@ -115,6 +119,7 @@ div.query-condition-summry{
 	margin-left:10px;
 	display:none;
 	font-weight:normal;
+	line-height: 28px;
 }
 
 
@@ -291,4 +296,126 @@ div.tangram-suggestion-main{
 /**/
 thead.table-title-normal>tr>th{
 	font-weight:normal;
+}
+
+/*div img*/
+div.modal-truck-img{
+	height: 360px;
+	overflow-y: hidden;
+}
+/*div img 隐藏左右箭头层*/
+a.carousel-control.left {
+  /*background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.0001) 100%);
+  background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.0001) 100%);
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.0001) 100%);*/
+  background-image:none;
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
+}
+a.carousel-control.right {
+  left: auto;
+  right: 0;
+  /*background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.0001) 0%, rgba(0, 0, 0, 0.5) 100%);
+  background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.0001) 0%, rgba(0, 0, 0, 0.5) 100%);
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.0001) 0%, rgba(0, 0, 0, 0.5) 100%);*/
+  background-image:none;
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=1);
+}
+
+/*div img 增加图片阴影,边框*/
+div.carousel.slide{
+	 height: 323px;
+	-moz-box-shadow: 7px 7px 5px #888888; /* 老的 Firefox */
+     box-shadow: 7px 7px 9px #888888;
+     background-color: #fff;
+     border: solid 1px #eee;
+     padding: 7px;
+}
+/*truck img自适应div大小*/
+div>img.auto-size-img{
+	width:auto;
+ 	height:auto;
+ 	max-width:552px;
+ 	max-height:307px;
+ 	
+/*  	margin: -150 auto; */
+ 	margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+div.carousel-inner{
+	width: 100%;
+	height: 100%;
+}
+/*img title*/
+div.carousel-caption{
+	font-size: 18px;
+}
+div.col-md-4>div.layui-upload-list {
+	margin: 0 5px 5px -5px;
+	background-color: #fff;
+	box-shadow: 5px 5px 9px #888888;
+	border: solid 1px #eee;
+	padding: 5px;
+	width: 170px;
+}
+div.fix-display-menu{
+	display:none;
+	font-size: 16px;
+	position:fixed;
+    background: #eee;
+    color: #888;
+    width: 38px;
+    height: 38px;
+    line-height: 38px;
+    text-align: center;
+    border-radius: 30px;
+    border: 1px solid #ccc;
+    top:30%;
+    z-index:3000;
+    padding-top: 9px;
+    filter:alpha(opacity=50);  /* ie 有效*/
+	-moz-opacity:0.5; /* Firefox  有效*/
+	opacity: 0.5; /* 通用，其他浏览器  有效*/
+}
+div.fix-display-menu:hover{
+	background-color:#337ab7;
+	cursor:pointer;
+	color:#fff;
+	border: 0px solid #666;
+	opacity:1;
+	
+}
+
+div.ins-truck-cal-div div.fc-event-skin {
+	border-color: #36c ;     /* default BORDER color */
+	background-color: #36c ; /* default BACKGROUND color */
+	color: #fff;            /* default TEXT color */
+	}
+	
+ul.ui-autocomplete{
+	 z-index:3000;
+}	
+
+/*fullcalendar*/
+.fc-head>tr>td.fc-widget-header{
+	    padding: 0px 0px !important;
+}
+.fc-head>tr>td.fc-widget-header>div.fc-row.fc-widget-header{
+	    padding: 2px 0px !important;
+}
+div.fc>div.fc-toolbar{
+	margin-bottom:0em;
+}
+div.fc-center>h2{
+	font-size: 18px;
+}
+a>div.fc-content{
+	background: none;
+	padding:2px;
+}
+td.fc-sat,td.fc-sun{
+	background-color:#f5eeed;
 }

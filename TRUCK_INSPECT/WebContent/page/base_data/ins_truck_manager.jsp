@@ -10,7 +10,7 @@
   <meta name="description" content="华悦车检系统登录" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="">
-  
+<%--   <link href="<%=path%>/style/layui.css?v=<%=staticVersion%>" rel="stylesheet" /><!-- layui css file --> --%>
   <!-- HTML5 Support for IE -->
   <!--[if lt IE 9]>
   <script src="js/html5shim.js"></script>
@@ -18,10 +18,16 @@
 
   <!-- Favicon -->
   <link rel="shortcut icon" href="img/favicon/favicon.png">
+  <style type="text/css">
+	.layui-upload-file {
+		display: none !important;
+		opacity: .01;
+		filter: Alpha(opacity = 1);
+	}
+</style>
 </head>
 
 <body class="content-body">
-
 
       <!-- Page heading -->
       <div class="page-head">
@@ -66,12 +72,18 @@
         		</div>
         
        			<div class="form-group col-sm-3">
-        			<label class="col-sm-5 control-label">车型</label>
-         			<div class="col-sm-7"><input type="text" class="form-control" placeholder="车型" id="qr_input_truck_type"></div>
+        			<label class="col-sm-5 control-label">车辆类型</label>
+         			<div class="col-sm-7">
+<!--          			<input type="text" class="form-control" placeholder="车辆类型" id="qr_input_truck_type"> -->
+         			<yb:select dataSource="DATA_DIC.TRUCK_TYPE"  selectClass="form-control subWidth"  includeNull="true" selectId="qr_input_truck_type"/>
+         			</div>
         		</div>
        			<div class="form-group col-sm-3">
         			<label class="col-sm-5 control-label">车辆状态</label>
-         			<div class="col-sm-7"><input type="text" class="form-control" placeholder="车辆状态" id="qr_input_truck_status"></div>
+         			<div class="col-sm-7">
+<!--          			<input type="text" class="form-control" placeholder="车辆状态" id="qr_input_truck_status"> -->
+         			<yb:select dataSource="DATA_DIC.TRUCK_STATUS"  selectClass="form-control subWidth"  includeNull="true" selectId="qr_input_truck_status"/>
+         			</div>
         		</div>
 
 				<div class="form-group col-sm-3">
@@ -103,7 +115,7 @@
                 <div class="widget">
 
                 <div class="widget-head">
-                  <div class="pull-left">查询结果 &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-xs" href="javascript:void(0);" onclick="addMember();" id="bt_add_member">新增车辆</button></div>
+                  <div class="pull-left">查询结果 &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-xs" href="javascript:void(0);" onclick="addTruck();" id="bt_add_truck">新增车辆</button></div>
                   <div class="widget-icons pull-right">
                     <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
                     <a href="#" class="wclose"><i class="icon-remove"></i></a>
@@ -116,16 +128,17 @@
                     <table id="insTruckList"  class="table table-striped table-bordered table-hover">
                       <thead>
                         <tr>
-                          <th width="5%"></th>
-                          <th width="10%"></th>
-                          <th width="10%"></th>
-                          <th width="10%"></th>
-                          <th width="10%"></th>
-                          <th width="10%"></th>
-                          <th width="10%"></th>
-                          <th width="10%"></th>
-                          <th width="10%"></th>
-                          <th width="15%"></th>
+                          <th width="5%">序号</th>
+                          <th width="10%">车牌/车架号</th>
+                          <th width="10%">类型/所属/危</th>
+                          <th width="10%">品牌/车型</th>
+                          <th width="10%">生产/上牌日期</th>
+                          <th width="10%">许可开始/截止</th>
+                          <th width="10%">长宽高/载重</th>
+                          <th width="10%">检测历史</th>
+                          <th width="5%">图片</th>
+                          <th width="5%">状态</th>
+                          <th width="15%">操作</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -183,103 +196,150 @@
 				 <div class="padd">
                  	 <div class="form-horizontal">
                  	 <input  type="hidden" id="add_input_ins_truck_id" value="" >
-                          					<div class="form-group">
-                                            <label class="control-label col-md-3" for="add_input_truck_license">车辆代码</label>
-                                            <div class="col-md-4">
-                                              <input type="text" class="form-control required-input" id="add_input_truck_license" placeholder="车辆代码">
+                          			<div class="form-group">
+                                       <label class="control-label col-md-3" for="add_input_truck_license"></label>
+                                        <div class="col-md-4">
+<!-- 											<div class="layui-upload"> -->
+											 <div class="layui-upload-list">
+											    <img class="layui-upload-img" id="truck_img_upload" style="width:158px;height:154px;" > <!-- 上传图片 -->
+											    <img class="layui-upload-img" id="truck_img_display" src="" style="width:158px;height:154px; display: none;"> <!-- 显示图片 -->
+											  </div>
+<!-- 											  <button type="button" class="btn  btn-xs btn-primary" id="test1">上传图片</button> -->
+<!-- 											  <button type="button" class="layui-btn" id="test1">上传图片</button> -->
+<!-- 											</div> -->
+										 </div>
+<!-- 										 <div> -->
+										    <label class="control-label col-md-6" for="add_input_truck_license">车牌</label>
+                                            <div class="col-md-4" style="margin-bottom: 15px">
+                                              <input type="text" class="form-control required-input" id="add_input_truck_license" placeholder="车牌">
                                               <span class="text-danger" >*</span>
                                             </div>
-                                            <label class="control-label col-md-3" for="add_input_truck_type">车辆姓名</label>
+                                            
+                                            <label class="control-label col-md-3" for="add_input_truck_vin">VIN</label>
+                                            <div class="col-md-4" style="margin-bottom: 15px">
+                                              <input type="text" class="form-control required-input" id="add_input_truck_vin" placeholder="车辆Vin码">
+<!--                                               <span class="text-danger">*</span> -->
+                                            </div>
+                                            
+                                            <label class="control-label col-md-3" for="add_input_truck_type">类型</label>
+                                            <div class="col-md-4" style="margin-bottom: 15px">
+<!--                                          		<input type="text" class="form-control required-input" id="add_input_truck_type" placeholder="车辆类型"> -->
+                                              <yb:select dataSource="DATA_DIC.TRUCK_TYPE"  selectClass="form-control subWidth"  includeNull="true" selectId="add_input_truck_type"/>
+<!--                                               <span class="text-danger">*</span> -->
+                                            </div>
+                                            <label class="control-label col-md-3" for="add_input_truck_danger_level">危险类型</label>
+                                            <div class="col-md-4" >
+<!--                                               <input type="text" class="form-control required-input" id="add_input_truck_danger_level" placeholder="危险类型"> -->
+                                              <yb:select dataSource="DATA_DIC.TRUCK_DANGER_LEVEL"  selectClass="form-control subWidth"  includeNull="true" selectId="add_input_truck_danger_level"/>
+<!--                                               <span class="text-danger">*</span> -->
+                                            </div>
+                                            
+<!--                                       </div>  -->
+										<!--end row -->
+                                          </div> 
+                          					<div class="form-group">
+                                            <label class="control-label col-md-3" for="add_input_truck_driver_name">司机</label>
                                             <div class="col-md-4">
-                                              <input type="text" class="form-control required-input" id="add_input_truck_type" placeholder="车辆名称">
-                                              <span class="text-danger">*</span>
+                                              <input type="text" class="form-control required-input" id="add_input_truck_driver_name" placeholder="司机">
+                                         	  <input type="hidden" id="add_input_truck_driver_id" value="">
+<!--                                               <span class="text-danger" >*</span> -->
+                                            </div>
+                                            <label class="control-label col-md-3" for="add_input_truck_belong_type">归属类型</label>
+                                            <div class="col-md-4">
+<!--                                               <input type="text" class="form-control required-input" id="add_input_truck_belong_type" placeholder="归属类型"> -->
+                                              <yb:select dataSource="DATA_DIC.TRUCK_BELONG_TYPE"  selectClass="form-control subWidth"  includeNull="true" selectId="add_input_truck_belong_type"/>
+<!--                                               <span class="text-danger">*</span> -->
+                                            </div>
+                                          </div> 
+                          					<div class="form-group">
+                                            <label class="control-label col-md-3" for="add_input_truck_brand_code">品牌</label>
+                                            <div class="col-md-4">
+                                              <input type="text" class="form-control required-input" id="add_input_truck_brand_code" placeholder="品牌">
+<!--                                               <span class="text-danger" >*</span> -->
+                                            </div>
+                                            <label class="control-label col-md-3" for="add_input_truck_model_code">车型</label>
+                                            <div class="col-md-4">
+                                              <input type="text" class="form-control required-input" id="add_input_truck_model_code" placeholder="车型">
+<!--                                               <span class="text-danger">*</span> -->
                                             </div>
                                           </div> 
                                           
                                           <div class="form-group">
-                                            <label class="control-label col-md-3" for="add_input_member_password">车辆密码</label>
+                                            <label class="control-label col-md-3" for="add_input_truck_make_date">生产日期</label>
                                             <div class="col-md-4">
-                                              <input type="password" class="form-control required-input" id="add_input_member_password">
-                                              <span class="text-danger" >*</span>
+                                              <input type="text" class="form-control required-input layer-date" id="add_input_truck_make_date"  placeholder="生产日期">
+<!--                                               <span class="text-danger" >*</span> -->
+											  <input class="form-control required-input" size="16" type="text" value="" id="add_input_truck_make_date_query" placeholder="生产日期" readonly>
                                             </div>
-                                            <label class="control-label col-md-3" for="add_input_truck_status">车辆手机</label>
-                                            <div class="col-md-4">
-                                              <input type="text" class="form-control required-input" id="add_input_truck_status" placeholder="车辆手机">
-<!--                                               <span class="text-danger">*</span> -->
-                                            </div>
-                                          </div>  
                                             
-                          				  <div class="form-group">
-                                            <label class="control-label col-md-3" for="add_input_member_password_confirm">确认密码</label>
+                                            <label class="control-label col-md-3" for="add_input_truck_license_date">上牌日期</label>
                                             <div class="col-md-4">
-                                              <input type="password" class="form-control required-input" id="add_input_member_password_confirm">
-                                              <span class="text-danger" >*</span>
+                                              <input type="text" class="form-control required-input layer-date" id="add_input_truck_license_date"  placeholder="上牌日期">
+<!--                                               <span class="text-danger" >*</span> -->
+											  <input class="form-control required-input" size="16" type="text" value="" id="add_input_truck_license_date_query" placeholder="上牌日期" readonly>
                                             </div>
-                                            <label class="control-label col-md-3" for="add_input_email">车辆邮箱</label>
+
+                                          </div>  
+                                          <!-- 暂不需要
+                          				  <div class="form-group">
+                                            <label class="control-label col-md-3" for="add_input_truck_cf_begin">许可开始</label>
                                             <div class="col-md-4">
-                                              <input type="text" class="form-control required-input" id="add_input_email" placeholder="车辆邮箱">
-<!--                                               <span class="text-danger">*</span> -->
+                                              <input type="text" class="form-control required-input" id="add_input_truck_cf_begin" placeholder="许可开始日期">
+                                            </div>
+                                            
+                                            <label class="control-label col-md-3" for="add_input_truck_cf_end">许可截止</label>
+                                            <div class="col-md-4">
+                                              <input type="text" class="form-control required-input" id="add_input_truck_cf_end" placeholder="许可截止日期">
                                             </div>
                                           </div>   
-                                          
-                                          <!-- Select box -->
-                                          <div class="form-group">
-                                            <label class="control-label col-md-3">职务</label>
-                                            <div class="col-md-4" id="add_input_job">                               
-<!--                                                 <select class="form-control" style="width:93%"> -->
-<!--                                                 <option>&nbsp;</option> -->
-<!--                                                 <option>1</option> -->
-<!--                                                 <option>2</option> -->
-<!--                                                 </select>   -->
-                                            <yb:select dataSource="DATA_DIC.POSITION_TYPE"  selectClass="form-control subWidth"  includeNull="true" selectId="add_input_job_select"/>
-                                            </div>
-
-			                               <label class="control-label col-md-3" for="add_input_sex">车辆性别</label>
-			                                <div class="col-md-4">
-			                                <label class="radio-inline"> <input type="radio" name="add_input_sex" id="add_input_sex_m" value="SEX_0010" checked> 男</label> 
-											<label class="radio-inline"> <input type="radio" name="add_input_sex" id="add_input_sex_f" value="SEX_0020"> 女</label>
-			                             	</div>
-										</div>
-										
-										 <div class="form-group">
-                                            <label class="control-label col-md-3" for="add_input_cert_no">身份证号</label>
-                                            <div class="col-md-4">
-                                              <input type="text" class="form-control required-input" id="add_input_cert_no" placeholder="身份证号">
-                                            </div>
-                                            <label class="control-label col-md-3" for="">出生日期</label>
-                                           <div class="date form_date col-md-4"  
-                                                data-date=""  data-date-format="yyyy-mm-dd" 
-                                                data-link-field="add_input_birthday" data-link-format="yyyy-mm-dd">
-                                                <span id="testView"></span>
-									            <input class="form-control required-input layer-date" size="16" type="text" value="" id="add_input_birthday"  placeholder="出生日期" readonly style="display:none;">
-									            <input class="form-control required-input" size="16" type="text" value="" id="add_input_birthday_query" placeholder="出生日期" readonly>
-									        </div>
-<!-- 													<input type="hidden" id="add_input_birthday" value="" /><br/> -->
-                                          </div>  
-                                          <!--  -->
-                                          <div class="form-group">
-                                            <label class="control-label col-md-3" for="add_input_member_desc">车辆说明</label>
+ 										 --> 
+ 										 
+ 										  <div class="form-group">
+                                            <label class="control-label col-md-3" for="add_input_truck_desc">车辆说明</label>
                                             <div class="col-md-8">
-                                              <input type="text" class="form-control" id="add_input_member_desc"  placeholder="车辆说明">
+                                              <input type="text" class="form-control" id="add_input_truck_desc"  placeholder="车辆说明">
                                             </div>
                                           </div>
-                                          
+ 										<!--  //暂不需要车辆尺寸
+                                        <div class="form-group">
+                                        <center><hr class="modal-hr"/></center>  
+                                        <div class="panel-body" id="add_input_truck_size" style="padding-bottom: 0px;"><p>车辆尺寸</p></div>
+                                            <label class="control-label col-md-2" for="add_input_truck_size_length">长</label>
+                                            <div class="col-md-2">
+                                              <input type="text" class="form-control required-input" id="add_input_truck_size_length" placeholder="长" style="width:84%;"><span class="text-default" >M</span>
+                                            </div>
+                                            <label class="control-label col-md-2" for="add_input_truck_size_width">宽</label>
+                                            <div class="col-md-2">
+                                              <input type="text" class="form-control required-input" id="add_input_truck_size_width" placeholder="宽" style="width:84%;"><span class="text-default" >M</span>
+                                            </div>
+                                            <label class="control-label col-md-2" for="add_input_truck_size_height">高</label>
+                                            <div class="col-md-2">
+                                              <input type="text" class="form-control required-input" id="add_input_truck_size_height" placeholder="高" style="width:84%;"><span class="text-default" >M</span>
+                                            </div>
+                                         </div>
                                           <div class="form-group">
-                                         		 <label class="control-label col-md-3" >车辆设置</label>
-                                         		 <div class="col-md-8">
-													<label class="checkbox-inline col-md-3"> <input type="checkbox" id="add_input_is_login_sys" value="1">操作员</label>
-													<label class="checkbox-inline col-md-3"> <input type="checkbox" id="add_input_is_inspactor" value="1">检查员</label>
-<!-- 												<label class="checkbox-inline col-md-3"> <input type="checkbox" id="qr_cb_include_stop" value="1">检查员</label> -->
-                                         		 </div>
-                                          </div>
-
-										
-<!-- 										<div class="form-group"><center><hr class="modal-hr"/></center> -->
-<!-- 											<div class="panel-body" id="role_action_option_div"><p>角色对应菜单列表</p> -->
-<%-- 												<yb:funActOptHtml ulId="role_action_option"></yb:funActOptHtml> --%>
-<!-- 											</div> -->
-<!-- 								         </div>   -->
-										
+                                            <label class="control-label col-md-3" for="add_input_truck_weight">车重</label>
+                                            <div class="col-md-4">
+                                              <input type="text" class="form-control required-input" id="add_input_truck_weight"  placeholder="车重" style="width:92%;">
+                                              <span class="text-default" >T</span>
+                                            </div>
+                                            <label class="control-label col-md-3" for="add_input_truck_color">颜色</label>
+                                            <div class="col-md-4">
+                                              <input type="text" class="form-control required-input" id="add_input_truck_color" placeholder="颜色">
+                                            </div>
+                                        
+                                          </div>     
+                                          -->  
+                                         <yb:CheckEntMidOptHtml entTypeCode="CET_0010"></yb:CheckEntMidOptHtml>
+                                         <yb:TruckObjSupMidSubOptHtml entTypeCode="CET_0010"></yb:TruckObjSupMidSubOptHtml>
+                                         <!-- 检查对象类型 车辆 -->
+<!--                                           <div class="form-group"> -->
+<!--                                          		 <label class="control-label col-md-3" >车辆设置</label> -->
+<!--                                          		 <div class="col-md-8"> -->
+<!-- 													<label class="checkbox-inline col-md-3"> <input type="checkbox" id="add_input_is_login_sys" value="1">操作员</label> -->
+<!-- 													<label class="checkbox-inline col-md-3"> <input type="checkbox" id="add_input_is_inspactor" value="1">检查员</label> -->
+<!--                                          		 </div> -->
+<!--                                           </div> -->
 								</div>
                			 </div>
 					</div>
@@ -291,6 +351,86 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal obj sub-->
+	<div id="modal_sub_ins_truck" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content widget ">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title" id="modal_sub_ins_truck_title"></h4>
+				</div>
+				<div class="alert opt-result-alert"></div>
+				<div class="modal-body modal-scrollable" id="modal_sub_ins_truck_content">
+					 <div class="padd">
+	                 	 	<div class="form-horizontal" id="modal_sub_ins_truck_div_content">
+							</div>
+               		 </div>
+					</div>
+				<div class="modal-footer">
+<!-- 					<button type="button" id="btn_save_ins_truck" data-opt-type="" class="btn btn-success" data-loading-text="Loading" onclick="saveInsTruckConfirm(this);">保&nbsp;&nbsp;存</button> -->
+					<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关&nbsp;&nbsp;闭</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- pic modal -->
+	
+<div id="modal_ins_truck_img" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+				<div class="modal-content widget ">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title" id="modal_add_ins_truck_img_title"></h4>
+				</div>
+				<div class="alert opt-result-alert"></div>
+				<div class="modal-body modal-scrollable modal-truck-img" id="modal_add_ins_truck_img_content">
+			<div id="myCarousel" class="carousel slide" >
+				<!-- 轮播（Carousel）指标 -->
+				<ol class="carousel-indicators" id="modal_ins_truck_img_li">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+					<li data-target="#myCarousel" data-slide-to="3"></li>
+					<li data-target="#myCarousel" data-slide-to="4"></li>
+				</ol>
+				<!-- 轮播（Carousel）项目 -->
+				<div class="carousel-inner" id="modal_ins_truck_img_div">
+					<div class="item active">
+						<img src="<%=path%>/img/temp/timg.jpg" alt="First slide" class="auto-size-img">
+						<div class="carousel-caption">鲁F-12345</div>
+					</div>
+					<div class="item">
+						<img src="<%=path%>/img/temp/timg (1).jpg" alt="Second slide" class="auto-size-img">
+						<div class="carousel-caption">鲁F-12345</div>
+					</div>
+					<div class="item">
+						<img src="<%=path%>/img/temp/timg (2).jpg" alt="Third slide" class="auto-size-img">
+						<div class="carousel-caption">鲁F-12345</div>
+					</div>
+					<div class="item">
+						<img src="<%=path%>/img/temp/timg (3).jpg" alt="Third slide" class="auto-size-img">
+						<div class="carousel-caption">鲁F-12345</div>
+					</div>
+					<div class="item">
+						<img src="<%=path%>/img/temp/timg (4).jpg" alt="Third slide" class="auto-size-img">
+						<div class="carousel-caption">鲁F-12345</div>
+					</div>
+				</div>
+				<!-- 轮播（Carousel）导航 -->
+				<a class="carousel-control left" 
+				    href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left" style="font-size:20px"></span></a> 
+				<a class="carousel-control right"
+					href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right" style="font-size:20px"></span></a>
+			</div>
+		 </div>
+<!-- 		 <div class="modal-footer"> -->
+<!-- 				<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关&nbsp;&nbsp;闭</button> -->
+<!-- 		 </div> -->
+	  </div>
+	</div>
+</div>
 
 <!-- Header starts -->
 <!-- Header ends -->
@@ -309,6 +449,8 @@
 <script src="<%=path%>/js/jquery.js?v=<%=staticVersion%>"></script> <!-- jQuery -->
 <script src="<%=path%>/js/bootstrap.js?v=<%=staticVersion%>"></script> <!-- Bootstrap -->
 <script src="<%=path%>/js/laydate.js?v=<%=staticVersion%>"></script> <!-- laydate.js -->
+<script src="<%=path%>/js/layui/layui.js?v=<%=staticVersion%>"></script> <!-- layui core.js -->
+<%-- <script src="<%=path%>/js/layui/upload.js?v=<%=staticVersion%>"></script> <!-- layui upload.js --> --%>
 
 <!-- table收起 -->
 <script src="<%=path%>/js/truck-inspect-common.js?v=<%=staticVersion%>"></script> <!-- Custom codes -->
@@ -321,7 +463,7 @@
 <!-- Script for this page -->
 <script type="text/javascript">
 //data dic
-var map=parseData2Map('<yb:dataDic dataDicType="POSITION_TYPE,SEX"/>');
+var map=parseData2Map('<yb:dataDic dataDicType="TRUCK_TYPE,TRUCK_BELONG_TYPE,TRUCK_DANGER_LEVEL,TRUCK_STATUS"/>');
 function dicTranse(value){
 	return map[value]==null?value:map[value];
 }
@@ -333,6 +475,9 @@ function dicTranse(value){
 	}
 
 	$(function() {
+// 		recordMainPageBrowserType("site_root");
+		jsonPX();
+// 		console.log(checkBrowser());
 		dataTableInit();
 	}); 
 	
@@ -344,58 +489,42 @@ function dicTranse(value){
 		var includeStop=(true==$("#qr_cb_include_stop").is(':checked'))?"1":"0";
 		
 		//格式：列映射关系
-		var aoColumns = '[{"mDataProp" : "MEMBER_ID","sTitle" : "序号"},'
-					   + '{"mDataProp" : "MEMBER_CODE","sTitle" : "代码/姓名"},'
-					   + '{"mDataProp" : "MOBILE","sTitle" : "手机/邮箱"},'
-					   + '{"mDataProp" : "JOB_TITEL_TYPE","sTitle" : "职位"},'
-					   + '{"mDataProp" : "MEMBER_ROLE","sTitle" : "角色"},'
-					   + '{"mDataProp" : "IS_INSPACTOR","sTitle" : "操作/检车"},'
-					   + '{"mDataProp" : "MEMBER_INS_GROUP","sTitle" : "检查组"},'
-					   + '{"mDataProp" : "MEMBER_REMARK","sTitle" : "备注"},'
+		var aoColumns = '[{"mDataProp" : "TRUCK_ID","sTitle" : "序号"},'
+					   + '{"mDataProp" : "TRUCK_LICENSE","sTitle" : "车牌/车架号"},'
+					   + '{"mDataProp" : "TRUCK_TYPE","sTitle" : "类型/所属/危"},'
+					   + '{"mDataProp" : "BRAND_CODE","sTitle" : "品牌/车型"},'
+					   + '{"mDataProp" : "MAKE_DATE","sTitle" : "生产/上牌日期"},'
+					   + '{"mDataProp" : "CONFIRM_BEGIN_DATE","sTitle" : "许可开始/截止"},'
+					   + '{"mDataProp" : "TRUCK_HEIGHT","sTitle" : "长宽高/载重"},'
+					   + '{"mDataProp" : "TRUCK_DESC","sTitle" : "检测历史"},'
+					   + '{"mDataProp" : "IMG_COUNT","sTitle" : "图片"},'
 					   + '{"mDataProp" : "FREEZE_TAG","sTitle" : "状态"},'
-					   + '{"mDataProp" : "MEMBER_ID","sTitle" : "操作"}]';
+					   + '{"mDataProp" : "TRUCK_ID","sTitle" : "操作"}]';
 
 		var reqData = {
 			action : 'BASE_DATA_INS_TRUCK_LIST_QUERY_ACTION',
 			params : 'params',
-			MEMBER_NAME:memberName,
-			MOBILE:mobile,
-			MEMBER_CODE:memberCode,
+			TRUCK_TYPE:truck_type,
+			TRUCK_STATUS:truck_status,
+			TRUCK_LICENSE:truck_license,
 			INCLUDE_STOP:includeStop
 			};
 		//example为table定义id ：10：需要加入操作按钮的列；[4,5]：需要转义的列（映射数据字典值）
-		initMemberTable('insTruckList', aoColumns, reqData, '<%=path%>',9,[]);
+		initInsTruckTable('insTruckList', aoColumns, reqData, '<%=path%>',10,[]);
 		resetIFrameLength();//need ajax async:false,
 		} 
 	/*title tips- common method,dynamic bind*/
 	$(function () { $("[data-toggle='tooltip']").tooltip();});
+	//opt全选 改为动态绑定
+	$('#truck_map_obj_option_div').on('click',":checkbox[value='all']",function(){
+		console.log($(this).parent().parent().find(":checkbox").size());
+		$(this).parent().parent().find(":checkbox").prop("checked",this.checked); 
+	});
 	
-// 	$('#add_input_birthday').datetimepicker({
-// 		language:'zh-CN',
-//         format:'yyyy-mm-dd',
-//         weekStart: 1,
-//         todayBtn:  1,
-// 		autoclose: 1,
-// 		todayHighlight: 1,
-// 		startView: 2,
-// 		minView: 2,
-// 		forceParse: 0
-//     });
-
-//  	$(function() {
-//  	  $("#add_input_birthday").datepicker({
-//  		 showButtonPanel:true,
-//  		 dateFormat: "yy-mm-dd",
-//  		 changeMonth: true,
-//  		 changeYear: true,
-//  		 maxDate: 0 
-//  	  });
-//   	  $("#add_input_birthday").datepicker("option", "showAnim","slideDown");
-//  	 });
-
-		//执行一个laydate实例
+	
+		//执行一个laydate实例 生产日期
 		laydate.render({
-		  elem: '#add_input_birthday', //指定元素
+		  elem: '#add_input_truck_make_date', //指定元素
 		  max:0,
 // 		  theme: 'molv',
 		  theme: '#6699CC'
@@ -408,13 +537,25 @@ function dicTranse(value){
 // 		  		alert('');
 // 			}
 		});
+		//上牌日期
+		laydate.render({
+		  elem: '#add_input_truck_license_date', //指定元素
+		  max:0,
+		  theme: '#6699CC'
+		});
 
-	function addMember() {
+	function addTruck() {
 		myModalInit('modal_add_ins_truck');
 		activeModalInput('modal_add_ins_truck');
 		
-		$('#add_input_birthday_query').hide();
-		$('#add_input_birthday').show();
+		$('#add_input_truck_license_date_query').hide();
+		$('#add_input_truck_license_date').show();
+		
+		$('#add_input_truck_make_date_query').hide();
+		$('#add_input_truck_make_date').show();
+		
+		$('#truck_img_display').hide();
+		$('#truck_img_upload').show();
 		
 		//btn show
 		$('#btn_save_ins_truck').show();
@@ -431,33 +572,67 @@ function dicTranse(value){
 	function saveInsTruckConfirm(obj) {
 		var modalOptType = $(obj).attr('data-opt-type');//new or eidt
 
-		var truck_type = $('#add_input_truck_type').val();
-		var member_desc = $('#add_input_member_desc').val();
-		var member_id = $('#add_input_ins_truck_id').val();
+		var truckType = $('#add_input_truck_type').val();
+		var truckImgData = $('#truck_img_upload').attr('src');//图片
+		var truckId = $('#add_input_ins_truck_id').val();
 		
 		var data={};
-		data.MEMBER_NAME=truck_type;
-		data.MEMBER_DESC=member_desc;
-		data.MEMBER_MOBILE=$('#add_input_truck_status').val();
-		data.MEMBER_EMAIL=$('#add_input_email').val();
-		data.MEMBER_JOB=$('#add_input_job_select').val();
-		data.MEMBER_SEX=$('input:radio[name="add_input_sex"]:checked').val();//TODO
-// 		data.MEMBER_SEX=$('#add_input_job').val();//TODO
-		data.MEMBER_CERT_NO=$('#add_input_cert_no').val();
-		data.MEMBER_BIRTH_DAY=$('#add_input_birthday').val();
-		data.IS_LOGIN_SYS=($('#add_input_is_login_sys').prop('checked'))?"1":"0";//
-		data.IS_INSPACTOR=($('#add_input_is_inspactor').prop('checked'))?"1":"0";//
-		data.PASSWORD_CFG=$('#add_input_member_password_confirm').val();
-		data.PASSWORD=$('#add_input_member_password').val();
-		data.MEMBER_CODE=$('#add_input_truck_license').val();
+		
+		data.TRUCK_TYPE=truckType;
+		data.TRUCK_IMG_DATA=truckImgData;
+		data.TRUCK_IMG_FILE_NAME=$('#truck_img_upload').attr('data-upload-filename');//图片名称
+		
+		data.TRUCK_LICENSE=$('#add_input_truck_license').val();
+		data.TRUCK_VIN=$('#add_input_truck_vin').val();
+		data.TRUCK_TYPE=$('#add_input_truck_type').val();//TODO
+		data.TRUCK_D_LEVEL=$('#add_input_truck_danger_level').val();//TODO
+		data.TRUCK_DRIVER_NAME=$('#add_input_truck_driver_name').val();
+		data.TRUCK_BELONG_TYPE=$('#add_input_truck_belong_type').val();
+		data.TRUCK_BRAND=$('#add_input_truck_brand_code').val();
+		data.TRUCK_MODEL=$('#add_input_truck_model_code').val();
+		data.TRUCK_MAKE_DATE=$('#add_input_truck_make_date').val();
+		data.TRUCK_LICENSE_DATE=$('#add_input_truck_license_date').val();
+		data.TRUCK_DESC=$('#add_input_truck_desc').val();
+		
+		data.TRUCK_LENGTH=$('#add_input_truck_size_length').val();
+		data.TRUCK_WIDTH=$('#add_input_truck_size_width').val();
+		data.TRUCK_HEIGHT=$('#add_input_truck_size_height').val();
+		data.TRUCK_WEIGHT=$('#add_input_truck_weight').val();
+		data.TRUCK_COLOR=$('#add_input_truck_color').val();
+		
+		//opt 车辆对应检查项目子类
+		var subObjArray=[];
+		$('#truck_map_obj_option_div').find(":checked:not([value='all'])").each(function(index,item){
+			subObjArray.push($(item).attr('data-obj_mid_code')+'$$'+$(item).attr('value'));//objMidCode$$objSubcode,objMidCode$$objSubcode
+		});
+		var subObjStr='';
+		if(subObjArray!=null&&subObjArray.length>0){
+			subObjStr=subObjArray.toString();///midCode$$subCode
+		}
+		data.SUB_OBJ_STR=subObjStr;//车辆对应检查项目小类
+// 		alert(subObjStr);
+		//truck-ent-mid
+		var midEntArray=[];
+		$('#modal_add_ins_truck').find("select[data-belone='truck-ent-mid-type']").each(function(index,item){
+			if($(item).val()!=null)
+			midEntArray.push($(item).attr('data-belone-code')+'$$'+$(item).val());//midCode$$subCode,midCode$$subCode
+		});
+		var midEntStr='';
+		if(midEntArray!=null&&midEntArray.length>0){
+			midEntStr=midEntArray.toString();//"xxx,xxx"
+		}
+// 		alert(midEntStr);
+		data.SUB_ENT_STR=midEntStr;//车辆对应检查对象中类及小类
+		
+// 		data.IS_INSPACTOR=($('#add_input_is_inspactor').prop('checked'))?"1":"0";//
 
 		var reqUrl;
 		if ('NEW' == modalOptType) {
-			reqUrl = '<%=path%>/AjaxChannel?action=BASE_DATA_INS_TRUCK_ADD_ACTION';
+			reqUrl='<%=path%>/AjaxChannel?action=BASE_DATA_INS_TRUCK_ADD_ACTION';
 		}
 		else if('EDIT'==modalOptType){
 			reqUrl='<%=path%>/AjaxChannel?action=BASE_DATA_INS_TRUCK_EDIT_ACTION';
-			data.MEMBER_ID=member_id;
+			data.TRUCK_ID=truckId;
 		}
 		else{
 			returnErrorMsgShow('modal_add_ins_truck','未知操作类型，请稍后重试')
@@ -477,6 +652,7 @@ function dicTranse(value){
 							returnSuccessMsgShow('modal_add_ins_truck',json.MSG)
 							var fvTable=$("#insTruckList").dataTable(); //datatable init current
 							fvTable.fnDraw(false);
+							resetIFrameLength();//need ajax async:false,
 							$(obj).button('reset');
 						}else{
 // 							alert(json.MSG)	
@@ -491,13 +667,21 @@ function dicTranse(value){
 	}
 	
 	//open query modal
-	function detail(member_id){
+	function detail(truckId){
 		myModalInit('modal_add_ins_truck');
 		//input readOnly
 		readOnlyModalInput('modal_add_ins_truck');
 		
-		$('#add_input_birthday_query').show();
-		$('#add_input_birthday').hide();
+		$('#add_input_truck_license_date_query').show();
+		$('#add_input_truck_license_date').hide();
+		
+		$('#add_input_truck_make_date_query').show();
+		$('#add_input_truck_make_date').hide();
+		
+		$('#truck_img_display').show();//显示
+		$('#truck_img_upload').hide(); //
+		
+		//$('#truck_img_display').attr('src','<%=path%>/img/404.png');//test
 		
 		//btn hide
 		$('#btn_save_ins_truck').hide();
@@ -508,32 +692,59 @@ function dicTranse(value){
 		$.ajax({
 				type : 'POST',
 				url:reqUrl,
-				data: {MEMBER_ID:member_id},
+				data: {TRUCK_ID:truckId},
 				dataType : 'json',
 				success : function(json) {
 					if(json.SUCCESS=='1'){
-							$('#add_input_ins_truck_id').val(json.MEMBER_BEAN.Id);
-// 							$('#add_input_role_code').val(json.ROLE_BEAN.RoleCode);
-							$('#add_input_truck_type').val(json.MEMBER_BEAN.MemberName);
-							$('#add_input_truck_license').val(json.MEMBER_BEAN.MemberCode);
-							$('#add_input_truck_status').val(json.MEMBER_BEAN.Mobile);
-// 							$('#add_input_member_password').val(json.MEMBER_BEAN.Password);
-// 							$('#add_input_member_password_confirm').val(json.MEMBER_BEAN.Password);
-							$('#add_input_email').val(json.MEMBER_BEAN.Email);
-							$('#add_input_cert_no').val(json.MEMBER_BEAN.CertNo);
-							if(json.MEMBER_BEAN.Birthday!=null){
-								$('#add_input_birthday').val(moment(json.MEMBER_BEAN.Birthday).format('YYYY-MM-DD'));
-								$('#add_input_birthday_query').val(moment(json.MEMBER_BEAN.Birthday).format('YYYY-MM-DD'));
+							$('#add_input_truck_type').val(json.INS_TRUCK_BEAN.TruckType);
+							$('#add_input_ins_truck_id').val(json.INS_TRUCK_BEAN.Id);
+							$('#add_input_truck_license').val(json.INS_TRUCK_BEAN.TruckLicense);
+							$('#add_input_truck_vin').val(json.INS_TRUCK_BEAN.Vin);
+							$('#add_input_truck_danger_level').val(json.INS_TRUCK_BEAN.TruckDangerLevel);
+							$('#add_input_truck_driver_name').val(json.INS_TRUCK_BEAN.DriverName);
+							$('#add_input_truck_belong_type').val(json.INS_TRUCK_BEAN.TruckBelongType);
+							$('#add_input_truck_brand_code').val(json.INS_TRUCK_BEAN.BrandCode);
+							$('#add_input_truck_model_code').val(json.INS_TRUCK_BEAN.ModelCode);
+							if(json.INS_TRUCK_BEAN.MakeDate!=null){
+								$('#add_input_truck_make_date_query').val(moment(json.INS_TRUCK_BEAN.MakeDate).format('YYYY-MM-DD'));
+								$('#add_input_truck_make_date').val(moment(json.INS_TRUCK_BEAN.MakeDate).format('YYYY-MM-DD'));
 							}
-							$('#add_input_member_desc').val(json.MEMBER_BEAN.MemberRemark);
-// 							$('#add_input_member_desc').val(json.MEMBER_BEAN.MemberDesc);
-// 							$("input:radio[name='add_input_sex']").val(json.MEMBER_BEAN.Sex);
-							$("input:radio[name='add_input_sex'][value='"+json.MEMBER_BEAN.Sex+"']").prop("checked", "checked");
-							if("1"==json.MEMBER_BEAN.CanLoginSys)$("#add_input_is_login_sys").prop("checked", "checked");
-							if("1"==json.MEMBER_BEAN.IsInspactor)$("#add_input_is_inspactor").prop("checked", "checked");
-							$('#add_input_job_select').val(json.MEMBER_BEAN.JobTitelType);
+							if(json.INS_TRUCK_BEAN.LicenseDate!=null){
+								$('#add_input_truck_license_date_query').val(moment(json.INS_TRUCK_BEAN.LicenseDate).format('YYYY-MM-DD'));
+								$('#add_input_truck_license_date').val(moment(json.INS_TRUCK_BEAN.LicenseDate).format('YYYY-MM-DD'));
+							}
+							$('#add_input_truck_desc').val(json.INS_TRUCK_BEAN.TruckDesc);
+							$('#add_input_truck_size_length').val(json.INS_TRUCK_BEAN.TruckLength);
+							$('#add_input_truck_size_width').val(json.INS_TRUCK_BEAN.TruckWidth);
+							$('#add_input_truck_weight').val(json.INS_TRUCK_BEAN.TruckWeight);
+							$('#add_input_truck_size_height').val(json.INS_TRUCK_BEAN.TruckHeight);
+							$('#add_input_truck_color').val(json.INS_TRUCK_BEAN.TruckColor);
+// 							$("input:radio[name='add_input_sex'][value='"+json.MEMBER_BEAN.Sex+"']").prop("checked", "checked");
+							
+// 							if("1"==json.MEMBER_BEAN.CanLoginSys)$("#add_input_is_login_sys").prop("checked", "checked");
+// 							if("1"==json.MEMBER_BEAN.IsInspactor)$("#add_input_is_inspactor").prop("checked", "checked");
+// 							$('#add_input_job_select').val(json.MEMBER_BEAN.JobTitelType);
 // 							returnSuccessMsgShow('modal_add_ins_truck',json.MSG)
-							$('#modal_add_ins_truck_title').text('车辆明细['+json.MEMBER_BEAN.MemberName+']');
+
+							$('#modal_add_ins_truck_title').text('车辆明细['+json.INS_TRUCK_BEAN.TruckLicense+']');
+							
+							if(json.ENT_MAP_LIST!=null){
+								$.each(json.ENT_MAP_LIST,function(index,item){
+									console.log(item);
+									$('select[id="add_input_'+item.CheckEntMidCode+'"]').val(item.CheckEntSubCode);
+								});
+							}
+							if(json.OBJ_MAP_LIST!=null){
+								$.each(json.OBJ_MAP_LIST,function(index,item){
+									console.log(item);
+									$(':checkbox[id="'+item.ObjClassSubCode+'_CHECK_BOX"]').prop("checked", "checked");
+								})
+							}
+							
+							//PIC
+								$('#truck_img_display').show();//显示
+								$('#truck_img_upload').hide(); //
+								$('#truck_img_display').attr('src',json.INS_TRUCK_BEAN.MainPicUrl);//MAIN_PIC_URL
 							
 						}else{
 							returnErrorMsgShow('modal_add_ins_truck',json.MSG)	
@@ -550,7 +761,7 @@ function dicTranse(value){
 	}
 	
 	//open edit modal
-	function editMember(member_id){
+	function editTruck(truckId){
 // 		init
 		myModalInit('modal_add_ins_truck');
 		activeModalInput('modal_add_ins_truck');
@@ -569,33 +780,53 @@ function dicTranse(value){
 		$.ajax({
 				type : 'POST',
 				url:reqUrl,
-				data: {MEMBER_ID:member_id},
+				data: {TRUCK_ID:truckId},
 				dataType : 'json',
 				success : function(json) {
 					if(json.SUCCESS=='1'){
-						$('#add_input_ins_truck_id').val(json.MEMBER_BEAN.Id);
-//						$('#add_input_role_code').val(json.ROLE_BEAN.RoleCode);
-						$('#add_input_truck_type').val(json.MEMBER_BEAN.MemberName);
-						$('#add_input_truck_license').val(json.MEMBER_BEAN.MemberCode);
-						$('#add_input_truck_status').val(json.MEMBER_BEAN.Mobile);
-//						$('#add_input_member_password').val(json.MEMBER_BEAN.Password);
-//						$('#add_input_member_password_confirm').val(json.MEMBER_BEAN.Password);
-						$('#add_input_email').val(json.MEMBER_BEAN.Email);
-						$('#add_input_cert_no').val(json.MEMBER_BEAN.CertNo);
-						if(json.MEMBER_BEAN.Birthday!=null){
-							$('#add_input_birthday').val(moment(json.MEMBER_BEAN.Birthday).format('YYYY-MM-DD'));
-							$('#add_input_birthday_query').val(moment(json.MEMBER_BEAN.Birthday).format('YYYY-MM-DD'));
+						$('#add_input_truck_type').val(json.INS_TRUCK_BEAN.TruckType);
+						$('#add_input_ins_truck_id').val(json.INS_TRUCK_BEAN.Id);
+						$('#add_input_truck_license').val(json.INS_TRUCK_BEAN.TruckLicense);
+						$('#add_input_truck_vin').val(json.INS_TRUCK_BEAN.Vin);
+						$('#add_input_truck_danger_level').val(json.INS_TRUCK_BEAN.TruckDangerLevel);
+						$('#add_input_truck_driver_name').val(json.INS_TRUCK_BEAN.DriverName);
+						$('#add_input_truck_belong_type').val(json.INS_TRUCK_BEAN.TruckBelongType);
+						$('#add_input_truck_brand_code').val(json.INS_TRUCK_BEAN.BrandCode);
+						$('#add_input_truck_model_code').val(json.INS_TRUCK_BEAN.ModelCode);
+						if(json.INS_TRUCK_BEAN.MakeDate!=null){
+							$('#add_input_truck_make_date_query').val(moment(json.INS_TRUCK_BEAN.MakeDate).format('YYYY-MM-DD'));
+							$('#add_input_truck_make_date').val(moment(json.INS_TRUCK_BEAN.MakeDate).format('YYYY-MM-DD'));
 						}
-						$('#add_input_member_desc').val(json.MEMBER_BEAN.MemberRemark);
-// 						$('#add_input_member_desc').val(json.MEMBER_BEAN.MemberDesc);
-//						$("input:radio[name='add_input_sex']").val(json.MEMBER_BEAN.Sex);
-						$("input:radio[name='add_input_sex'][value='"+json.MEMBER_BEAN.Sex+"']").prop("checked", "checked");
-						if("1"==json.MEMBER_BEAN.CanLoginSys)$("#add_input_is_login_sys").prop("checked", "checked");
-						if("1"==json.MEMBER_BEAN.IsInspactor)$("#add_input_is_inspactor").prop("checked", "checked");
-						$('#add_input_job_select').val(json.MEMBER_BEAN.JobTitelType);
-//							returnSuccessMsgShow('modal_add_ins_truck',json.MSG)
+						if(json.INS_TRUCK_BEAN.LicenseDate!=null){
+							$('#add_input_truck_license_date_query').val(moment(json.INS_TRUCK_BEAN.LicenseDate).format('YYYY-MM-DD'));
+							$('#add_input_truck_license_date').val(moment(json.INS_TRUCK_BEAN.LicenseDate).format('YYYY-MM-DD'));
+						}
+						$('#add_input_truck_desc').val(json.INS_TRUCK_BEAN.TruckDesc);
+						$('#add_input_truck_size_length').val(json.INS_TRUCK_BEAN.TruckLength);
+						$('#add_input_truck_size_width').val(json.INS_TRUCK_BEAN.TruckWidth);
+						$('#add_input_truck_weight').val(json.INS_TRUCK_BEAN.TruckWeight);
+						$('#add_input_truck_size_height').val(json.INS_TRUCK_BEAN.TruckHeight);
+						$('#add_input_truck_color').val(json.INS_TRUCK_BEAN.TruckColor);
 							
-						$('#modal_add_ins_truck_title').text('车辆编辑['+json.MEMBER_BEAN.MemberName+']');
+						$('#modal_add_ins_truck_title').text('车辆编辑['+json.INS_TRUCK_BEAN.TruckLicense+']');
+						
+						if(json.ENT_MAP_LIST!=null){
+							$.each(json.ENT_MAP_LIST,function(index,item){
+								console.log(item);
+								$('select[id="add_input_'+item.CheckEntMidCode+'"]').val(item.CheckEntSubCode);
+							});
+						}
+						if(json.OBJ_MAP_LIST!=null){
+							$.each(json.OBJ_MAP_LIST,function(index,item){
+								console.log(item);
+								$(':checkbox[id="'+item.ObjClassSubCode+'_CHECK_BOX"]').prop("checked", "checked");
+							})
+						}
+						
+						//PIC
+								$('#truck_img_display').hide();//显示
+								$('#truck_img_upload').show(); //
+								$('#truck_img_upload').attr('src',json.INS_TRUCK_BEAN.MainPicUrl);//MAIN_PIC_URL
 						
 						}else{
 // 							alert(json.MSG)	
@@ -611,7 +842,7 @@ function dicTranse(value){
 	}
 	
 	/*opt confirm*/
-	function optConfirm(opt_type,truck_type,member_id){
+	function optConfirm(opt_type,truck_license,truck_id){
 		//auto top and height
 // 		modal_auto_top($('div.modal-dialog'));
 
@@ -623,36 +854,36 @@ function dicTranse(value){
 		var title;
 		var contentHtml;
 		
-		$("#opt_confirm_ins_truck_id").val(member_id);
-		$("#opt_confirm_truck_type").val(truck_type);
+		$("#opt_confirm_ins_truck_id").val(truck_id);
+		$("#opt_confirm_truck_license").val(truck_license);
 		$("#opt_confirm_opt_type").val(opt_type);
 		
 		if("delete"==opt_type){
-			title="删除车辆["+truck_type+"]";
+			title="删除车辆["+truck_license+"]";
 			
 			contentHtml=
 				"<div class='alert alert-danger' role='alert'>"
 					+"<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> <span class='sr-only'>注意:</span>"
-					+"<strong>注意:</strong>车辆["+truck_type+"]将彻底删除，无法恢复 !"
+					+"<strong>注意:</strong>车辆["+truck_license+"]将彻底删除，无法恢复 !"
 				+"</div>";
 // 			$('#optModal').find("button.btn-primary:first").click(startRole);
 
 		}else if("stop"==opt_type)	{
-			title="停用车辆["+truck_type+"]";
+			title="停用车辆["+truck_license+"]";
 			
 			contentHtml=
 				"<div class='alert alert-warning' role='alert'>"
 					+"<span class='glyphicon glyphicon-question-sign' aria-hidden='true'></span> <span class='sr-only'>注意:</span>"
-					+"<strong>注意:</strong>车辆["+truck_type+"]将停用，可在车辆管理恢复。"
+					+"<strong>注意:</strong>车辆["+truck_license+"]将停用，可在车辆管理恢复。"
 				+"</div>";
 // 			$('#optModal').find("button.btn-primary:first").click(stopRole);
 		}else if("start"==opt_type){
-			title="启用车辆["+truck_type+"]";
+			title="启用车辆["+truck_license+"]";
 			
 			contentHtml=
 				"<div class='alert alert-info' role='alert'>"
 					+"<strong>注意:</strong><span class='glyphicon glyphicon-info-sign' aria-hidden='true'></span> <span class='sr-only'>注意:</span>"
-					+"车辆["+truck_type+"]将被启用。"
+					+"车辆["+truck_license+"]将被启用。"
 				+"</div>";
 // 			$('#optModal').find("button.btn-primary:first").click(deleteRole);
 		}
@@ -662,8 +893,8 @@ function dicTranse(value){
 	}
 	
 	function optConfirmDone(obj){
-		var memberId=$("#opt_confirm_ins_truck_id").val();
-		var memberName=$("#opt_confirm_truck_type").val();
+		var truck_id=$("#opt_confirm_ins_truck_id").val();
+		var truck_license=$("#opt_confirm_truck_license").val();
 		var optType=$("#opt_confirm_opt_type").val();
 		
 		$(obj).button('loading');
@@ -672,7 +903,7 @@ function dicTranse(value){
 		$.ajax({
 				type : 'POST',
 				url:reqUrl,
-				data: {MEMBER_ID:memberId,OPT_TYPE:optType},
+				data: {TRUCK_ID:truck_id,OPT_TYPE:optType},
 				dataType : 'json',
 				success : function(json) {
 					if(json.SUCCESS=='1'){
@@ -680,6 +911,7 @@ function dicTranse(value){
 // 							$(obj).button('complete');//button 
 							var fvTable=$("#insTruckList").dataTable(); //datatable init current
 							fvTable.fnDraw(false);
+							resetIFrameLength();//need ajax async:false,
 							$(obj).button('reset');
 						}else{
 							returnErrorMsgShow('optModal',json.MSG);
@@ -696,54 +928,71 @@ function dicTranse(value){
 			//ajax end
 	}
 	
-	function optModPassword(memberName,memberId){
-		myModalInit('modal_mod_password');
-		activeModalInput('modal_mod_password');
-		$('#add_input_mod_password_member_id').val(memberId);
-		$('#btn_mod_password').show();
-		$('#btn_mod_password').attr('data-opt-type','MOD_PASSWORD');
-		$('#modal_mod_password_title').text('车辆['+memberName+']修改密码');
-		
-		$('#modal_mod_password').modal({backdrop: 'static', keyboard: false});
-	}
-	
-	//returnErrorMsgShow('modal_add_ins_truck',json.MSG)	
-	
-	function savePassword(obj){
-		var password=$('#add_input_mod_password').val();
-		var passwordCfg=$('#add_input_mod_password_confirm').val();
-		if(password==null||password==''){
-			returnErrorMsgShow('modal_mod_password','密码不能为空');
-			return;
-		}
-		if(passwordCfg==null||passwordCfg==''){
-			returnErrorMsgShow('modal_mod_password','确认密码不能为空');
-			return;
-		}
-		if(password!=passwordCfg){
-			returnErrorMsgShow('modal_mod_password','新密码与确认密码不一致');
-			return;
-		}
-		$(obj).button('loading');
-		var reqUrl='<%=path%>/AjaxChannel?action=BASE_DATA_INS_TRUCK_MOD_PASSWORD_ACTION';
-		
-		var memberId=$('#add_input_mod_password_member_id').val();
-		
+	//truck obj detail
+	function truckMapSubObj(truckLicense,truckId){
+		$('#modal_sub_ins_truck_title').text('查看车辆对应检查项目小类['+truckLicense+']');
+		$('#modal_sub_ins_truck #modal_sub_ins_truck_div_content').html('');
+		var reqUrl='<%=path%>/AjaxChannel?action=BASE_DATA_INS_TRUCK_CHECK_OBJ_DETAIL_ACTION';
 		//ajax begin
 		$.ajax({
 				type : 'POST',
 				url:reqUrl,
-				data: {MEMBER_ID:memberId,PASSWORD:password,PASSWORD_CFG:passwordCfg},
+				data: {TRUCK_ID:truckId},
 				dataType : 'json',
 				success : function(json) {
 					if(json.SUCCESS=='1'){
-							returnSuccessMsgShow('modal_mod_password',json.MSG);//alert msg
-							var fvTable=$("#insTruckList").dataTable(); //datatable init current
-// 							fvTable.fnDraw(false);
-							$(obj).button('reset');
+						$('#modal_sub_ins_truck #modal_sub_ins_truck_div_content').html(json.SUB_LIST_HTML);
+						readOnlyModalInput('modal_sub_ins_truck');	
 						}else{
-							returnErrorMsgShow('modal_mod_password',json.MSG);
-							$(obj).button('reset'); 
+							returnErrorMsgShow('modal_sub_ins_truck',json.MSG)	
+						}
+					},
+				error : function(e) {
+					console.log(e);
+					}
+				});
+		//ajax end
+// 		$('#modal_add_ins_truck_title').text('车辆明细['+$('#add_input_truck_type').val()+']'); //EMPTY
+		$('#modal_sub_ins_truck').modal({backdrop: 'static', keyboard: false});
+		
+	}
+
+	/*查看车辆图片*/
+	function detailImg(truckLicense,truckId){
+		$('#modal_ins_truck_img_li').html('');
+		$('#modal_ins_truck_img_div').html('');
+		//ajax begin
+		var reqUrl='<%=path%>/AjaxChannel?action=BASE_DATA_INS_TRUCK_PIC_DETAIL_ACTION';
+		$.ajax({
+				type : 'POST',
+				url:reqUrl,
+				data: {TRUCK_ID:truckId},
+				dataType : 'json',
+				success : function(json) {
+					if(json.SUCCESS=='1'){
+							//returnSuccessMsgShow('modal_ins_truck_img',json.MSG);//alert msg
+							//$(obj).button('reset');
+							var liHtml='';
+							var divHtml='';
+							if(json.PIC_LIST!=null){
+								$.each(json.PIC_LIST,function(index,item){
+									console.log(item);
+									if(0==index){
+										liHtml+='<li data-target="#myCarousel" data-slide-to="'+index+'" class="active"></li>';
+										divHtml+='<div class="item active"><img src="'+item.SrcPicUrl+'" alt="'+truckLicense+'" class="auto-size-img"><div class="carousel-caption">'+truckLicense+'</div></div>';
+									}else{
+										liHtml+='<li data-target="#myCarousel" data-slide-to="'+index+'" ></li>';
+										divHtml+='<div class="item"><img src="'+item.SrcPicUrl+'" alt="'+truckLicense+'" class="auto-size-img"><div class="carousel-caption">'+truckLicense+'</div></div>';
+									}
+								});
+								console.log(liHtml);
+								console.log(divHtml);
+								$('#modal_ins_truck_img_li').html(liHtml);
+								$('#modal_ins_truck_img_div').html(divHtml);
+							}	
+						}else{
+							returnErrorMsgShow('modal_ins_truck_img',json.MSG);
+							//$(obj).button('reset'); 
 						}
 					},
 				error : function(e) {
@@ -751,6 +1000,117 @@ function dicTranse(value){
 					}
 				});
 			//ajax end
+		$('#modal_add_ins_truck_img_title').text('查看车辆图片['+truckLicense+']');
+		$('#modal_ins_truck_img').modal({backdrop: 'static', keyboard: false});
+		$('#myCarousel').carousel({
+		    interval: 3000
+		});
+	}
+	
+	/*图片固定长宽比*/
+	function imgResize(){
+		var fWidth=$("div.modal-dialog").width();
+		var fHeight=$("#modal_add_ins_truck_img_content").height();
+		console.log(fWidth+"X"+fHeight);
+		
+		var iWidth=$("img").width();
+		var iHeight=$("img").height();
+		console.log(iWidth+"X"+iHeight);
+		
+// 		$("div.carousel-inner img").
+// 		alert($('#myCarousel').css("height"));
+// 		$('div.truck-img-slide').css("line-height","300px");
+//  	600X334
+//  	552X307
+	}
+	
+	//truck img upload
+	layui.use('upload', function(){
+		  var $ = layui.jquery
+		  ,upload = layui.upload;
+		  
+		  //普通图片上传
+		  var uploadInst = upload.render({
+		    elem: '#truck_img_upload'//选择文件
+		    ,url: 'null' //不做上传
+// 		    ,url: '/upload/'
+		    ,accept:'file'
+			,auto: false //选择文件后不自动上传 //与 choose配合使用
+		    ,choose: function(obj){ //auto: false 时生效
+			      obj.preview(function(index, file, result){
+			            console.log(index); //得到文件索引
+			            console.log(file.type); //得到文件类型
+			            console.log(file.name); //得到文件类型
+			            console.log(file); //得到文件对象
+			            console.log(result); //得到文件base64编码，比如图片
+			            if(file.type.indexOf("image")==-1){
+			            	returnErrorMsgShow('modal_add_ins_truck','非图片文件格式，不能上传！');
+			            	return;
+			            }else{
+			                $('#truck_img_upload').attr('src', result); //图片（base64）
+			                $('#truck_img_upload').attr('data-upload-filename', file.name);//图片文件名称 
+			            }
+			      });
+		    }
+// 		    ,bindAction: '#btn_save_ins_truck'//不做上传按钮绑定，modal保存时，以base64字符串与其他参数一起提交action；或者作为绑定时，先上传成功，返回文件保存后地址信息，id等，再连同其他参数，再次提交后台action；
+		    ,before: function(obj){
+		      //预读本地文件示例，不支持ie8
+		      obj.preview(function(index, file, result){
+		            console.log(index); //得到文件索引
+		            console.log(file); //得到文件对象
+		            console.log(file.type); //得到文件类型
+		            console.log(result); //得到文件base64编码，比如图片
+		            if(file.type.indexOf("image")==-1){
+		            	alert('file type is error');
+		            	return false;
+		            }
+		        $('#truck_img_upload').attr('src', result); //图片链接（base64）
+		      });
+		    }
+		    ,done: function(res){
+		      //如果上传失败
+		      if(res.code > 0){
+// 		        return layer.msg('上传失败');
+		        returnErrorMsgShow('modal_add_ins_truck','上传失败');
+		        return;
+		      }else{
+		    	 returnSuccessMsgShow('modal_add_ins_truck','上传成功');//alert msg
+		    	 
+		      }
+		      //上传成功
+		    }
+		    ,error: function(){
+		      //演示失败状态，并实现重传
+// 		      var demoText = $('#demoText');
+// 		      demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+// 		      demoText.find('.demo-reload').on('click', function(){
+// 		        uploadInst.upload();
+// 		      });
+		    	 returnErrorMsgShow('modal_add_ins_truck','上传失败');
+		    }
+		  });
+	});
+	
+	//ul li a click
+	function displayActionByRoleCode(obj){
+		if($(obj).parent().hasClass("active")){
+			return false;
+		}
+		var roleCode=$(obj).attr("data-obj_mid_code");
+		console.log(roleCode);
+		$(obj).parent().parent().children("li").removeClass("active");
+		$(obj).parent().addClass("active");
+		//display action list
+		$(obj).parent().parent().parent().children("div.action-checkbox-div").hide();
+		$(obj).parent().parent().parent().children("#ACTION_DIV_"+roleCode).show();
+		$(obj).parent().parent().parent().children("#QUERY_ACTION_DIV_"+roleCode).show();//兼容sub obj detail
+// 		$(obj).parent().parent().parent().children("div.action-checkbox-div").hide(400);
+// 		$(obj).parent().parent().parent().children("#ACTION_DIV_"+roleCode).show(200);
+	}
+	
+	function actionOptionReset(){ //action 复位
+		$('#truck_map_obj_option').find('a[data-obj_mid_code]:first').click();
+// 		$('#role_action_option').find('a[data-role_code]').first().click();
 	}
 
 </script>

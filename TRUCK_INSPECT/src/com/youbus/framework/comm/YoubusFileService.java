@@ -82,6 +82,28 @@ public class YoubusFileService implements Service {
 		return this.server.getFile(conn,fileId,AppId,ownId);
 	}
 	
+	/**
+	 * 
+	 * 方   法  名:writeFileReturnObj
+	 * 方法描述:
+	 * 参         数:@param conn
+	 * 参         数:@param AppID
+	 * 参         数:@param owner增加对象标示 比如车牌
+	 * 参         数:@param fname
+	 * 参         数:@param ins
+	 * 参         数:@param expireDate
+	 * 参         数:@param supType 增加大类 比如 CET_0010	CHECK_ENT_TYPE
+	 * 参         数:@return
+	 * 参         数:@throws Exception
+	 * 返   回  值:FsFileInfoPO
+	 * 创   建  人:rock
+	 * @exception
+	 * @since  1.0.0
+	 */
+	public FsFileInfoPO writeFileReturnObj(Connection conn,String AppID,String owner,String fname,InputStream ins,Date expireDate,String supType) throws Exception{
+		return this.server.writeFileReturnObj(conn,AppID,owner,fname,ins,expireDate,supType);
+	}
+	
 	
 	/* (non-Javadoc)
 	 * @see com.infoservice.framework.Service#destroyService()

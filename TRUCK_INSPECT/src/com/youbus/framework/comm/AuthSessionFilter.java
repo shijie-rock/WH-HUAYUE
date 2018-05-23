@@ -68,6 +68,7 @@ public class AuthSessionFilter implements Filter {
 		System.out.println("session_id：="+request.getSession().getId());
 		String subUrl=request.getServletPath()+"?"+request.getQueryString();//注册成功后需要跳转应用，所有只需要传递 项目上下文后面的 url即可
 		log.debug("referer_sub url:="+subUrl);
+		System.out.println("referer_sub url:="+subUrl);
 		if (!isEgnore(req)) { 
 			//排除远程发送reg及远程页面跳转//排除静态文件)
 			System.out.println("进入Auth-SessionFilter");
@@ -118,6 +119,8 @@ public class AuthSessionFilter implements Filter {
 		String method=request.getMethod();
 		String actionId=(String) (request.getAttribute(FrameworkConstant.ACTION_ID)==null?request.getParameter(FrameworkConstant.ACTION_ID):request.getAttribute(FrameworkConstant.ACTION_ID));
 		System.out.println("actionId :="+actionId);
+		System.out.println("url :="+url);
+		
 		
 		if(url.endsWith(".js")||url.endsWith(".css")||url.endsWith(".png")||url.endsWith(".jpg")||url.endsWith(".woff")||url.endsWith(".ico")||url.endsWith(".ico")||url.endsWith(".map"))return true;
 		if(url.endsWith("js/uploadify/uploadify.swf"))return true;
@@ -127,12 +130,20 @@ public class AuthSessionFilter implements Filter {
 		//action
 		if("LOGIN_ACTION".equals(actionId))return true;//忽略用户登录action
 		if("LOGOUT_ACTION".equals(actionId))return true;//忽略用户登出action
+		if("SYS_QUERY_SERVER_TIME_ACTION".equals(actionId))return true;//忽略用户查询服务器时间
 		
 		System.out.println("URL：="+url);
 		System.out.println("sessionId1：="+request.getSession().getId());
 		System.out.println("contextPath：="+contextPath);
 		System.out.println("method：="+method);
 		System.out.println("servlet context：="+req.getServletContext());
+		
+		if(url.indexOf("/mobile-page")!=-1)return true;//暂时忽略移动端页面
+		if(request.getServletPath().indexOf("fileUploadChannel")!=-1){
+			return true;////暂时忽略移动端页面 暂时忽略上传动作
+		}
+	
+		
 		log.debug(isEgnore?"忽略":"不忽略");
 		return isEgnore;
 		

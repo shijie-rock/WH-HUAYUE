@@ -28,9 +28,23 @@ window.parent.onscroll= function(){
 //	$('div.datetimepicker').css("display","none");
 	$('div.layui-laydate').css("display","none");
 	$('input.layer-date').blur();//失焦，下次再次激活
+	$('ul.ui-autocomplete').css("display","none");//自动填充隐藏
 //	$('div.layui-laydate').css("margin-top",window.parent.getScrollTop()+20+"px");
 	console.log('div margin-top'+$('div.layui-laydate').css("margin-top"));
 }
+
+//window.onscroll= function(){
+//	$('ul.ui-autocomplete').css("display","none");//自动填充隐藏
+//}
+
+$("div").scroll(function() {
+	$('ul.ui-autocomplete').css("display","none");//自动填充隐藏
+	$('div.layui-laydate').css("display","none");
+	$('input.layer-date').blur();//失焦，下次再次激活
+	
+	//fullcalendar
+	$('div.popover.fade.top.in').hide();
+});
 
 //模态框展示时，调用
 //$('div.modal-dialog').on('show.bs.modal', function () {
@@ -178,12 +192,18 @@ window.parent.onscroll= function(){
 // 			    $(this).val('');
 // 		  });
 		  $('#'+modal_id).find(':text').val('');//clear check box
+		  $('#'+modal_id).find(":hidden [data-ins-init-need-clear='true']").val('');//clear hide need clear
+		  $('#'+modal_id).find("[type='number']").val('1');//clear check box
 		  $('#'+modal_id).find('.modal-title').text('');//clear title
 		  $('#'+modal_id).find(':checkbox').removeAttr('checked');//clear check box
 		  //radio //
 		  $('#'+modal_id).find('input:radio').removeAttr('checked');
 		  //select
 		  $('#'+modal_id).find('select').val('');
+		  //textarea
+		  $('#'+modal_id).find('textarea').val('');
+		  //img
+		  $('#'+modal_id).find('img').attr('src','');
 	}
 	/*模态框显示提示信息-失败或者警告*/
 	function returnErrorMsgShow(modal_id,err_msg){
@@ -243,16 +263,20 @@ window.parent.onscroll= function(){
 	/*modal content readOnly*/
 	function readOnlyModalInput(modal_id){
 		$('#'+modal_id).find(":text").attr('readonly','');
+		$('#'+modal_id).find("[type='number']").attr('readonly','');
 		$('#'+modal_id).find(":password").attr('readonly','');
 		$('#'+modal_id).find(":radio").attr('disabled','disabled');
 		$('#'+modal_id).find(":checkbox").attr('disabled','disabled');
 		$('#'+modal_id).find("select").attr('disabled','disabled');
+		$('#'+modal_id).find("textarea").attr('disabled','disabled');
 	}
 	/*modal content active*/
 	function activeModalInput(modal_id){
 		$('#'+modal_id).find(":text").removeAttr('readonly');
+		$('#'+modal_id).find("[type='number']").removeAttr('readonly');
 		$('#'+modal_id).find(":checkbox").removeAttr('disabled');
 		$('#'+modal_id).find("select").removeAttr('disabled');
+		$('#'+modal_id).find("textarea").removeAttr('disabled');
 		
 		$('#'+modal_id).find(":password").removeAttr('disabled');
 		$('#'+modal_id).find(":radio").removeAttr('disabled');
@@ -284,18 +308,21 @@ window.parent.onscroll= function(){
 	function packUpDown(obj){
 		var indexSidebar=$('#index-sidebar', parent.document);
 		var indexContent=$('#index-content', parent.document);
+		var displayDiv=$('#div-fix-display-menu', parent.document);
 		if(indexSidebar.is(':hidden')){
 			indexSidebar.show(50);
 //			indexSidebar.animate({'width':'230'},300);
 			indexContent.animate({'margin-left':'230'},150);
 			$(obj).children('span').text('展开');
 			$(obj).children('i').removeClass('glyphicon-menu-right').addClass('glyphicon-menu-left');
+			displayDiv.hide(200);
 		}else{
 			indexSidebar.hide();
 //			indexSidebar.animate({'width':'0'},300);
 			indexContent.animate({'margin-left':'0'},150);
 			$(obj).children('span').text('收起');
 			$(obj).children('i').removeClass('glyphicon-menu-left').addClass('glyphicon-menu-right');
+			displayDiv.show(200);
 		}
 	}
 	
@@ -308,10 +335,150 @@ window.parent.onscroll= function(){
 		
 		var headHeight=parseInt($("div.page-head").css("height"));
 		var tableHeight=parseInt($("div.matter").css("height"));
-		var bufferHeight=150;
+//		var bufferHeight=50;
+		var bufferHeight=100;
 		
-		$('#iframepage',window.parent.document).css("height",(headHeight+tableHeight+bufferHeight)+'px');
+		var newHight=headHeight+tableHeight+bufferHeight;
+		newHight=newHight<700?700:newHight;
+		
+//		$('#iframepage',window.parent.document).css("height",(headHeight+tableHeight+bufferHeight)+'px');
+		$('#iframepage',window.parent.document).css("height",(newHight)+'px');
 		
 		console.log('$(iframepage).height() set finish:='+$('#iframepage',window.parent.document).css("height"));
 		
 	}
+	   /**
+	    * 判断浏览器v2-20171219
+	    * @returns {String}
+	    */
+	   function checkBrowser(){  
+		   var ua = navigator.userAgent.toLocaleLowerCase();  
+		   var browserType=null;  
+		       if (ua.match(/msie/) != null || ua.match(/trident/) != null) {  
+		          browserType = "IE";  
+		          browserVersion = ua.match(/msie ([\d.]+)/) != null ? ua.match(/msie ([\d.]+)/)[1] : ua.match(/rv:([\d.]+)/)[1];  
+		   } else if (ua.match(/firefox/) != null) {  
+		          browserType = "FF";  
+		   }else if (ua.match(/ubrowser/) != null) {  
+		          browserType = "UC";  
+		   }else if (ua.match(/opera/) != null) {  
+		          browserType = "OPERA";  
+		   } else if (ua.match(/bidubrowser/) != null) {  
+		          browserType = "BAIDU";    
+		   }else if (ua.match(/metasr/) != null) {  
+		          browserType = "SOGOU";    
+		   }else if (ua.match(/tencenttraveler/) != null || ua.match(/qqbrowse/) != null) {  
+		          browserType = "QQ";  
+		   }else if (ua.match(/maxthon/) != null) {  
+		          browserType = "MAXTHON";  
+		   }else if (ua.match(/chrome/) != null) {  
+		   var is360 = _mime("type", "application/vnd.chromium.remoting-viewer");  
+		   function _mime(option, value) {  
+		               var mimeTypes = navigator.mimeTypes;  
+		               for (var mt in mimeTypes) {  
+		               if (mimeTypes[mt][option] == value) {  
+		                      return true;  
+		                 }  
+		               }  
+		               return false;  
+		           }  
+		   if(is360){                 
+		   browserType = '360';    
+		                }else{    
+		               browserType = "CHROME";    
+		                }    
+		            
+		   }else if (ua.match(/safari/) != null) {  
+		          browserType = "SAFARI";  
+		   }  
+		   return browserType;  
+		   } 
+	   
+	   
+	  function recordMainPageBrowserType(pageCode){
+		    var url = "http://auth.qa.youbus.com.cn/AUTH_CENTER/jsonP?action=REMOTE_QUERY_ADVLIST_ACTION&FILE_CODE=1213121";
+//		    var url = "http://gps.youbus.com.cn/YOUBUS_GPS/jsonP?action=RT_RECORD_PAGE_VISIT_BROWSER_INFO_ACTION";
+		    var browserType=checkBrowser();
+		    var data = {
+		    		BROWSER_TYPE: browserType,//浏览器类型
+		            PAGE_CODE: pageCode,//文章CODE
+//		            isShowError: "0"
+		    };   
+		    $.ajax({
+		        type: "POST",
+		        url: url,
+		        async: true,
+//		        dataType: "json",
+		        data: data,
+		        dataType:'jsonp',
+		        contentType: "application/jsonp; charset=utf-8",
+		        jsonpCallback:'callback',
+		        jsonp: "callback",
+		        success: function(reuslt) {
+		        	 	console.log(reuslt);
+		        	 	console.log("result:="+reuslt.AVD_LIST);
+		               //callback(reuslt.AVD_LIST);
+		        },  
+		       error : function() {  
+//		               if(data.isShowError!=null && data.isShowError=="0") return;      
+//		               if(data.errorCallback!=null) {
+//		                   data.errorCallback();       
+//		                   return;      
+//		               }
+//		               alert("网络异常，请稍后尝试！");
+		       } 
+//		       error: function(XMLHttpRequest, textStatus, errorThrown) {
+//		           console.log(XMLHttpRequest);
+////		           alert(XMLHttpRequest.status);
+////		           alert(XMLHttpRequest.readyState);
+////		           alert(textStatus);
+//		             }
+		    });
+	  }
+	  function callback(advList){
+		  console.log(advList);
+//		  var obj = eval('(' + advList + ')');
+//		  $.each(obj,function(date){
+//			  console.log(this);
+//		  });
+	  }
+	  
+	  function jsonPX(){
+		var url = "http://auth.qa.youbus.com.cn/AUTH_CENTER/jsonP?action=REMOTE_QUERY_ADVLIST_ACTION&FILE_CODE=1213121";
+		var data = {
+				FILE_CODE: '1213121'
+			};
+		  $.ajax({
+				type: "POST",
+				url: url,
+				async: true,//false使用同步的方式,true为异步方式
+				data: data,
+				dataType:'jsonp',
+			    contentType: "application/jsonp; charset=utf-8",
+				jsonpCallback:'callback',
+				jsonp: "callback",
+				success: function(reuslt) {
+					console.log("jsonPX:="+reuslt.AVD_LIST);
+					var obj = eval('(' + reuslt.AVD_LIST + ')');
+					  $.each(obj,function(date){
+					  console.log(this);
+					  });
+				},  
+			   	error : function() {  
+			   		
+			   		console.log('error');  	   		
+			   	} 
+			});  
+	  }
+	  
+		function getUrlParam(name){  
+			//构造一个含有目标参数的正则表达式对象  
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");  
+			//匹配目标参数  
+			var r = window.location.search.substr(1).match(reg);  
+			//返回参数值  
+			if (r!=null) return unescape(r[2]);  
+			return null;  
+		} 	  
+	  
+	  

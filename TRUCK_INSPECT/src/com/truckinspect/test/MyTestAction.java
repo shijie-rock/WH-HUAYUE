@@ -8,6 +8,7 @@
 package com.truckinspect.test;
 
 import java.sql.Connection;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +73,15 @@ public class MyTestAction extends ActionImpl {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
+		String t=MessageFormat.format("http://www.sis001.com/forum/forum-230-'{0}'.html", 1);
+		System.out.println(t);
 
 	}
+	
+//	public static void main(String[] args){
+//		String str="asdfsadfsa$$dsfawwe$$fadfsadfsa$$adsf";
+//		System.out.print(str.split("[$][$]").length);
+//	}
 
 }

@@ -87,6 +87,7 @@ public class EditInsGroupAction extends ActionImpl {
 		insGroupPOValue.setUpdateTime(YBUtility.now());
 		insGroupPOValue.setInsGroupName(insGroupName);
 		insGroupPOValue.setInsGroupDesc(insGroupDesc);
+		insGroupPOValue.setVer(version+1);
 		
 		int excuteResult=POFactory.update(conn, insGroupPOCon, insGroupPOValue);
 		

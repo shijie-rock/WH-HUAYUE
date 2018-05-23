@@ -271,23 +271,43 @@
           <li class="has_sub"><a href="#"><i class="icon-book"></i>基础数据 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
             <ul>
               <li><a href="<%=path%>/page/base_data/position_manager.jsp" target="iframepage">检查地点</a></li>
-              <li><a href="<%=path%>/page/base_data/truck_manager.jsp" target="iframepage">车辆信息</a></li>
+              <li><a href="<%=path%>/page/base_data/ins_truck_manager.jsp" target="iframepage">车辆信息</a></li>
               <li><a href="<%=path%>/page/base_data/driver_manager.jsp" target="iframepage">司机信息</a></li>
             </ul>
           </li>
+           <li class="has_sub"><a href="#"><i class="icon-list"></i>检查对象<span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+            <ul>
+              <li><a href="<%=path%>/page/busi_data/entity_sup_manager.jsp" target="iframepage">对象大类</a></li>
+              <li><a href="<%=path%>/page/busi_data/entity_mid_manager.jsp" target="iframepage">对象中类</a></li>
+              <li><a href="<%=path%>/page/busi_data/entity_sub_manager.jsp" target="iframepage">对象小类</a></li>
+<%--               <li><a href="<%=path%>/page/busi_data/object_item_manager.jsp" target="iframepage">检查项目(表)</a></li> --%>
+<%--               <li><a href="<%=path%>/service?action=BUSI_DATA_OBJ_QUERY_TREE_HTML_ACTION" target="iframepage">检查项目(树)</a></li> --%>
+            </ul>
+          </li> 
            <li class="has_sub"><a href="#"><i class="icon-list"></i>项目管理<span class="pull-right"><i class="icon-chevron-right"></i></span></a>
             <ul>
-              <li><a href="<%=path%>/page/busi_data/project_class_manager.jsp" target="iframepage">对象大类</a></li>
-              <li><a href="<%=path%>/page/busi_data/project_class_sub_manager.jsp" target="iframepage">对象小类</a></li>
-              <li><a href="<%=path%>/page/busi_data/project_item_manager.jsp" target="iframepage">检查项目</a></li>
+              <li><a href="<%=path%>/page/busi_data/object_sup_manager.jsp" target="iframepage">一级分类</a></li>
+              <li><a href="<%=path%>/page/busi_data/object_mid_manager.jsp" target="iframepage">二级分类</a></li>
+              <li><a href="<%=path%>/page/busi_data/object_sub_manager.jsp" target="iframepage">三级分类</a></li>
+              <li><a href="<%=path%>/page/busi_data/object_item_manager.jsp" target="iframepage">检查项目(表)</a></li>
+              <li><a href="<%=path%>/service?action=BUSI_DATA_OBJ_QUERY_TREE_HTML_ACTION" target="iframepage">检查项目(树)</a></li>
             </ul>
           </li> 
            <li class="has_sub"><a href="#"><i class="glyphicon glyphicon-edit"></i>业务数据<span class="pull-right"><i class="icon-chevron-right"></i></span></a>
             <ul>
-              <li><a href="<%=path%>/page/ins_order/ins_order_manager.jsp" target="iframepage">检车单管理</a></li>
-              <li><a href="<%=path%>/page/ins_order/ins_order_item_manager.jsp" target="iframepage">检车单明细</a></li>
+              <li><a href="<%=path%>/page/ins_order/ins_check_order_manager.jsp" target="iframepage">检车单管理</a></li>
+              <li><a href="<%=path%>/page/ins_order/ins_check_order_item_manager.jsp" target="iframepage">检车单明细</a></li>
+              <li><a href="<%=path%>/page/ins_order/ins_check_calendar.jsp" target="iframepage">检车任务日历</a></li>
             </ul>
           </li> 
+          <!-- 
+           <li class="has_sub"><a href="#"><i class="glyphicon glyphicon-calendar"></i>资源日历<span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+            <ul>
+              <li><a href="<%=path%>/page/ins_order/ins_check_calendar.jsp" target="iframepage">检车任务日历</a></li>
+              <li><a href="<%=path%>/page/ins_order/ins_truck_calendar.jsp" target="iframepage">车辆日历</a></li>
+            </ul>
+          </li> 
+           -->
           <li class="has_sub"><a href="#"><i class="glyphicon glyphicon-send"></i>消息管理<span class="pull-right"><i class="icon-chevron-right"></i></span></a>
             <ul>              
             <li><a href="<%=path%>/page/message/wx_msg_manager.jsp" target="iframepage">微信消息</a></li>
@@ -306,14 +326,16 @@
             <li><a href="<%=path%>/page/system/sys_log_manager.jsp" target="iframepage">日志查询</a></li>
             </ul>
           </li> 
-          <!--                          
-          <li><a href="charts.html"><i class="icon-bar-chart"></i>图表</a></li> 
+                                    
+          <li><a href="#" onclick="menuHide();"><i class="glyphicon glyphicon-step-backward"></i>关闭菜单<span class="pull-right"><i class="icon-chevron-left"></i></span></a></li> 
+          <!--
           <li><a href="tables.html"><i class="icon-table"></i>表格</a></li>
           <li><a href="forms.html"><i class="icon-tasks"></i>表单</a></li>
           <li><a href="ui.html"><i class="icon-magic"></i>UI图标</a></li>
           <li><a href="calendar.html"><i class="icon-calendar"></i>日历</a></li>
            -->
         </ul>
+        
     </div>
 
     <!-- Sidebar ends -->
@@ -331,7 +353,12 @@
    <!-- Mainbar ends -->
    <div class="clearfix"></div>
 <!-- Content ends -->
-
+<!-- 悬浮触发展示左侧菜单 -->
+<div id="div-fix-display-menu" class="fix-display-menu">
+      <p >
+          <span class="glyphicon glyphicon-chevron-right"></span>
+      </p>
+</div>
 <!-- Footer starts -->
 <footer class="main-footer" >
   <div class="container">
@@ -386,6 +413,7 @@
 
 $(function(){
 	parent.document.all.iframepage.height = document.body.scrollHeight;//设置iframe 的高度，依赖子页面内容高度。
+
 });
 
 function iFrameHeight(obj) {
@@ -414,6 +442,22 @@ function getScrollTop() {
         return document.documentElement.scrollTop;
     }
 }
+
+//收起按钮点击事件
+function menuHide(){
+	$('#index-sidebar').hide(50);
+	$('#index-content').animate({'margin-left':'0'},150);
+	$('#div-fix-display-menu').show(200);
+}
+
+//展示按钮点击事件
+$('#div-fix-display-menu').click(function(){
+	$('#index-sidebar').show(50);
+	$('#index-content').animate({'margin-left':'230'},150);
+	$(this).hide(200);
+});
+
+
 
 $(function () {
 

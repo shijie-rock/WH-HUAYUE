@@ -135,5 +135,45 @@
 		<fragment>true</fragment>
 		</attribute>
 </tag>
+
+<tag>
+		<!-- 定义标签名 -->
+		<name>checkObjOptHtml</name>
+		<!-- 定义标签处理类 -->
+		<tag-class>com.youbus.framework.comm.tag.CheckObjOptHtmlTag</tag-class>
+		<!-- 定义标签体为空 -->
+		<body-content>scriptless</body-content>
+		<attribute>
+		<name>ulId</name>
+		<required>true</required>
+		<fragment>true</fragment>
+		</attribute>
+</tag>
+<tag>
+		<!-- 定义标签名 -->
+		<name>CheckEntMidOptHtml</name>
+		<!-- 定义标签处理类 -->
+		<tag-class>com.youbus.framework.comm.tag.CheckEntMidOptHtml</tag-class>
+		<!-- 定义标签体为空 -->
+		<body-content>scriptless</body-content>
+		<attribute>
+		<name>entTypeCode</name>
+		<required>true</required>
+		<fragment>true</fragment>
+		</attribute>
+</tag>
+<tag>
+		<!-- 定义标签名 -->
+		<name>TruckObjSupMidSubOptHtml</name>
+		<!-- 定义标签处理类 -->
+		<tag-class>com.youbus.framework.comm.tag.TruckObjSupMidSubOptHtml</tag-class>
+		<!-- 定义标签体为空 -->
+		<body-content>scriptless</body-content>
+		<attribute>
+		<name>entTypeCode</name>
+		<required>true</required>
+		<fragment>true</fragment>
+		</attribute>
+</tag>
 	
 </taglib>

@@ -189,12 +189,12 @@
                  	 <div class="form-horizontal">
                           					<div class="form-group">
                                             <label class="control-label col-md-3" for="add_input_role_code">角色代码</label>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                               <input type="text" class="form-control required-input" id="add_input_role_code" placeholder="角色代码">
                                               <span class="text-danger" >*</span>
                                             </div>
                                             <label class="control-label col-md-3" for="add_input_role_name">角色名称</label>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                               <input type="text" class="form-control required-input" id="add_input_role_name" placeholder="角色名称">
                                               <span class="text-danger">*</span>
                                             </div>

@@ -38,6 +38,8 @@ public class TbAppInfoPO implements DataBean{
 	private Integer id;
 	private String localCityCode;
 	private String protocol;
+	private String serverUrl;
+	private String fileServerPrifixUrl;//FILE_SERVER_PRIFIX_URL 文件服务器地址前缀
 
 	public void setLastStartTime(Date lastStartTime){
 		this.lastStartTime=lastStartTime;
@@ -217,5 +219,41 @@ public class TbAppInfoPO implements DataBean{
 
 	public String toXMLString(){
 		return POFactoryUtil.beanToXmlString(this);
+	}
+
+	/**
+	 * serverUrl
+	 *
+	 * @return  the serverUrl
+	 * @since   1.0.0
+	*/
+	
+	public String getServerUrl() {
+		return serverUrl;
+	}
+
+	/**
+	 * @param serverUrl the serverUrl to set
+	 */
+	public void setServerUrl(String serverUrl) {
+		this.serverUrl = serverUrl;
+	}
+
+	/**
+	 * fileServerPrifixUrl
+	 *
+	 * @return  the fileServerPrifixUrl
+	 * @since   1.0.0
+	*/
+	
+	public String getFileServerPrifixUrl() {
+		return fileServerPrifixUrl;
+	}
+
+	/**
+	 * @param fileServerPrifixUrl the fileServerPrifixUrl to set
+	 */
+	public void setFileServerPrifixUrl(String fileServerPrifixUrl) {
+		this.fileServerPrifixUrl = fileServerPrifixUrl;
 	}
 }
