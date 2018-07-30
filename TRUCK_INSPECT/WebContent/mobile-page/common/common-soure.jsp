@@ -18,3 +18,7 @@
 <link href="<%=path%>/style/jqm/themes/default/jquery.mobile-1.4.5.min.css?v=<%=staticVersion%>" rel="stylesheet" />
 <link href="<%=path%>/style/truck-inspect.css?v=<%=staticVersion%>" rel="stylesheet" /> 
 <link href="<%=path%>/style/jqm/truck-jqm.css?v=<%=staticVersion%>" rel="stylesheet" />
+<script type="text/javascript">
+// js全局变量
+var BASE_PATH="<%=path%>";
+</script>

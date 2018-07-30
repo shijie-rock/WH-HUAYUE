@@ -2,7 +2,7 @@
 <!-- 各个主页面的head（不含list） -->
 <div data-role="header" style="position: fixed; top: 0px; width: 100%; z-index: 100;"
 	data-fullscreen="true">
-	<h1>Default theme</h1>
+	<h1>Client Test</h1>
 	<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-back" data-rel="back" id="page-return-back" style="display:none;">返回</a>
 	<a href="#pushPanel" class="ui-btn ui-corner-all ui-shadow ui-icon-bullets ui-btn-icon-left">设置</a>
 		<div data-role="navbar" id="page-order-navcate" style="display:none;">

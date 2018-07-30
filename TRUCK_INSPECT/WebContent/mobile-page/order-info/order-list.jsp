@@ -152,7 +152,7 @@
 				        <h2>罐车：车辆检查</h2>
 				        <p><b>检查人：管理员 2018-05-18</b></p>
 				        <p>车身检查，车头检查。</p>
-				        <p class="ui-li-aside order-check-doing">检查中检
+				        <p class="ui-li-aside order-check-doing">检查中
 				        </p></a>
 				      </li>
 				      <li data-role="list-divider">鲁F-12345 <span class="ui-li-count">2</span></li>   
@@ -222,7 +222,7 @@
 				        <h2>罐车：车辆检查</h2>
 				        <p><b>检查人：管理员 2018-05-18</b></p>
 				        <p>车身检查未通过，车头检查通过。</p>
-				        <p class="ui-li-aside order-check-not-pass">检查结果：不过
+				        <p class="ui-li-aside order-check-not-pass">未通过
 				        </p></a>
 				<!--    <p class="ui-li-aside">检查结果：通过</p></a> -->
 				      </li>
@@ -231,7 +231,7 @@
 				        <h2>拖车：车辆检查</h2>
 				        <p><b>检查人：管理员 2018-05-18</b></p>
 				        <p>车身检查通过，车头检查通过。</p>
-				        <p class="ui-li-aside order-check-pass">检查结果：通过
+				        <p class="ui-li-aside order-check-pass">已通过
 				        </p></a>
 				      </li>
 				      <li data-role="list-divider">鲁F-12345 <span class="ui-li-count">2</span></li>   
@@ -239,7 +239,7 @@
 				        <h2>罐车：车辆检查</h2>
 				        <p><b>检查人：管理员 2018-05-18</b></p>
 				        <p>车身检查未通过，车头检查通过。</p>
-				        <p class="ui-li-aside order-check-not-pass">检查结果：不过
+				        <p class="ui-li-aside order-check-not-pass">未通过
 				        </p></a>
 				<!--    <p class="ui-li-aside">检查结果：通过</p></a> -->
 				      </li>
@@ -248,7 +248,7 @@
 				        <h2>拖车：车辆检查</h2>
 				        <p><b>检查人：管理员 2018-05-18</b></p>
 				        <p>车身检查通过，车头检查通过。</p>
-				        <p class="ui-li-aside order-check-pass">检查结果：通过
+				        <p class="ui-li-aside order-check-pass">已通过
 				        </p></a>
 				      </li>
 				      <li data-role="list-divider">鲁F-12345 <span class="ui-li-count">2</span></li>   
@@ -256,7 +256,7 @@
 				        <h2>罐车：车辆检查</h2>
 				        <p><b>检查人：管理员 2018-05-18</b></p>
 				        <p>车身检查未通过，车头检查通过。</p>
-				        <p class="ui-li-aside order-check-not-pass">检查结果：不过
+				        <p class="ui-li-aside order-check-not-pass">未通过
 				        </p></a>
 				<!--    <p class="ui-li-aside">检查结果：通过</p></a> -->
 				      </li>
@@ -265,7 +265,7 @@
 				        <h2>拖车：车辆检查</h2>
 				        <p><b>检查人：管理员 2018-05-18</b></p>
 				        <p>车身检查通过，车头检查通过。</p>
-				        <p class="ui-li-aside order-check-pass">检查结果：通过
+				        <p class="ui-li-aside order-check-pass">已通过
 				        </p></a>
 				      </li>
 				      <li data-role="list-divider">鲁F-12345 <span class="ui-li-count">2</span></li>   
@@ -273,7 +273,7 @@
 				        <h2>罐车：车辆检查</h2>
 				        <p><b>检查人：管理员 2018-05-18</b></p>
 				        <p>车身检查未通过，车头检查通过。</p>
-				        <p class="ui-li-aside order-check-not-pass">检查结果：不过
+				        <p class="ui-li-aside order-check-not-pass">未通过
 				        </p></a>
 				<!--    <p class="ui-li-aside">检查结果：通过</p></a> -->
 				      </li>
@@ -282,7 +282,7 @@
 				        <h2>拖车：车辆检查</h2>
 				        <p><b>检查人：管理员 2018-05-18</b></p>
 				        <p>车身检查通过，车头检查通过。</p>
-				        <p class="ui-li-aside order-check-pass">检查结果：通过
+				        <p class="ui-li-aside order-check-pass">已通过
 				        </p></a>
 				      </li>
 				      <li data-role="list-divider">鲁F-12345 <span class="ui-li-count">2</span></li>   
@@ -290,7 +290,7 @@
 				        <h2>罐车：车辆检查</h2>
 				        <p><b>检查人：管理员 2018-05-18</b></p>
 				        <p>车身检查未通过，车头检查通过。</p>
-				        <p class="ui-li-aside order-check-not-pass">检查结果：不过
+				        <p class="ui-li-aside order-check-not-pass">未通过
 				        </p></a>
 				<!--    <p class="ui-li-aside">检查结果：通过</p></a> -->
 				      </li>
@@ -299,7 +299,7 @@
 				        <h2>拖车：车辆检查</h2>
 				        <p><b>检查人：管理员 2018-05-18</b></p>
 				        <p>车身检查通过，车头检查通过。</p>
-				        <p class="ui-li-aside order-check-pass">检查结果：通过
+				        <p class="ui-li-aside order-check-pass">已通过
 				        </p></a>
 				      </li>
 				
@@ -618,7 +618,7 @@
 		var checkedScrollSize = 0;//已检滚动条高度
 
 		var scrollHeigh = 0;//当前滚动条的高度
-
+// 		alert("1");
 		//navicate点击初始化,点击激活navicate
 		$(document).on(
 				"pagecreate",
@@ -665,16 +665,18 @@
 				});
 
 		//头部栏及底部栏按钮显示
+// 		alert("2");
 		$(function() {
 			// 	$('#page-return-back').show();//返回按钮显示
 			$('#page-order-navcate').show();//nav 显示
 			//设置按钮激活
-			$('#ppage-footer-btn-group a').removeClass(
+			$('#page-footer-btn-group a').removeClass(
 					"ui-btn-active ui-state-persist");
 			$('#page-footer-btn-order-list').addClass(
 					"ui-btn-active ui-state-persist");
 		});
 
+// 		alert("3");
 		//监听滚动事件
 		document.onscroll = function() {
 
@@ -716,7 +718,7 @@
 					}
 		});
 		*/
-
+// 		alert("4");
 		//向下滑动，直到最顶部，刷新列表
 		function getNewData() {
 			if (currentListType == "uncheck") {//获取最新未检列表
@@ -758,6 +760,7 @@
 			}
 		}
 
+// 		alert("5");
 		function loading(text) {
 			$.mobile.loading('show', {
 				text : text + '加载中...', //加载器中显示的文字
@@ -767,12 +770,14 @@
 				html : "" //要显示的html内容，如图片等
 			});
 		}
+// 		alert("6");
 		function hideLoader() {
 			//隐藏加载器
 			$.mobile.loading('hide');
 		}
 
 		//向上滑动，直到最底部，拉取分页新数据
+// 		alert("7");
 		function getLastPageData() {
 			if (currentListType == "uncheck") {//获取下一页未检列表
 				var uncheck_get_new_page_span = $("#uncheck-list").children(
@@ -812,6 +817,7 @@
 			}
 		}
 
+// 		alert("8");
 		function sleep(n) { //n表示的毫秒数
 			var start = new Date().getTime();
 			while (true)
@@ -820,6 +826,7 @@
 		}
 
 		//检查单详情
+// 		alert("9");
 		function openDetail(orderId) {
 			$("#order-detail-title").text("单据详情[" + orderId + "]");
 			loading("单据详情[" + orderId + "]");
@@ -829,6 +836,7 @@
 		
 		
 		//不通过展示
+// 		alert("10");
 		function displayItemDesc(obj,order_item_id){
 // 			alert("displayItemDesc");
 			var itemDescDiv=findItemDesc(obj,order_item_id);
@@ -841,6 +849,7 @@
 		}
 		
 // 	      未检点击
+		alert("11");
 		function hideItemDesc1(obj,order_item_id){
 // 			alert("hideItemDesc");
 			var itemDescDiv=findItemDesc(obj,order_item_id);
@@ -854,6 +863,7 @@
 		}
 		
 		//通过展示
+		alert("12");
 		function hideItemDesc2(obj,order_item_id){
 // 			alert("hideItemDesc");
 			var itemDescDiv=findItemDesc(obj,order_item_id);
@@ -864,31 +874,37 @@
 			$(obj).parent().parent().find("label").removeClass("order-check-not-pass order-check-pass");
 			$(obj).prev().addClass("order-check-pass");//label
 		}
-		
+		alert("13");
 		function findItemDesc(obj,order_item_id){
 // 			return $(obj).parent().parent(); data-order-item-desc
 			return $("div[data-order-item-desc='"+order_item_id+"']").first();
 		}
 		
+		alert("14");
 		$("body").on("touchstart", function(e) {
-		    // 判断默认行为是否可以被禁用
+		    // 判断默认行为是否可以被禁用 --浏览器有效，手机端无效，需要注释掉
+		    /*
 		    if (e.cancelable) {
 		        // 判断默认行为是否已经被禁用
 		        if (!e.defaultPrevented) {
 		            e.preventDefault();
 		        }
 		    }   
+		    */
 		    startX = e.originalEvent.changedTouches[0].pageX,
 		    startY = e.originalEvent.changedTouches[0].pageY;
 		});
+		alert("15");
 		$("body").on("touchmove", function(e) {         
-		    // 判断默认行为是否可以被禁用
+		    // 判断默认行为是否可以被禁用 --浏览器有效，手机端无效，需要注释掉
+		    /*
 		    if (e.cancelable) {
 		        // 判断默认行为是否已经被禁用
 		        if (!e.defaultPrevented) {
 		            e.preventDefault();
 		        }
-		    }               
+		    }   
+		    */
 		    moveEndX = e.originalEvent.changedTouches[0].pageX,
 		    moveEndY = e.originalEvent.changedTouches[0].pageY,
 		    X = moveEndX - startX,
@@ -924,5 +940,6 @@
 		});
 		
 	</script>
+
 </body>
 </html>

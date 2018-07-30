@@ -1,4 +1,16 @@
 /*移动端通用js*/
+/*为footer按钮绑定点击事件*/
+$(function() { 
+		  $("#page-footer-btn-order-list").on("click",function(){
+			   console.log("move to order list");
+			   window.location.href=BASE_PATH+"/mobile-page/order-info/order-list.jsp";
+		   });
+		  $("#page-footer-btn-my").on("click",function(){
+			   console.log("move to cust maintain");
+			   window.location.href=BASE_PATH+"/mobile-page/member-info/member-maintain.jsp";
+		   });
+		
+});
 //滚动到指定位置
 function scrollTo(scrollHeight){
 	if(scrollHeight!=null){

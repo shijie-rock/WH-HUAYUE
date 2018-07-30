@@ -137,6 +137,7 @@ public class FileUploadServlet extends HttpServlet{
 //			            String returnJsonStr=null;
 			            ObjectMapper objectMapper =new ObjectMapper(); 
 			            response.getWriter().print(objectMapper.writeValueAsString(returnBean));
+			            System.out.println("return json:="+objectMapper.writeValueAsString(returnBean));
 		                
 		            	}catch (Exception e){  
 		            		e.printStackTrace();

@@ -14,13 +14,14 @@ String nowTime=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date(System.c
 <title>CanvasTest</title>
 </head>
 <body>
-
+<div id="upload_result">未上传</div>
 <div id="file-bar" class="btn-group" style="left:0px;position:fixed; top:0px; width:100%; height:50px; 
-/* background-color:#e5e5e5; */
-background-color:rgba(229,229,2229,0.5);
-/*filter:alpha(Opacity=80);-moz-opacity:0.5;opacity: 0.5;*/
-z-index:9999;text-align:center;line-height: 50px;padding-top:3px;">
-<input id="upload" type="file" accept="image/*;" capture="camera" >
+ background-color:#e5e5e5; 
+filter:alpha(Opacity=80);-moz-opacity:0.5;opacity: 0.5;
+background-color:rgba(229,229,2229,0.5);z-index:9999;text-align:center;line-height: 50px;padding-top:3px;">
+
+<input id="upload" type="file"  name="upload" accept="image/png,image/jpeg,image/gif" capture="camera">
+<!-- <input id="upload" type="file"  name="upload" accept="image/*" capture="camera"> -->
 </div>
 <!-- <p>Canvas:</p> -->
 <div id="canvas" style="margin-top:40px;">
@@ -151,13 +152,16 @@ function upload(){
         url : reqUrl,//这个就是请求地址对应sAjaxSource
         data :reqData ,  //这个是把datatable的一些基本数据传给后台,比如起始位置,每页显示的行数 
         type : 'post',
-        dataType : 'json',
+//      dataType: 'text',
+     	dataType : 'json',
         async : false,
         success : function(jsonResult) {
+        	alert(jsonResult);
 //         	alert(jsonResult.srcFilePath);
 			alert('上传成功');
 //         	alert(jQuery.parseJSON(jsonResult));
      		//fnCallback(jQuery.parseJSON(jsonResult.jsonResult));//把返回的数据传给这个方法就可以了,datatable会自动绑定数据的
+			$("#upload_result").text("上传成功["+jsonResult.srcFilePath+"]");
         },
         error : function(msg) {
      	   alert("msg:" + msg);
@@ -166,6 +170,7 @@ function upload(){
 }
 
 $("#upload").change(function(){
+	$("#upload_result").text("未上传");
 	$("#button-bar").show(2000);//显示按钮栏
 	queryServerTime();
 	console.log('dateTime:='+dateTime);
