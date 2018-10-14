@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="GBK"?>
+<Config>
+		<Action id="QUERY_INFO_ACTION">
+		<Description>初始化日历下拉</Description>
+		<ActionContext>
+		    <Data name="QT" type="string" output="true"/>
+		    <Data name="MSG" type="array" output="true"/>
+		    <Data name="MAC" type="string" output="true"/>
+		    <Data name="DATE" type="string" output="true"/>
+		    <Data name="DATETIME" type="string" output="true"/>
+<!-- 		<Data name="APP_BEAN_LIST" type="array" output="true"/> -->
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.youbus.jsontest.action.QueryInfoAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="GPS_MSG_REPORT">
+		<Description>移动端gps上报</Description>
+		<ActionContext>
+			<Data name="JSON_STRING" type="string"/>
+			<Data name="data" type="string"/>
+			<Data name="iszip" type="string"/>
+			<Data name="ip" type="string"/>
+			<Data name="MSG" type="object" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.youbus.gps.data.action.MobileGpsReportAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="MOBILE_MSG_REPORT">
+		<Description>移动端安装或者卸载时上报设备基本信息</Description>
+		<ActionContext>
+			<Data name="JSON_STRING" type="string"/>
+			<Data name="data" type="string"/>
+			<Data name="iszip" type="string"/>
+			<Data name="ip" type="string"/>
+			<Data name="isInstall" type="string"/>
+			<Data name="MSG" type="object" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.youbus.gps.data.action.MobileMacInfoReportAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="GPS_MSG_GET">
+		<Description>移动端获取在服务器上的位置信息</Description>
+		<ActionContext>
+			<Data name="token" type="string"/>
+			<Data name="mobile" type="string"/>
+			<Data name="ip" type="string"/>
+			<Data name="MSG" type="object" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.youbus.gps.data.action.MobileGpsPositionGetAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="GPS_ALL_MSG_GET">
+		<Description>WEB页面获取在服务器上的所有位置信息for ajax</Description>
+		<ActionContext>
+			<Data name="ip" type="string"/>
+			<Data name="GPS_INFO_LIST" type="array" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.youbus.gps.data.action.WebGpsDataQueryAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+</Config>

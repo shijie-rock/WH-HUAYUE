@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>HY_LMS_EXCHAGE</display-name>
+  <servlet>
+    <servlet-name>JsonChannelServlet</servlet-name>
+    <servlet-class>
+			com.infoservice.framework.channels.json.JsonChannelServlet
+		</servlet-class>
+    <init-param>
+      <param-name>DefaultEncoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>ChannelId</param-name>
+      <param-value>json</param-value>
+    </init-param>
+  </servlet>
+<!--    <servlet> -->
+<!--     <servlet-name>ReceiveRemoteServlet</servlet-name> -->
+<!--     <servlet-class>com.youbus.framework.comm.channel.ReceiveRemoteReqChannelServlet</servlet-class> -->
+<!--     <init-param> -->
+<!--       <param-name>DefaultEncoding</param-name> -->
+<!--       <param-value>UTF-8</param-value> -->
+<!--     </init-param> -->
+<!--     <init-param> -->
+<!--       <param-name>ChannelId</param-name> -->
+<!--       <param-value>chn_mobile</param-value> -->
+<!--     </init-param> -->
+<!--   </servlet> -->
+<!--    <servlet> -->
+<!--     <servlet-name>MobileReqServlet</servlet-name> -->
+<!--     <servlet-class>com.youbus.framework.comm.channel.MobileReqChannelServlet</servlet-class> -->
+<!--     <init-param> -->
+<!--       <param-name>DefaultEncoding</param-name> -->
+<!--       <param-value>UTF-8</param-value> -->
+<!--     </init-param> -->
+<!--     <init-param> -->
+<!--       <param-name>ChannelId</param-name> -->
+<!--       <param-value>chn_remote</param-value> -->
+<!--     </init-param> -->
+<!--   </servlet> -->
+<!--   <servlet> -->
+<!--     <servlet-name>HttpChannelServlet</servlet-name> -->
+<!--     <servlet-class>com.infoservice.framework.channels.http.HttpChannelServlet</servlet-class> -->
+<!--     <init-param> -->
+<!--       <param-name>DefaultEncoding</param-name> -->
+<!--       <param-value>UTF-8</param-value> -->
+<!--     </init-param> -->
+<!--     <init-param> -->
+<!--       <param-name>ChannelId</param-name> -->
+<!--       <param-value>chn_http</param-value> -->
+<!--     </init-param> -->
+<!--   </servlet> -->
+  <servlet>
+    <servlet-name>FrameworkInitializer</servlet-name>
+    <servlet-class>com.infoservice.framework.FrameworkInitializer</servlet-class>
+    <init-param>
+      <param-name>configFile</param-name>
+      <param-value>/WEB-INF/Framework.xml</param-value>
+    </init-param>
+    <init-param>
+      <param-name>log4j.properties</param-name>
+      <param-value>/WEB-INF/log.properties</param-value>
+    </init-param>
+    <init-param>
+      <param-name>authenCheck</param-name>
+      <param-value>false</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+<!--   <servlet-mapping> -->
+<!--     <servlet-name>HttpChannelServlet</servlet-name> -->
+<!--     <url-pattern>/service</url-pattern> -->
+<!--   </servlet-mapping> -->
+  <servlet-mapping>
+    <servlet-name>FrameworkInitializer</servlet-name>
+    <url-pattern>/FrameworkInitializer</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>JsonChannelServlet</servlet-name>
+    <url-pattern>/AjaxChannel</url-pattern>
+  </servlet-mapping>
+<!--   <servlet-mapping> -->
+<!--     <servlet-name>ReceiveRemoteServlet</servlet-name> -->
+<!--     <url-pattern>/remote</url-pattern> -->
+<!--   </servlet-mapping> -->
+<!--   <servlet-mapping> -->
+<!--     <servlet-name>MobileReqServlet</servlet-name> -->
+<!--     <url-pattern>/mobile</url-pattern> -->
+<!--   </servlet-mapping> -->
+<!--   <session-config> -->
+<!--     <session-timeout>30</session-timeout> -->
+<!--   </session-config> -->
+<!--   <jsp-config> -->
+<!--     <taglib> -->
+<!--       <taglib-uri>/tags/list</taglib-uri> -->
+<!--       <taglib-location>/WEB-INF/tld/list.tld</taglib-location> -->
+<!--     </taglib> -->
+<!--     <taglib> -->
+<!--       <taglib-uri>/tags/out</taglib-uri> -->
+<!--       <taglib-location>/WEB-INF/tld/label.tld</taglib-location> -->
+<!--     </taglib> -->
+<!--     <taglib> -->
+<!--       <taglib-uri>/tags/input</taglib-uri> -->
+<!--       <taglib-location>/WEB-INF/tld/form.tld</taglib-location> -->
+<!--     </taglib> -->
+<!--   </jsp-config> -->
+  <welcome-file-list>
+    <welcome-file>jsp/index.jsp</welcome-file>
+    <welcome-file>jsp/main.jsp</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+  </welcome-file-list>
+  <filter>
+    <display-name>AddrFilter</display-name>
+    <filter-name>AddrFilter</filter-name>
+    <filter-class>com.infoservice.framework.AddrFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AddrFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <filter-class>com.youbus.jsontest.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>utf-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+<!--   <filter> -->
+<!--     <display-name>RemoteRegFilter</display-name> -->
+<!--     <filter-name>RemoteRegFilter</filter-name> -->
+<!--     <filter-class>com.youbus.agentcenter.auth.AuthRemotLoginInfoFilter</filter-class> -->
+<!--   </filter> -->
+<!--   <filter-mapping> -->
+<!--     <filter-name>RemoteRegFilter</filter-name> -->
+<!--     <url-pattern>/service/*</url-pattern> -->
+<!--   </filter-mapping> -->
+<!--   <servlet> -->
+<!--     <servlet-name>FileUploadServlet</servlet-name> -->
+<!--     <servlet-class>com.youbus.framework.comm.FileUploadServlet</servlet-class> -->
+<!--   </servlet> -->
+<!--   <servlet-mapping> -->
+<!--     <servlet-name>FileUploadServlet</servlet-name> -->
+<!--     <url-pattern>/fileUploadChannel</url-pattern> -->
+<!--   </servlet-mapping> -->
+  <servlet>
+    <servlet-name>ReceiveJsonTestServlet</servlet-name>
+    <servlet-class>com.youbus.jsontest.ReceiveJsonTestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReceiveJsonTestServlet</servlet-name>
+    <url-pattern>/jsontest</url-pattern>
+  </servlet-mapping>
+  
+</web-app>
