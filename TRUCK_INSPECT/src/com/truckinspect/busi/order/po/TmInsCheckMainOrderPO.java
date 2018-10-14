@@ -54,6 +54,7 @@ public class TmInsCheckMainOrderPO implements DataBean{
 	private String checkTargetCode;
 	private Integer ver;
 	private Integer checkPassCount;
+	private String checkItemSummary;//¼ì²âÏîÄ¿ÕªÒª
 
 	public void setPositionAddress(String positionAddress){
 		this.positionAddress=positionAddress;
@@ -361,5 +362,23 @@ public class TmInsCheckMainOrderPO implements DataBean{
 
 	public String toXMLString(){
 		return POFactoryUtil.beanToXmlString(this);
+	}
+
+	/**
+	 * checkItemSummary
+	 *
+	 * @return  the checkItemSummary
+	 * @since   1.0.0
+	*/
+	
+	public String getCheckItemSummary() {
+		return checkItemSummary;
+	}
+
+	/**
+	 * @param checkItemSummary the checkItemSummary to set
+	 */
+	public void setCheckItemSummary(String checkItemSummary) {
+		this.checkItemSummary = checkItemSummary;
 	}
 }

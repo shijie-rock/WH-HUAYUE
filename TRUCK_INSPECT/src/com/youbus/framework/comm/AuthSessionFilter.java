@@ -122,7 +122,7 @@ public class AuthSessionFilter implements Filter {
 		System.out.println("url :="+url);
 		
 		
-		if(url.endsWith(".js")||url.endsWith(".css")||url.endsWith(".png")||url.endsWith(".jpg")||url.endsWith(".woff")||url.endsWith(".ico")||url.endsWith(".ico")||url.endsWith(".map"))return true;
+		if(url.endsWith(".gif")||url.endsWith(".js")||url.endsWith(".css")||url.endsWith(".png")||url.endsWith(".jpg")||url.endsWith(".woff")||url.endsWith(".ico")||url.endsWith(".ico")||url.endsWith(".map"))return true;
 		if(url.endsWith("js/uploadify/uploadify.swf"))return true;
 		//jsp	
 		if(url.endsWith("/page/login.jsp"))return true;//ºöÂÔÓÃ»§µÇÂ¼Ò³Ãæ

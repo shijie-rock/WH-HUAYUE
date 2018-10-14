@@ -178,25 +178,26 @@
                 </div>
                 <div class="widget-content referrer">
                   <!-- Widget content -->
-                  <div class="padd">
-                    <ul class="latest-news">
-                      <li>
-                        <!-- Title and date -->
-                        <h6><a href="#">紧急通知 </a> - <span>2017-12-1</span>&nbsp;&nbsp;<span class="label label-danger" style="color:#fff;font-weight: bold;">Important</span></h6>
-                        <p>安全生产工作紧急通知... ...</p>
-                      </li>
+                  <div class="padd" id="index_content_comm_msg_list_div" style="height:14%">
+                  	<div id="index_content_comm_msg_load" style="background-image: url(../img/loading.gif);width: 20px;height: 20px;margin-left: 50%;margin-top: 17%;"></div>
+                    <ul class="latest-news" id="index_content_comm_msg_list" style="display:none;">
+<!--                       <li> -->
+<!--                         Title and date -->
+<!--                         <h6><a href="#">紧急通知 </a> - <span>2017-12-1</span>&nbsp;&nbsp;<span class="label label-danger" style="color:#fff;font-weight: bold;">Important</span></h6> -->
+<!--                         <p>安全生产工作紧急通知... ...</p> -->
+<!--                       </li> -->
 
-                      <li>
-                        <!-- Title and date -->
-                        <h6><a href="#">人事变动通知</a> - <span>2017-12-1</span></h6>
-                        <p>关于相关人员岗位调动的通知 为了更好的协调工作,提高工作效率。经公司决定现安排以下 人员工作岗... </p>
-                      </li>
+<!--                       <li> -->
+<!--                         Title and date -->
+<!--                         <h6><a href="#">人事变动通知</a> - <span>2017-12-1</span></h6> -->
+<!--                         <p>关于相关人员岗位调动的通知 为了更好的协调工作,提高工作效率。经公司决定现安排以下 人员工作岗... </p> -->
+<!--                       </li> -->
 
-                      <li>
-                        <!-- Title and date -->
-                        <h6><a href="#">开展安全生产培训的通知</a> - <span>2017-12-1</span></h6>
-                        <p>2017年1月20日 - 为进一步贯彻落实国务院安委办、省安委办、省国资委、集团公司《关于切实做好春节期间安全生产工作的通知》... </p>
-                      </li>                                        
+<!--                       <li> -->
+<!--                         Title and date -->
+<!--                         <h6><a href="#">开展安全生产培训的通知</a> - <span>2017-12-1</span></h6> -->
+<!--                         <p>2017年1月20日 - 为进一步贯彻落实国务院安委办、省安委办、省国资委、集团公司《关于切实做好春节期间安全生产工作的通知》... </p> -->
+<!--                       </li>                                         -->
                     </ul> 
                   </div>
                   <div class="widget-foot">
@@ -382,6 +383,9 @@
 <!-- JS -->
 <script src="<%=path%>/js/jquery.js?v=<%=staticVersion%>"></script> <!-- jQuery -->
 <script src="<%=path%>/js/bootstrap.js?v=<%=staticVersion%>"></script> <!-- Bootstrap -->
+
+<script src="<%=path%>/js/truck-inspect-common.js?v=<%=staticVersion%>"></script> <!-- Custom codes -->
+
 <script src="<%=path%>/js/jquery-ui-1.9.2.custom.min.js?v=<%=staticVersion%>"></script> <!-- jQuery UI -->
 <script src="<%=path%>/js/fullcalendar.min.js?v=<%=staticVersion%>"></script> <!-- Full Google Calendar - Calendar -->
 <script src="<%=path%>/js/jquery.rateit.min.js?v=<%=staticVersion%>"></script> <!-- RateIt - Star rating -->
@@ -413,7 +417,17 @@
 
 <!-- Script for this page -->
 <script type="text/javascript">
+
+//data dic
+var map=parseData2Map('<yb:dataDic dataDicType="COM_MSG_LEVEL"/>');
+function dicTranse(value){
+	return map[value]==null?value:map[value];
+}
+
+
 $(function () {
+	
+	queryPubCommMsg(3);//查询公告
 
     /* Bar Chart starts */
 
@@ -666,6 +680,68 @@ $(function () {
 /* Pie chart ends */
 
 });
+
+function queryPubCommMsg(dataCount){
+	var reqUrl='<%=path%>/AjaxChannel?action=MESSAGE_COMM_MSG_QUERY_MAIN_PAGE_ACTION';
+	//ajax begin
+	$.ajax({
+			type : 'POST',
+			url:reqUrl,
+			data: {DATA_COUNT:dataCount},
+			dataType : 'json',
+			success : function(json) {
+				if(json.SUCCESS=='1'){
+					$("#index_content_comm_msg_load").hide();
+					$("#index_content_comm_msg_list").show();
+						if(json.COMM_MSG_LIST!=null){
+							var liHtml="";
+							
+							$.each(json.COMM_MSG_LIST,function(index,data){
+								
+								console.log(data);
+								//一般
+								var commLevelHtml='<span class="label label-default" style="color:#fff;font-weight: bold;">'+dicTranse("CML_0030")+'</span>';
+								if(data.COM_MSG_LEVEL=='CML_0010'){//紧急
+									commLevelHtml='<span class="label label-danger" style="color:#fff;font-weight: bold;">'+dicTranse(data.COM_MSG_LEVEL)+'</span>';
+								}else if(data.COM_MSG_LEVEL=='CML_0020'){//严重
+									 commLevelHtml='<span class="label label-warn" style="color:#fff;font-weight: bold;">'+dicTranse(data.COM_MSG_LEVEL)+'</span>';
+								}
+								
+								liHtml+='<li>';
+								liHtml+='<h6><a href="#">'+data.COMM_MSG_TITLE+' </a> - <span>'+data.PUB_TIME_STR+'</span>&nbsp;&nbsp;'
+								+commLevelHtml+
+								'</h6>';
+								liHtml+='<p>'+data.COMM_MSG_SUB_TITLE+'</p>';
+								liHtml+='</li>';
+							});
+							console.log(liHtml);
+							$("#index_content_comm_msg_list").html(liHtml);
+						}
+					
+//                     <li>
+//                     <!-- Title and date -->
+//                     <h6><a href="#">紧急通知 </a> - <span>2017-12-1</span>&nbsp;&nbsp;<span class="label label-danger" style="color:#fff;font-weight: bold;">Important</span></h6>
+//                     <p>安全生产工作紧急通知... ...</p>
+//                   </li>
+					
+// 						returnSuccessMsgShow('optModal',json.MSG);//alert msg
+// 						var fvTable=$("#CommMsgList").dataTable(); //datatable init current
+// 						fvTable.fnDraw(false);
+// 						$(obj).button('reset');
+					}else{
+						console.log('无数据');
+// 						returnErrorMsgShow('optModal',json.MSG);
+// 						$(obj).button('reset'); 
+					}
+				},
+			error : function(e) {
+				console.log(e);
+				}
+			});
+		//ajax end
+	//
+}
+
 </script>
 
 </body>

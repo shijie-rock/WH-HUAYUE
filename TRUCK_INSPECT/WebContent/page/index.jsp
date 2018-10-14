@@ -309,7 +309,8 @@
           </li> 
            -->
           <li class="has_sub"><a href="#"><i class="glyphicon glyphicon-send"></i>消息管理<span class="pull-right"><i class="icon-chevron-right"></i></span></a>
-            <ul>              
+            <ul> 
+            <li><a href="<%=path%>/page/message/common_msg_manager.jsp" target="iframepage">发布公告</a></li>             
             <li><a href="<%=path%>/page/message/wx_msg_manager.jsp" target="iframepage">微信消息</a></li>
             <li><a href="<%=path%>/page/message/sms_msg_manager.jsp" target="iframepage">短信消息</a></li>
             </ul>

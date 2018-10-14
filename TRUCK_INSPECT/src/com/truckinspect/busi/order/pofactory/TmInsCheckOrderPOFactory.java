@@ -451,4 +451,54 @@ public class TmInsCheckOrderPOFactory extends POFactory {
 		}
 		return null;
 	}
+	
+	/**
+	 * 移动端查询检查单列表
+	 * 方   法  名:mobileQueryCheckOrderList
+	 * 方法描述:
+	 * 参         数:@param conn
+	 * 参         数:@param checkMemberId 检车员id
+	 * 参         数:@param checkType 1:未检,2：检中,3：已检
+	 * 参         数:@param pageNo 当前页码
+	 * 参         数:@return
+	 * 返   回  值:List<DynaBean>
+	 * 创   建  人:rock
+	 * @exception
+	 * @since  1.0.0
+	 */
+	public static List<DynaBean> mobileQueryCheckOrderList(Connection conn,int checkMemberId,String checkType,int pageNo){
+		int PAGE_SIZE=10;//每页条数
+		String subSql=" AND A.CHECK_ORDER_STATUS='CIS_0010' ";//待检查
+		if("2".equals(checkType)){
+			subSql=" AND A.CHECK_ORDER_STATUS='CIS_0020' ";//检查中
+			}else if("3".equals(checkType)){
+				subSql=" AND A.CHECK_ORDER_STATUS='CIS_0030' ";//已检查
+			
+		}
+		String sql=" SELECT A.* ,B.MEMBER_NAME AS CHECKER_NAME,C.MEMBER_NAME AS CREATE_NAME,D.MEMBER_NAME AS PL_CHECKER_NAME, "
+				 + " DATE_FORMAT(A.CREATE_TIME,'%Y-%m-%d %H:%i:%S') AS ORDER_CREATE_TIME,"
+				 + " DATE_FORMAT(A.CHECK_PL_BEGIN_TIME,'%Y-%m-%d %H:%i:%S') AS P_BEGIN_TIME, "
+				 + " DATE_FORMAT(A.CHECK_PL_END_TIME,'%Y-%m-%d %H:%i:%S') AS P_END_TIME ,"
+				 + " DATE_FORMAT(A.CHECK_R_BEGIN_TIME,'%Y-%m-%d %H:%i:%S') AS R_BEGIN_TIME ,"
+				 + " DATE_FORMAT(A.CHECK_R_END_TIME,'%Y-%m-%d %H:%i:%S') AS R_END_TIME,"
+				 + " E.TRUCK_TYPE "
+				 + " FROM TM_INS_CHECK_MAIN_ORDER A "
+				 + " LEFT JOIN TM_SYS_MEMBER B ON B.STATUS='1' AND A.CHECK_R_MEMBER_ID=B.ID "
+				 + " LEFT JOIN TM_SYS_MEMBER C ON C.STATUS='1' AND A.CREATE_BY=C.ID"
+				 + " LEFT JOIN TM_SYS_MEMBER D ON D.STATUS='1' AND A.CHECK_PL_MEMBER_ID=D.ID "
+				 + " LEFT JOIN TM_INS_TRUCK_INFO E ON E.STATUS='1' AND A.CHECK_TARGET_ID=E.ID "
+				 + " WHERE 1=1 AND A.STATUS='1' AND A.FREEZE_TAG ='0'  "
+				 + subSql;//check stats 检查状态
+		sql+=" ORDER BY IFNULL(A.CHECK_R_BEGIN_TIME,A.CHECK_PL_BEGIN_TIME) ASC ";
+		sql+=" limit  "+(pageNo-1)*PAGE_SIZE+","+PAGE_SIZE;
+		log.debug("sql:="+sql);
+		
+		try {
+			return DBConUtil.getResult(conn, sql, "CHECK_ORDER_BEAN");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

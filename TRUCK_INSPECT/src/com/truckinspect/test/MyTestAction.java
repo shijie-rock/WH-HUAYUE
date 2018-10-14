@@ -73,11 +73,65 @@ public class MyTestAction extends ActionImpl {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
-		String t=MessageFormat.format("http://www.sis001.com/forum/forum-230-'{0}'.html", 1);
-		System.out.println(t);
 
+//		System.out.println(t);
+		String code="3432564576657565756912374861";
+		String mobile="1399999999999";
+		
+		byte[] codeBytes=code.getBytes();
+		byte[] mobileBytes=mobile.getBytes();
+		
+		StringBuffer newMobile=new StringBuffer("");
+		
+		for(int i=0;i<mobileBytes.length;i++){
+			System.out.print("org code["+i+"]:="+codeBytes[i]);
+			System.out.println(" org mobile["+i+"]:="+mobileBytes[i]);
+			char newMobileCode=(char)(codeBytes[i]+mobileBytes[i]);
+			newMobile.append(newMobileCode);
+			
+			System.out.println("new newMobileCode:="+newMobileCode);
+		}
+		
+		System.out.println("newMobile:="+newMobile);
+		
+		
+		StringBuffer oldMobile=new StringBuffer("");
+		byte[] newMobileBytes=newMobile.toString().getBytes();
+		
+		for(int i=0;i<newMobileBytes.length;i++){
+			System.out.print("org code["+i+"]:="+codeBytes[i]);
+			System.out.println(" new mobile["+i+"]:="+newMobileBytes[i]);
+			char oldMobileCode=(char)(newMobileBytes[i]-codeBytes[i]);
+			oldMobile.append(oldMobileCode);
+			
+			System.out.println("old oldMobile:="+oldMobileCode);
+		}
+		
+		System.out.println("oldMobile:="+oldMobile);
 	}
+	
+    /**
+     * ×Ö·û×ªASC
+     * 
+     * @param st
+     * @return
+     */
+    public static int getAsc(String st) {
+        byte[] gc = st.getBytes();
+        int ascNum = (int) gc[0];
+        return ascNum;
+    }
+
+    /**
+     * ASC×ª×Ö·û
+     * 
+     * @param backnum
+     * @return
+     */
+    public static char backchar(int backnum) {
+        char strChar = (char) backnum;
+        return strChar;
+    }	
 	
 //	public static void main(String[] args){
 //		String str="asdfsadfsa$$dsfawwe$$fadfsadfsa$$adsf";

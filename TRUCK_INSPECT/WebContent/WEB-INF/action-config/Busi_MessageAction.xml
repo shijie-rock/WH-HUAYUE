@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="GBK"?>
+<Config>
+	<Action id="MESSAGE_COMM_MSG_QUERY_LIST_ACTION">
+		<Description>查询公告列表信息</Description>
+		<ActionContext>
+			<Data name="sEcho" type="string"/>
+			<Data name="iDisplayStart" type="integer"/>
+			<Data name="iDisplayLength" type="integer"/>
+			
+			<Data name="COMM_MSG_CONTENT" type="string"/>
+			<Data name="COM_MSG_LEVEL" type="string"/>
+			<Data name="INCLUDE_STOP" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="jsonResult" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.msg.action.QueryCommMsgListAction"  on1Do="next" onOtherDo="next"/>
+<!-- 			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/> -->
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="MESSAGE_COMM_MSG_ADD_ACTION">
+		<Description>新增公告</Description>
+		<ActionContext>
+			<Data name="COMM_MSG_TITLE" type="string"/>
+			<Data name="COMM_MSG_SUB_TITLE" type="string"/>
+			<Data name="COMM_MSG_CONTENT" type="string"/>
+			<Data name="COMM_MSG_LEVEL" type="string"/>
+			<Data name="PUBLISH_TAG" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.msg.action.AddCommMsgAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	<Action id="MESSAGE_COMM_MSG_EDIT_ACTION">
+		<Description>新增公告</Description>
+		<ActionContext>
+			<Data name="COMM_MSG_TITLE" type="string"/>
+			<Data name="COMM_MSG_SUB_TITLE" type="string"/>
+			<Data name="COMM_MSG_CONTENT" type="string"/>
+			<Data name="COMM_MSG_LEVEL" type="string"/>
+			<Data name="COMM_MSG_ID" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.msg.action.EditCommMsgAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+		
+	<Action id="MESSAGE_COMM_MSG_DETAIL_ACTION">
+		<Description>查询公告明细</Description>
+		<ActionContext>
+			<Data name="COMM_MSG_ID" type="string"/>
+			
+			<Data name="MSG" type="string" output="true"/>
+			<Data name="COMM_MSG_BEAN" type="object" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="3"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.msg.action.QueryCommMsgDetailAction"  on1Do="next" onOtherDo="3"/>
+			<ActionStep id="3" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="MESSAGE_COMM_MSG_MOD_ACTION">
+		<Description>公告停用启用删除</Description>
+		<ActionContext>
+			<Data name="COMM_MSG_ID" type="string"/>
+			<Data name="OPT_TYPE" type="string"/>
+			
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+			<Data name="MSG" type="string" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.msg.action.ModCommMsgAction"  on1Do="next" onOtherDo="4"/>
+			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/>
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	<Action id="MESSAGE_COMM_MSG_QUERY_MAIN_PAGE_ACTION">
+		<Description>首页查询已发布公告</Description>
+		<ActionContext>
+			<Data name="DATA_COUNT" type="integer"/>
+			<Data name="COMM_MSG_LIST" type="array" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.busi.msg.action.QueryCommMsgForMainPageAction"  on1Do="next" onOtherDo="next"/>
+<!-- 			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/> -->
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+	
+</Config>

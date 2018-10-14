@@ -16,6 +16,7 @@ import com.info.base.po.TmSysMemberPO;
 import com.infoservice.framework.ActionImpl;
 import com.infoservice.framework.datacontext.ActionContext;
 import com.infoservice.po.POFactory;
+import com.thoughtworks.xstream.converters.basic.StringBuilderConverter;
 import com.truckinspect.busi.base.po.TmInsPositionInfoPO;
 import com.truckinspect.busi.base.po.TmInsTruckInfoPO;
 import com.truckinspect.busi.object.po.TmInsCheckObjItemPO;
@@ -61,9 +62,14 @@ public class AddInsCheckOrderAction extends ActionImpl {
 		String itemList=atx.getStringValue("ITEM_LIST");//CHE_010101ITEM$$测试检查项目;;CHE_010101ITEM-1$$CHE_010101ITEM-1-NAME;;PTCT-0010$$普通车头-检查
 		
 		//check param
-		if(StringUtils.isBlank(targetId)||StringUtils.isBlank(plMemberId)||StringUtils.isBlank(itemList)){
+		if(StringUtils.isBlank(targetId)||StringUtils.isBlank(plMemberId)){
 			logger.error(" PARAM IS EMTPY .");
 			atx.setErrorContext("BUSI_DATA_CHECK_ORDER_ADD_ACTION_ERR_1000", "新增车辆检查单：参数为空", null);
+			return 0;
+		}
+		if(StringUtils.isBlank(itemList)){
+			logger.error(" CHECK ITEM IS EMTPY .");
+			atx.setErrorContext("BUSI_DATA_CHECK_ORDER_ADD_ACTION_ERR_1001", "新增车辆检查单：请添加检查项目", null);
 			return 0;
 		}
 		Connection conn=atx.getConnection();
@@ -245,10 +251,11 @@ public class AddInsCheckOrderAction extends ActionImpl {
 				atx.setErrorContext("BUSI_DATA_CHECK_ORDER_ADD_ACTION_ERR_8001", "新增车辆检查单：处理时间异常", null);
 				return 0;
 		}
-		POFactory.insert(conn, orderPOCon);
+//		POFactory.insert(conn, orderPOCon);
 		
 //		TM_INS_CHECK_ORDER_ITEM
 		if(StringUtils.isNotBlank(itemList)){
+			StringBuffer sbf=new StringBuffer("");//检测项目摘要
 			//CHE_010101ITEM$$测试检查项目;;CHE_010101ITEM-1$$CHE_010101ITEM-1-NAME;;PTCT-0010$$普通车头-检查
 			String[] itemCodeArray=itemList.split(";;");
 			
@@ -287,6 +294,8 @@ public class AddInsCheckOrderAction extends ActionImpl {
 					itemPOCon.setCheckObjCode(itemCode);
 					itemPOCon.setCheckObjName(itemName);
 					
+					sbf.append(itemName).append(",");
+					
 					objItemPOCon.setCheckObjCode(itemCode);
 					
 					objItemPOResult=POFactory.getByPriKey(conn, objItemPOCon);
@@ -299,7 +308,17 @@ public class AddInsCheckOrderAction extends ActionImpl {
 					POFactory.insert(conn, itemPOCon);
 				}
 			}
+			if(StringUtils.isNotBlank(sbf.toString())){ //20181012-增加摘要
+				String itemSummary=sbf.toString();
+				if(itemSummary.endsWith(",")){
+					itemSummary=itemSummary.substring(0,itemSummary.length()-1);
+				}
+				orderPOCon.setCheckItemSummary(itemSummary);
+			}
 		}
+		
+		POFactory.insert(conn, orderPOCon);
+		
 		atx.setStringValue("CHECK_ORDER_NO", orderNo);//订单号返回前台
 		OptLogUtil.bindOptContext(atx, TruckInsCommonCanstant.OPT_TYPE_WEBCHECKORDER_ADD, "", "新增检查单");
 		

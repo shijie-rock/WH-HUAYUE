@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="GBK"?>
+<Config>
+	<Action id="MOBILE_QUERY_CHECK_ORDER_LIST_ACTION">
+		<Description>移动端查询检查单列表</Description>
+		<ActionContext>
+			<Data name="CHECK_MEMBER_ID" type="string"/>
+			<Data name="QUERY_TYPE" type="string"/>
+			<Data name="PAGE" type="integer"/>
+			
+			<Data name="CHECK_ORDER_LIST" type="array" output="true"/>
+			<Data name="OPT_LOG_BEAN" type="object" output="true"/>
+		</ActionContext>
+		<ActionClass>com.infoservice.framework.actions.FlowAction</ActionClass>
+		<ActionParam>
+			<ActionStep id="1" classname="com.infoservice.framework.actions.BeginTransactionAction" on1Do="next"  onOtherDo="4"/>
+			<ActionStep id="2" classname="com.truckinspect.mobile.busi.action.MobileQueryCheckOrderListAction"  on1Do="next" onOtherDo="next"/>
+<!-- 			<ActionStep id="3" classname="com.truckinspect.common.action.OptLogRecordAction"  on1Do="next" onOtherDo="next"/> -->
+			<ActionStep id="4" classname="com.infoservice.framework.actions.EndTransactionAction"  onOtherDo="return"/>
+		</ActionParam>
+	</Action>
+	
+</Config>

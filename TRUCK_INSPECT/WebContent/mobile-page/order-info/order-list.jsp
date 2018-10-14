@@ -5,6 +5,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>order list</title>
+
+<script src="<%=path%>/js/jquery.js?v=<%=staticVersion%>"></script>
+<!-- jQuery -->
+<script src="<%=path%>/js/jquery-mobile/jquery.mobile-1.4.5.js?v=<%=staticVersion%>"></script>
+<!-- jQuery mobile -->
+<script src="<%=path%>/js/bootstrap.js?v=<%=staticVersion%>"></script>
+<!-- Bootstrap -->
+<!--
+<script src="<%=path%>/js/jquery-mobile/zepto.min.js?v=<%=staticVersion%>"></script>
+<script src="<%=path%>/js/jquery-mobile/dropload.js?v=<%=staticVersion%>"></script>
+-->
+<script src="<%=path%>/js/truck-mobile-common.js?v=<%=staticVersion%>"></script> <!-- mobile common js -->
+<script src="<%=path%>/js/busi-js/mobile-order-list.js?v=<%=staticVersion%>"></script> <!-- mobile busi js -->
+
 </head>
 <body>
 	<!-- main page -->
@@ -15,9 +29,8 @@
 		<!-- /main-head -->
 		<div data-role="main" class="ui-content" style="margin-top: 70px;"
 			id="all-check-order-list-content">
-			<div data-role="content" id="uncheck-list">
-				<span class="get-new-span" style="display: none">刷新未检数据...
-					...</span>
+			<div data-role="content" id="uncheck-list" style="padding:0;">
+				<span class="get-new-span" style="display: none">刷新未检数据... ...</span>
 					<ul data-role="listview" data-inset="true" style="z-index:-1">
 				      <li data-role="list-divider">鲁F-12345 <span class="ui-li-count">2</span></li>   
 				      <li>
@@ -112,12 +125,11 @@
 				
 				    </ul>
 					
-				<span class="get-new-page-span" style="display: none">更多未检数据...
-					...</span>
+				<span class="get-new-page-span" style="display: none">更多未检数据......</span>
+				<span class="no-data-span" style="display: none">别扯了，我是有底限的</span>
 			</div>
-			<div data-role="content" id="checking-list" style="display: none;">
-				<span class="get-new-span" style="display: none">刷新检中数据...
-					...</span>
+			<div data-role="content" id="checking-list" style="display: none;padding:0;">
+				<span class="get-new-span" style="display: none">刷新检中数据... ...</span>
 					<ul data-role="listview" data-inset="true" style="z-index:-1">
 				      <li data-role="list-divider">鲁F-12345 <span class="ui-li-count">2</span></li>   
 				      <li>
@@ -211,8 +223,8 @@
 				      </li>
 				
 				    </ul>
-				<span class="get-new-page-span" style="display: none">更多检中数据...
-					...</span>
+				<span class="get-new-page-span" style="display: none">更多检中数据......</span>
+				<span class="no-data-span" style="display: none">别扯了，我是有底限的</span>
 			</div>
 			<div data-role="content" id="checked-list" style="display: none; padding:0;">
 				<span class="get-new-span" style="display: none">刷新已检数据... ...</span>
@@ -304,8 +316,8 @@
 				      </li>
 				
 				    </ul>
-				<span class="get-new-page-span" style="display: none">更多已检数据...
-					...</span>
+				<span class="get-new-page-span" style="display: none">更多已检数据......</span>
+				<span class="no-data-span" style="display: none">别扯了，我是有底限的</span>
 			</div>
 
 		</div>
@@ -597,27 +609,26 @@
 	
 	<!-- 检查单详情 只读 end-->
 
-	<script src="<%=path%>/js/jquery.js?v=<%=staticVersion%>"></script>
-	<!-- jQuery -->
-	<script src="<%=path%>/js/jquery-mobile/jquery.mobile-1.4.5.js?v=<%=staticVersion%>"></script>
-	<!-- jQuery mobile -->
-	<script src="<%=path%>/js/bootstrap.js?v=<%=staticVersion%>"></script>
-	<!-- Bootstrap -->
-	<!--
-<script src="<%=path%>/js/jquery-mobile/zepto.min.js?v=<%=staticVersion%>"></script>
-<script src="<%=path%>/js/jquery-mobile/dropload.js?v=<%=staticVersion%>"></script>
-	-->
-<script src="<%=path%>/js/truck-mobile-common.js?v=<%=staticVersion%>"></script> <!-- mobile common js -->
-
 	<!-- Script for this page -->
 	<script type="text/javascript">
 		//页面全局变量定义
 		var currentListType = "uncheck";//当前检查点列表显示的类型：uncheck 未检，checking 检中，checked 已检
+		
+		var uncheck_list_page_no = 1;//当前显示未检车数据页码
+		var checking_list_page_no = 1;//当前显示检车中数据页码
+		var checked_list_page_no = 1;//当前显示已检车数据页码
+		
 		var uncheckScrollSize = 0;//未检列表滚动条高度
 		var checkingScrollSize = 0;//检中列表滚动条高度
 		var checkedScrollSize = 0;//已检滚动条高度
 
 		var scrollHeigh = 0;//当前滚动条的高度
+		
+		//data dic
+		var map=parseData2Map('<yb:dataDic dataDicType="COM_MSG_LEVEL,TRUCK_TYPE,CHECK_ORDER_STATUS,CHECK_ORDER_RESULT"/>');
+		function dicTranse(value){
+			return map[value]==null?value:map[value];
+		}
 // 		alert("1");
 		//navicate点击初始化,点击激活navicate
 		$(document).on(
@@ -646,19 +657,40 @@
 								if ("#page-order-uncheck" == attrHref) {//display未检
 									$("div #uncheck-list").show();
 									currentListType = "uncheck";
-									scrollTo(uncheckScrollSize);
-									//           	  alert('uncheck-list');
+									
+									if($("#uncheck-list ul").children().length>0){
+										scrollTo(uncheckScrollSize);
+									}
+									else{ //如果没有li，则执行一次查询
+										uncheck_list_page_no=1;
+										queryCheckOrderList("", uncheck_list_page_no, "1");
+									}
+									//alert('uncheck-list');
 
 								} else if ("#page-order-checking" == attrHref) {//display检中
 									$("div #checking-list").show();
 									currentListType = "checking";
-									scrollTo(checkingScrollSize);
+// 									scrollTo(checkingScrollSize);
+									if($("#checking-list ul").children().length>0){
+										scrollTo(checkingScrollSize);
+									}
+									else{ //如果没有li，则执行一次查询
+										checking_list_page_no=1;
+										queryCheckOrderList("", checking_list_page_no, "2");
+									}
 									//         	  alert('checking-list');
 								} else {//display已检
 
 									$("div #checked-list").show();
 									currentListType = "checkend";
-									scrollTo(checkedScrollSize);
+// 									scrollTo(checkedScrollSize);
+									if($("#checked-list ul").children().length>0){
+										scrollTo(checkedScrollSize);
+									}
+									else{ //如果没有li，则执行一次查询
+										checked_list_page_no=1;
+										queryCheckOrderList("", checked_list_page_no, "3");
+									}
 									//         	  alert('checked-list');
 								}
 							});
@@ -728,7 +760,10 @@
 				console.log("uncheck_get_new_span:=" + uncheck_get_new_span);
 				// 		ajax for new Data
 				console.log("begin uncheck ajax");
-				sleep(1000);
+// 				sleep(1000);
+				uncheck_list_page_no=1;
+				queryCheckOrderList("", uncheck_list_page_no, "1");
+// 				queryCheckOrderList(memberId, uncheck_list_page_no, "1");
 
 				console.log("end uncheck ajax");
 				// 		success
@@ -740,7 +775,9 @@
 				checking_get_new_span.show();
 				// 		ajax for new Data
 				console.log("begin checking ajax");
-				sleep(1000);
+// 				sleep(1000);
+				checking_list_page_no=1;
+				queryCheckOrderList("", checking_list_page_no, "2");
 				console.log("end checking ajax");
 				// 		success
 				// 		uncheck_get_new_span.hide();
@@ -753,7 +790,10 @@
 				// 		ajax for new Data
 
 				console.log("begin checkend ajax");
-				sleep(1000);
+// 				sleep(1000);
+				checked_list_page_no=1;
+				queryCheckOrderList("", checked_list_page_no, "3");
+				
 				console.log("end checkend ajax");
 				// 		success
 				// 		uncheck_get_new_span.hide();
@@ -786,7 +826,8 @@
 				// 		ajax for new Data
 				// 		append data
 				console.log("begin uncheck ajax");
-				sleep(1000);
+// 				sleep(1000);
+				queryCheckOrderList("", uncheck_list_page_no, "1");
 
 				console.log("end uncheck ajax");
 
@@ -797,7 +838,8 @@
 				// 		ajax for new Data
 				// 		append data
 				console.log("begin checking ajax");
-				sleep(1000);
+// 				sleep(1000);
+				queryCheckOrderList("", checking_list_page_no, "2");
 				console.log("end checking ajax");
 				// 		success
 				// 		uncheck_get_new_span.hide();
@@ -809,7 +851,8 @@
 				// 		ajax for new Data
 				// 		append data
 				console.log("begin checkend ajax");
-				sleep(1000);
+// 				sleep(1000);
+				queryCheckOrderList("", checked_list_page_no, "3");
 				console.log("end checkend ajax");
 				// 		success
 				// 		uncheck_get_new_span.hide();
@@ -849,7 +892,7 @@
 		}
 		
 // 	      未检点击
-		alert("11");
+// 		alert("11");
 		function hideItemDesc1(obj,order_item_id){
 // 			alert("hideItemDesc");
 			var itemDescDiv=findItemDesc(obj,order_item_id);
@@ -863,7 +906,7 @@
 		}
 		
 		//通过展示
-		alert("12");
+// 		alert("12");
 		function hideItemDesc2(obj,order_item_id){
 // 			alert("hideItemDesc");
 			var itemDescDiv=findItemDesc(obj,order_item_id);
@@ -874,13 +917,13 @@
 			$(obj).parent().parent().find("label").removeClass("order-check-not-pass order-check-pass");
 			$(obj).prev().addClass("order-check-pass");//label
 		}
-		alert("13");
+// 		alert("13");
 		function findItemDesc(obj,order_item_id){
 // 			return $(obj).parent().parent(); data-order-item-desc
 			return $("div[data-order-item-desc='"+order_item_id+"']").first();
 		}
 		
-		alert("14");
+// 		alert("14");
 		$("body").on("touchstart", function(e) {
 		    // 判断默认行为是否可以被禁用 --浏览器有效，手机端无效，需要注释掉
 		    /*
@@ -894,7 +937,7 @@
 		    startX = e.originalEvent.changedTouches[0].pageX,
 		    startY = e.originalEvent.changedTouches[0].pageY;
 		});
-		alert("15");
+// 		alert("15");
 		$("body").on("touchmove", function(e) {         
 		    // 判断默认行为是否可以被禁用 --浏览器有效，手机端无效，需要注释掉
 		    /*
@@ -938,6 +981,8 @@
 // 		        alert('单击');    
 // 		    }
 		});
+		
+		
 		
 	</script>
 

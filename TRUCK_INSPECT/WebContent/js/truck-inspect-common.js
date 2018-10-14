@@ -479,6 +479,20 @@ $("div").scroll(function() {
 			//返回参数值  
 			if (r!=null) return unescape(r[2]);  
 			return null;  
-		} 	  
-	  
+		} 	
+		
+		//js 处理字符串超长截断,默认设置10
+
+		//js 处理字符串超长截断
+		function wordlimit(cname, wordlength) {
+			if(cname!=null&&cname.length>wordlength){
+				return cname.substr(0, wordlength) + '...';
+			}
+			else 
+				return cname;
+		}
+		
+		function wordlimitDefault(cname){
+			return wordlimit(cname,10);
+		}
 	  

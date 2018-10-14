@@ -118,6 +118,17 @@ public class TruckInsCommonCanstant {
 	public static final String OPT_TYPE_WEBCHECKORDERITEM_UNV="OTC_1440";//WEB停用检查单检查明细
 	public static final String OPT_TYPE_WEBCHECKORDERITEM_VAL="OTC_1450";//WEB启用检查单检查明细
 	
+	//20180929 ADD
+	public static final String OPT_TYPE_COMM_MSG_ADD="OTC_1510";//新增公告
+	public static final String OPT_TYPE_COMM_MSG_DEL="OTC_1520";//删除公告
+	public static final String OPT_TYPE_COMM_MSG_MOD="OTC_1530";//编辑公告
+	public static final String OPT_TYPE_COMM_MSG_UNV="OTC_1540";//停用公告
+	public static final String OPT_TYPE_COMM_MSG_VAL="OTC_1550";//启用公告
+	public static final String OPT_TYPE_COMM_MSG_SED="OTC_1560";//发布公告
+	public static final String OPT_TYPE_COMM_MSG_CAL="OTC_1570";//取消发布
+	
+	
+	
 	public static final String BASE_DATA_CHECK_ORDER_STATUS_UNCHECK="COS_0010";//检查单状态 待检查
 	
 	public static final String BASE_DATA_CHECK_ORDER_RESULT_UNDONE="COR_0010";//检查单结果 未完成

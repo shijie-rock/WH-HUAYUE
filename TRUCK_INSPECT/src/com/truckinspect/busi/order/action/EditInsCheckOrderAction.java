@@ -260,13 +260,13 @@ public class EditInsCheckOrderAction extends ActionImpl {
 				return 0;
 		}
 		
-		int excuteResult=POFactory.update(conn, orderPOCon, orderPOValue);
-		
-		if(excuteResult<1){
-			logger.error(" DATA["+orderNo+"] CHANGED,NO DATA UPDATE,PLEASE RETRY FOR LATER .");
-			atx.setErrorContext("BUSI_DATA_CHECK_ORDER_EDIT_ACTION_ERR_8002", "编辑车辆检查单：数据NO["+orderNo+"]已变更，无法完成操作，请稍后重试", null);
-			return 0;
-		}
+//		int excuteResult=POFactory.update(conn, orderPOCon, orderPOValue);
+//		
+//		if(excuteResult<1){
+//			logger.error(" DATA["+orderNo+"] CHANGED,NO DATA UPDATE,PLEASE RETRY FOR LATER .");
+//			atx.setErrorContext("BUSI_DATA_CHECK_ORDER_EDIT_ACTION_ERR_8002", "编辑车辆检查单：数据NO["+orderNo+"]已变更，无法完成操作，请稍后重试", null);
+//			return 0;
+//		}
 		
 //		TM_INS_CHECK_ORDER_ITEM
 		if(StringUtils.isNotBlank(itemList)){
@@ -315,6 +315,9 @@ public class EditInsCheckOrderAction extends ActionImpl {
 	
 			TmInsCheckObjItemPO objItemPOResult;
 			List<Integer> idList=new ArrayList<Integer>();//存有效的check item id
+			
+			StringBuffer sbf=new StringBuffer("");//检测项目摘要
+			
 			for(String itemCodeSplitStr:itemCodeArray){
 				logger.debug("itemCodeSplitStr:="+itemCodeSplitStr);
 				String[] itemCodeName=itemCodeSplitStr.split("[$][$]");
@@ -323,6 +326,8 @@ public class EditInsCheckOrderAction extends ActionImpl {
 				}else{
 					String itemCode=itemCodeName[0];
 					String itemName=itemCodeName[1];
+					
+					sbf.append(itemName).append(",");
 					
 					itemPOCon.setCheckObjCode(itemCode);
 //					itemPOCon.setCheckObjName(itemName);
@@ -355,7 +360,24 @@ public class EditInsCheckOrderAction extends ActionImpl {
 						idList.add(itemPOInsertValue.getId());
 					}
 				}
+				
+				if(StringUtils.isNotBlank(sbf.toString())){ //20181012-增加摘要
+					String itemSummary=sbf.toString();
+					if(itemSummary.endsWith(",")){
+						itemSummary=itemSummary.substring(0,itemSummary.length()-1);
+					}
+					orderPOCon.setCheckItemSummary(itemSummary);
+				}
 			}
+			
+			int excuteResult=POFactory.update(conn, orderPOCon, orderPOValue);
+			
+			if(excuteResult<1){
+				logger.error(" DATA["+orderNo+"] CHANGED,NO DATA UPDATE,PLEASE RETRY FOR LATER .");
+				atx.setErrorContext("BUSI_DATA_CHECK_ORDER_EDIT_ACTION_ERR_8002", "编辑车辆检查单：数据NO["+orderNo+"]已变更，无法完成操作，请稍后重试", null);
+				return 0;
+			}
+			
 			String idStr=null;
 			if(idList!=null){
 				idStr=StringUtils.join(idList.toArray(),","); 

@@ -26,6 +26,7 @@ public class AppLog {
 	 */
 	final static String DE_LOG="DELog";
 	final static String APP_LOG="AppLog";
+	final static String OPT_LOG="OptLog";
 //	private Logger log;
 	private AppLog(){
 	}
@@ -43,6 +44,9 @@ public class AppLog {
 	}
 	public Logger getAppLog(){
 		return Logger.getLogger(APP_LOG);
+	}
+	public Logger getActionOptLog(){
+		return Logger.getLogger(OPT_LOG);
 	}
 //	public void debug(Object msg,Throwable t){
 //		if(true==flag){
