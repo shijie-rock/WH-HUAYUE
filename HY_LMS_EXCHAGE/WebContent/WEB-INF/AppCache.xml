@@ -12,12 +12,6 @@
 		memoryStoreEvictionPolicy="LRU">
 	</cache>
 	
-	<!-- 车队中心存储远程登录token信息 -->
-	<cache name="REMOTE_REG_INFO_CACHE" maxElementsInMemory="100" eternal="true"
-		overflowToDisk="false" timeToIdleSeconds="3600" timeToLiveSeconds="7200"
-		memoryStoreEvictionPolicy="LRU">
-	</cache>
-
 </ehcache> 
 
 

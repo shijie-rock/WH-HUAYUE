@@ -1,0 +1,7 @@
+eclipse.preferences.version=1
+encoding//src/com/test2/client=UTF-8
+encoding//src/com/test2/common=UTF-8
+encoding//src/com/test2/server=UTF-8
+encoding//src/com/vehicle/common/CommonConstant.java=UTF-8
+encoding//src/com/vehicle/service/VehicleInfoInitService.java=UTF-8
+encoding//src/com/vehicle/servlet/DataDownloadServlet.java=UTF-8

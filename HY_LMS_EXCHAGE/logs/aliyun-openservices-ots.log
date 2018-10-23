@@ -1,0 +1,44 @@
+2018-10-16 11:17:07,942 WARN o.a.m.f.k.KeepAliveFilter [NioProcessor-2] A keep-alive response message was not received within 30 second(s).
+2018-10-16 11:17:57,965 WARN o.a.m.f.k.KeepAliveFilter [NioProcessor-2] A keep-alive response message was not received within 30 second(s).
+2018-10-16 11:18:47,970 WARN o.a.m.f.k.KeepAliveFilter [NioProcessor-2] A keep-alive response message was not received within 30 second(s).
+2018-10-16 11:19:37,984 WARN o.a.m.f.k.KeepAliveFilter [NioProcessor-2] A keep-alive response message was not received within 30 second(s).
+2018-10-16 11:20:27,990 WARN o.a.m.f.k.KeepAliveFilter [NioProcessor-2] A keep-alive response message was not received within 30 second(s).
+2018-10-16 11:21:17,995 WARN o.a.m.f.k.KeepAliveFilter [NioProcessor-2] A keep-alive response message was not received within 30 second(s).
+2018-10-16 11:22:07,999 WARN o.a.m.f.k.KeepAliveFilter [NioProcessor-2] A keep-alive response message was not received within 30 second(s).
+2018-10-16 11:22:58,020 WARN o.a.m.f.k.KeepAliveFilter [NioProcessor-2] A keep-alive response message was not received within 30 second(s).
+2018-10-16 11:23:22,170 WARN o.a.m.f.l.LoggingFilter [NioProcessor-2] EXCEPTION :
+java.io.IOException: 远程主机强迫关闭了一个现有的连接。
+	at sun.nio.ch.SocketDispatcher.read0(Native Method) ~[?:1.7.0_75]
+	at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:43) ~[?:1.7.0_75]
+	at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223) ~[?:1.7.0_75]
+	at sun.nio.ch.IOUtil.read(IOUtil.java:197) ~[?:1.7.0_75]
+	at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:379) ~[?:1.7.0_75]
+	at org.apache.mina.transport.socket.nio.NioProcessor.read(NioProcessor.java:317) ~[mina-core-2.0.16.jar:?]
+	at org.apache.mina.transport.socket.nio.NioProcessor.read(NioProcessor.java:45) ~[mina-core-2.0.16.jar:?]
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor.read(AbstractPollingIoProcessor.java:683) ~[mina-core-2.0.16.jar:?]
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor.process(AbstractPollingIoProcessor.java:659) ~[mina-core-2.0.16.jar:?]
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor.process(AbstractPollingIoProcessor.java:648) ~[mina-core-2.0.16.jar:?]
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor.access$600(AbstractPollingIoProcessor.java:68) ~[mina-core-2.0.16.jar:?]
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor$Processor.run(AbstractPollingIoProcessor.java:1120) ~[mina-core-2.0.16.jar:?]
+	at org.apache.mina.util.NamePreservingRunnable.run(NamePreservingRunnable.java:64) ~[mina-core-2.0.16.jar:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [?:1.7.0_75]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615) [?:1.7.0_75]
+	at java.lang.Thread.run(Thread.java:745) [?:1.7.0_75]
+2018-10-16 11:23:22,171 WARN o.a.m.c.s.IoHandlerAdapter [NioProcessor-2] EXCEPTION, please implement org.apache.mina.core.service.IoHandlerAdapter.exceptionCaught() for proper handling:
+java.io.IOException: 远程主机强迫关闭了一个现有的连接。
+	at sun.nio.ch.SocketDispatcher.read0(Native Method) ~[?:1.7.0_75]
+	at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:43) ~[?:1.7.0_75]
+	at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223) ~[?:1.7.0_75]
+	at sun.nio.ch.IOUtil.read(IOUtil.java:197) ~[?:1.7.0_75]
+	at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:379) ~[?:1.7.0_75]
+	at org.apache.mina.transport.socket.nio.NioProcessor.read(NioProcessor.java:317) ~[mina-core-2.0.16.jar:?]
+	at org.apache.mina.transport.socket.nio.NioProcessor.read(NioProcessor.java:45) ~[mina-core-2.0.16.jar:?]
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor.read(AbstractPollingIoProcessor.java:683) ~[mina-core-2.0.16.jar:?]
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor.process(AbstractPollingIoProcessor.java:659) ~[mina-core-2.0.16.jar:?]
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor.process(AbstractPollingIoProcessor.java:648) ~[mina-core-2.0.16.jar:?]
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor.access$600(AbstractPollingIoProcessor.java:68) ~[mina-core-2.0.16.jar:?]
+	at org.apache.mina.core.polling.AbstractPollingIoProcessor$Processor.run(AbstractPollingIoProcessor.java:1120) ~[mina-core-2.0.16.jar:?]
+	at org.apache.mina.util.NamePreservingRunnable.run(NamePreservingRunnable.java:64) ~[mina-core-2.0.16.jar:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [?:1.7.0_75]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615) [?:1.7.0_75]
+	at java.lang.Thread.run(Thread.java:745) [?:1.7.0_75]

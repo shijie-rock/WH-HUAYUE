@@ -47,6 +47,7 @@ public class InitSendThreadParamService implements Service {
 	public String getName() {
 		// TODO Auto-generated method stub
 		return this.getClass().getName();
+		
 	}
 
 	/* (non-Javadoc)

@@ -136,6 +136,7 @@ public class AuthSessionFilter implements Filter {
 		if(url.endsWith(".js")||url.endsWith(".css")||url.endsWith(".png")||url.endsWith(".jpg")||url.endsWith(".woff")||url.endsWith(".ico")||url.endsWith(".ico")||url.endsWith(".map"))return true;
 		if(url.endsWith("js/uploadify/uploadify.swf"))return true;
 		//jsp	
+		if(url.endsWith("index.jsp"))return true;//ºöÂÔÓÃ»§µÇÂ¼Ò³Ãæ
 		if(url.endsWith("page/index.jsp"))return true;//ºöÂÔÓÃ»§µÇÂ¼Ò³Ãæ
 		if(url.endsWith("jsp/remote_log_error.jsp.jsp"))return true;//ºöÂÔ´íÎóÌø×ªÒ³Ãæ
 		//action
