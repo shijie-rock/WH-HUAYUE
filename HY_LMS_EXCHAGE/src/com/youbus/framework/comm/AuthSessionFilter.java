@@ -82,7 +82,7 @@ public class AuthSessionFilter implements Filter {
 		System.out.println("session_id：="+request.getSession().getId());
 		String subUrl=request.getServletPath()+"?"+request.getQueryString();//注册成功后需要跳转应用，所有只需要传递 项目上下文后面的 url即可
 		log.debug("referer_sub url:="+subUrl);
-		if (!isEgnore(req)) { 
+		if (!isEgnore(req)&&subUrl.indexOf("index.jsp")==-1) { 
 			//排除远程发送reg及远程页面跳转//排除静态文件)
 			System.out.println("进入Auth-SessionFilter");
 			log.debug("进入Auth-SessionFilter");
@@ -133,11 +133,14 @@ public class AuthSessionFilter implements Filter {
 		String actionId=(String) (request.getAttribute(FrameworkConstant.ACTION_ID)==null?request.getParameter(FrameworkConstant.ACTION_ID):request.getAttribute(FrameworkConstant.ACTION_ID));
 		System.out.println("actionId :="+actionId);
 		
+		if("1".equals(isRemoteStr))return true;//忽略远程
+		
 		if(url.endsWith(".js")||url.endsWith(".css")||url.endsWith(".png")||url.endsWith(".jpg")||url.endsWith(".woff")||url.endsWith(".ico")||url.endsWith(".ico")||url.endsWith(".map"))return true;
 		if(url.endsWith("js/uploadify/uploadify.swf"))return true;
 		//jsp	
 		if(url.endsWith("index.jsp"))return true;//忽略用户登录页面
 		if(url.endsWith("page/index.jsp"))return true;//忽略用户登录页面
+		if(url.endsWith("uat/test.jsp"))return true;//忽略测试页面
 		if(url.endsWith("jsp/remote_log_error.jsp.jsp"))return true;//忽略错误跳转页面
 		//action
 		if("SYS_LOGIN_ACTION".equals(actionId))return true;//忽略用户登录action

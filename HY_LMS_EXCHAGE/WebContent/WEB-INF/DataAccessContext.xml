@@ -12,7 +12,7 @@
 		<property name="username"><value>root</value></property>
 		<property name="password"><value>123456</value></property> 
 	</bean>
-	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+	<bean id="dataSource0" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName">
 		<value>java:comp/env/jdbc/hy_exchange</value>
 		</property>

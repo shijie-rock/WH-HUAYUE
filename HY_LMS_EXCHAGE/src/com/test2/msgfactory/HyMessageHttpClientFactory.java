@@ -263,7 +263,79 @@ public class HyMessageHttpClientFactory {
 		return null;
 	}
 	
-	
+	/**
+	 * 直接发送json报文
+	 * 方   法  名:sendJson
+	 * 方法描述:
+	 * 参         数:@param jsonRequest
+	 * 参         数:@return
+	 * 返   回  值:String
+	 * 创   建  人:rock
+	 * @exception
+	 * @since  1.0.0
+	 */
+	public static String sendJson(String jsonRequest){
+		String serverUrl=HyLmsClientConstant.API_SERVER_URL;
+		HttpPost post =null;
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();  
+	    CloseableHttpClient client = null; 
+	    CloseableHttpResponse response =null;
+		try {
+		System.out.println("serverUrl :="+serverUrl);
+		if(serverUrl.startsWith("https")){
+			client=SSLClient.createSSLClientDefault();
+		}else{
+			client=httpClientBuilder.build();  
+		}
+//		String paramJson=HyLmsSignUtil.getApiRequestJson(params);
+		post= new HttpPost(serverUrl); //
+		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(20000).setConnectTimeout(20000).build();//设置请求和传输超时时间
+		post.setConfig(requestConfig);
+		post.addHeader("Connection", "close");  
+//		post.addRequestHeader("connection","keep-alive");//test
+		post.addHeader("Content-Type", "application/json");  //提报中文
+	    post.setEntity(new StringEntity(jsonRequest,Consts.UTF_8));
+		response =client.execute(post);
+		  String sf="";
+		  HttpEntity respEntity=response.getEntity();
+          if (respEntity != null) {  
+            System.out.println("contentEncoding:" + respEntity.getContentEncoding());  
+            sf=EntityUtils.toString(respEntity,Consts.UTF_8);
+            appLog.debug("接收到api回执 :=" + sf);
+            System.out.println("response content:" +sf );  
+           }
+//			jacksonTest(decryptStr);
+			System.out.println("response return status:="+response.getStatusLine().getStatusCode());
+//			if()
+			return sf;
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{  
+			if(post!=null)
+			post.releaseConnection(); 
+			if(response!=null)
+				try {
+					response.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			if(client!=null)
+				try {
+					client.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+//			client.getHttpConnectionManager().closeIdleConnections(0);    
+		}  
+		return null;
+	}
 	
 	private static List<NameValuePair>  parseParam2NameValuePair(List<ParamBean> params){
 		if(params==null||params.size()<1)return null;

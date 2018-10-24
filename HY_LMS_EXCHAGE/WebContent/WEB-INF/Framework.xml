@@ -122,6 +122,7 @@
 	<SystemContext>
 		<Data name="system_name" type="string" default_value="DMS System" readonly="true"/>		
 	</SystemContext>
+		<ActionRef id="test" fileName="action-config/TestAction.xml" />
 	<!-- 
 	<ActionRef id="ACLAction" fileName="action-config/ACLAction.xml" />
 	<ActionRef id="test" fileName="action-config/TestAction.xml" />
