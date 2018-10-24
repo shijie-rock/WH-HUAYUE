@@ -62,6 +62,9 @@ public class HyLmsClientConstant {
 	
 	public static String TOPIC_BUSI_TASK_CREATE;//消息主题：运力创建
 	
+	public static String TOPIC_BUSI_MSG_CONFIRM;//消息主题：消息确认
+	public static String TOPIC_BUSI_MSG_ERROR;//消息主题：消息错误响应
+	
 	public static Map<String,String> RESPONSE_PARSER_MAP=new Hashtable<String,String>();//key 主题，value parser class name
 	
 	//
@@ -116,6 +119,9 @@ public class HyLmsClientConstant {
             TOPIC_BUSI_BILL_CREATE = properties.getProperty("TOPIC_BUSI_BILL_CREATE");
             TOPIC_BUSI_BILL_UPDATE = properties.getProperty("TOPIC_BUSI_BILL_UPDATE");
             TOPIC_BUSI_BILL_CANCEL = properties.getProperty("TOPIC_BUSI_BILL_CANCEL");
+            
+            TOPIC_BUSI_MSG_CONFIRM = properties.getProperty("TOPIC_BUSI_MSG_CONFIRM");
+            TOPIC_BUSI_MSG_ERROR = properties.getProperty("TOPIC_BUSI_MSG_ERROR");
             
             TOPIC_BUSI_TASK_CREATE = properties.getProperty("TOPIC_BUSI_TASK_CREATE");
             API_SERVER_URL = properties.getProperty("API_SERVER_URL");

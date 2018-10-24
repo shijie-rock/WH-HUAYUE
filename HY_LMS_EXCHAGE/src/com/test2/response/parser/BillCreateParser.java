@@ -16,7 +16,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.hy.exchange.pofactory.TmExMsgPOFactory;
-import com.test2.common.HyLmsClientConstant;
 import com.test2.common.HyLmsSignUtil;
 import com.test2.dto.BaseResponseBean;
 import com.test2.msgfactory.HyMessageHttpClientFactory;
@@ -86,12 +85,11 @@ public class BillCreateParser implements HyResponseParserInter {
 		
 		return 1;
 	}
-遗留问题：
-1：lms.trucking.sales.transportbill.transporttaskbill.create ，运力创建，需要提供接口给 .net。
-应用远程 到万华。
-2：关于：接到mina lms.message.trucking.sales.transportbill.transportconsignmentbill.cancel
-委托单取消业务，不需要发httpclient，需要人为创建一条消息，到：TM_EX_API_REC_MSG，TM_EX_API_REC_MSG_RESPONSE
-便于.net获取该记录后，触发.net的取消业务。
-3：缺少登录失败，重新登录的处理。
-
+//遗留问题：
+//1：lms.trucking.sales.transportbill.transporttaskbill.create ，运力创建，需要提供接口给 .net。
+//应用远程 到万华。
+//2：关于：接到mina lms.message.trucking.sales.transportbill.transportconsignmentbill.cancel
+//委托单取消业务，不需要发httpclient，需要人为创建一条消息，到：TM_EX_API_REC_MSG，TM_EX_API_REC_MSG_RESPONSE
+//便于.net获取该记录后，触发.net的取消业务。
+//3：缺少登录失败，重新登录的处理。--目前，放入session open 中。（即在服务端重启之后，session open 之后，会再次发起登录）。
 }

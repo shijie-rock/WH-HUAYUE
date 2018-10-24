@@ -63,7 +63,7 @@ public class MinaListener implements ServletContextListener {
 		// TODO Auto-generated method stub
 		System.out.println("客户端启动开始");
 		logger.debug("客户端启动开始");
-		HyLmsClientConstant.init();
+//		HyLmsClientConstant.init();
 		HyLmsClientConstant.NEED_CLOSE=false;
 		
 		Thread thread = new Thread(new Runnable() {
@@ -74,6 +74,10 @@ public class MinaListener implements ServletContextListener {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				logger.debug("初始化连接参数配置开始");
+				HyLmsClientConstant.init();
+				logger.debug("初始化连接参数配置结束");
+				
 				System.out.println("连接线程启动开始");
 				logger.debug("连接线程启动开始");
 				new HyLmsClient().connect();
@@ -82,7 +86,6 @@ public class MinaListener implements ServletContextListener {
 			}
 		});
 		thread.start();
-		
 		
 		System.out.println("客户端启动完毕");
 		logger.debug("客户端启动完毕");

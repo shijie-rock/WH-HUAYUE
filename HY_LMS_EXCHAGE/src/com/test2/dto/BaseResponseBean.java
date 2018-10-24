@@ -10,7 +10,6 @@ package com.test2.dto;
 import java.io.Serializable;
 
 import com.infoservice.po.DataBean;
-import com.infoservice.po.POFactory;
 import com.infoservice.po.POFactoryUtil;
 
 /**

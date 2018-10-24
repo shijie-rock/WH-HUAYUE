@@ -15,7 +15,12 @@ import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 import org.joda.time.LocalDateTime;
 
+import com.hy.exchange.pofactory.TmExMsgPOFactory;
+import com.test2.common.ClientHelper;
 import com.test2.common.HyLmsClientConstant;
+import com.test2.common.HyLmsSignUtil;
+import com.test2.dto.BaseRequestParamBean;
+import com.test2.msgfactory.HyMessageFactory;
 import com.test2.response.HyResponseParserThread;
 import com.test2.response.HyResponseUtil;
 import com.youbus.framework.comm.AppLog;
@@ -48,6 +53,14 @@ public class ClientMsgHandler extends IoHandlerAdapter {
         System.out.println("session opened with IP: " + clientIp);
 //        SessionManager.getManager().add(session);
         deLog.debug("session opened with IP: " + clientIp);
+        //再次赋值session
+    	ClientHelper.getInstance().setSESSION_CHANNAL(session);
+        
+        //session open 时，增加登录一次
+		BaseRequestParamBean reqBean=HyMessageFactory.createSysLoginMsg();
+		session.write(HyLmsSignUtil.getRequestBeanJson(reqBean));
+		TmExMsgPOFactory.insertReq(reqBean);
+        
 
     }
 
