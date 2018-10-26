@@ -28,7 +28,7 @@
 <form role="form" style="text-align: left;">
   <div class="form-group">
     <label for="json_msg">请求消息</label>
-    <input type="text" class="form-control" id="json_msg" placeholder="请输入请求json报文">
+    <textarea class="form-control" rows="3" id="json_msg" placeholder="请输入请求json报文"></textarea>
   </div>
   <div id="button_group" >
 	  <button type="button" class="btn btn-success" onclick="sendJson();">查询</button>
@@ -38,7 +38,7 @@
   <br/>
   <div class="form-group">
     <label for="response_msg">返回消息</label>
-	<textarea class="form-control" rows="10" id="response_msg" readonly="readonly" placeholder="返回应答报文"></textarea>
+	<textarea class="form-control" rows="13" id="response_msg" readonly="readonly" placeholder="返回应答报文"></textarea>
   </div>
   </form>
 </div>

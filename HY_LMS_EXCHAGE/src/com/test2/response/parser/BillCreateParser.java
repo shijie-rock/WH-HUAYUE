@@ -63,7 +63,8 @@ public class BillCreateParser implements HyResponseParserInter {
 		}
 		List<ParamBean> paramList1=new ArrayList<ParamBean>();
 		ParamBean paramBean=new ParamBean("no",billNo);paramList1.add(paramBean);
-		String dataJson=HyLmsSignUtil.getApiRequestContentJson(paramList1);
+		String dataJson=HyLmsSignUtil.getApiRequestContentJson2(paramList1);//json中带有转移符
+//		String dataJson=HyLmsSignUtil.getApiRequestContentJson(paramList1);
 		
 		//本地存api request  
 		List<ParamBean> paramList=HyMessageHttpClientFactory.getNewApiParamsBillQuery(dataJson);
@@ -77,10 +78,10 @@ public class BillCreateParser implements HyResponseParserInter {
 		JSONObject resJsonObj=JSONObject.fromObject(apiResponseJson);
 //		if(HyLmsClientConstant.MSG_RESULT_SUCCESS.equals(resJsonObj.getString("executeResult"))){
 //		}
-		String executeResult=resJsonObj.getString("executeResult");
-		String errorCode=resJsonObj.getString("errorCode");
-		String errorMessage=resJsonObj.getString("errorMessage");
-		String responseData=resJsonObj.getString("data");
+		String executeResult=resJsonObj.containsKey("executeResult")?resJsonObj.getString("executeResult"):"";
+		String errorCode=resJsonObj.containsKey("errorCode")?resJsonObj.getString("errorCode"):"";
+		String errorMessage=resJsonObj.containsKey("errorMessage")?resJsonObj.getString("errorMessage"):"";
+		String responseData=resJsonObj.containsKey("data")?resJsonObj.getString("data"):"";
 		TmExMsgPOFactory.updateApiReqMsg(apiDBId, executeResult, errorCode, errorMessage, responseData);
 		
 		return 1;

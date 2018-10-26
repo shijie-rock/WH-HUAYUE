@@ -21,6 +21,7 @@ import java.util.TreeMap;
 import java.util.UUID;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -39,20 +40,6 @@ import com.youbus.framework.comm.remoteclient.ParamBean;
 public class HyLmsSignUtil {
 	private static Logger log = LogManager.getLogger(HyLmsSignUtil.class);
 	private static Logger appLog=AppLog.getInstance().getDELog();
-	/**
-	 * 方   法  名:main
-	 * 方法描述:
-	 * 参         数:@param args
-	 * 返   回  值:void
-	 * 创   建  人:rock
-	 * @exception
-	 * @since  1.0.0
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		getNewMsgId();
-	}
-	
 	/**
 	 * 
 	 * 方   法  名:MD5Encode
@@ -137,6 +124,13 @@ public class HyLmsSignUtil {
 			String key=iter.next();
 			String value=paramMap.get(key);
 			value=(value==null?"":value);
+			//在mina报文 content字段，api报表data字段，因为需要传json内容，json字符串，
+//			为了保证服务端能够解析content 和data，所以，发送方，将这两个字段的json字符串，加了转移符。
+//			如："data":"{\"no\":\"SA18102600036\"}"，在客户端签名时，需要把 这个字符串中的转移符去掉，
+//			服务端在验签时，是不加 斜杠的
+			if(("data".equals(key)||"conent".equals(key))&&StringUtils.isNotBlank(value)){
+				value=value.replaceAll("\\\\", "");//去掉转移符
+			}
 			sbf.append(key+"="+value);
 //			sbf.append(key+value);
 		}
@@ -321,6 +315,55 @@ public class HyLmsSignUtil {
 			return sbf.toString();
 		}
 		return null;
+	}
+	/**
+	 * 返回api请求内容json字符串，带转移符
+	 * 方   法  名:getApiRequestContentJson2
+	 * 方法描述:
+	 * 参         数:@param paramList
+	 * 参         数:@return
+	 * 返   回  值:String
+	 * 创   建  人:rock
+	 * @exception
+	 * @since  1.0.0
+	 */
+	public static String getApiRequestContentJson2(List<ParamBean> paramList){
+		if(paramList!=null&&paramList.size()>0){
+			StringBuffer sbf=new StringBuffer("{");
+			for(int i=0;i<paramList.size();i++){
+				ParamBean paramBean=paramList.get(i);
+				String value=paramBean.getParamValue()==null?"":paramBean.getParamValue();
+				//签名时，有问题，会把斜杠也加入签名。在转签名的过程中，要把转移符替换掉
+				sbf.append("\\\""+paramBean.getParamName()+"\\\""+":"+"\\\""+value+"\\\"");
+				if(i<paramList.size()-1){
+					sbf.append(",");
+				}
+			}
+			sbf.append("}");
+//			sbf.append("\r\n");//粘包分离
+			System.out.println("bean to json :="+sbf.toString());
+			log.debug("bean to json :="+sbf.toString());;
+			return sbf.toString();
+		}
+		return null;
+	}
+	
+	/**
+	 * 方   法  名:main
+	 * 方法描述:
+	 * 参         数:@param args
+	 * 返   回  值:void
+	 * 创   建  人:rock
+	 * @exception
+	 * @since  1.0.0
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+//		getNewMsgId();
+		String str="\"no\":\"SA18102600036\"";
+		
+		System.out.println(str.replaceAll("\\\\", ""));
+		
 	}
 	
 }

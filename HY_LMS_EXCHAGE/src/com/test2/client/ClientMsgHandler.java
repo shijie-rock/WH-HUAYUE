@@ -22,7 +22,6 @@ import com.test2.common.HyLmsSignUtil;
 import com.test2.dto.BaseRequestParamBean;
 import com.test2.msgfactory.HyMessageFactory;
 import com.test2.response.HyResponseParserThread;
-import com.test2.response.HyResponseUtil;
 import com.youbus.framework.comm.AppLog;
 
 /**
@@ -57,9 +56,16 @@ public class ClientMsgHandler extends IoHandlerAdapter {
     	ClientHelper.getInstance().setSESSION_CHANNAL(session);
         
         //session open 时，增加登录一次
-		BaseRequestParamBean reqBean=HyMessageFactory.createSysLoginMsg();
-		session.write(HyLmsSignUtil.getRequestBeanJson(reqBean));
-		TmExMsgPOFactory.insertReq(reqBean);
+    	try{
+    		BaseRequestParamBean reqBean=HyMessageFactory.createSysLoginMsg();
+    		session.write(HyLmsSignUtil.getRequestBeanJson(reqBean));
+    		TmExMsgPOFactory.insertReq(reqBean);
+    	}catch(Throwable t){
+			t.printStackTrace();
+			deLog.error("处理会话打开逻辑失败："+t.getMessage());
+    		
+    	}
+
         
 
     }
