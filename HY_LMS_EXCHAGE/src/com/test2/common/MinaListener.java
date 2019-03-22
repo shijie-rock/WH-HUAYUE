@@ -50,6 +50,9 @@ public class MinaListener implements ServletContextListener {
 		}
 		if(CONNECTOR!=null)
 		CONNECTOR.dispose();
+		
+		HyLmsClientConstant.connectingNot();
+		
 		System.out.println("客户端关闭结束");
 		logger.debug("客户端关闭结束");
 		

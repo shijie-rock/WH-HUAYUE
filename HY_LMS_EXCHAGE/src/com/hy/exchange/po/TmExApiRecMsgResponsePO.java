@@ -12,6 +12,7 @@
 package com.hy.exchange.po;
 
 import java.util.Date;
+
 import com.infoservice.po.DataBean;
 import com.infoservice.po.POFactoryUtil;
 
@@ -25,6 +26,64 @@ public class TmExApiRecMsgResponsePO implements DataBean{
 	private Integer createBy;
 	private Date updateTime;
 	private String status;
+	
+	private Date parseTime;
+	private String topic;
+	private String parseStatus;
+
+	/**
+	 * parseTime
+	 *
+	 * @return  the parseTime
+	 * @since   1.0.0
+	 */
+	
+	public Date getParseTime() {
+		return parseTime;
+	}
+
+	/**
+	 * @param parseTime the parseTime to set
+	 */
+	public void setParseTime(Date parseTime) {
+		this.parseTime = parseTime;
+	}
+
+	/**
+	 * topic
+	 *
+	 * @return  the topic
+	 * @since   1.0.0
+	 */
+	
+	public String getTopic() {
+		return topic;
+	}
+
+	/**
+	 * @param topic the topic to set
+	 */
+	public void setTopic(String topic) {
+		this.topic = topic;
+	}
+
+	/**
+	 * parseStatus
+	 *
+	 * @return  the parseStatus
+	 * @since   1.0.0
+	 */
+	
+	public String getParseStatus() {
+		return parseStatus;
+	}
+
+	/**
+	 * @param parseStatus the parseStatus to set
+	 */
+	public void setParseStatus(String parseStatus) {
+		this.parseStatus = parseStatus;
+	}
 
 	public void setResponseData(String responseData){
 		this.responseData=responseData;

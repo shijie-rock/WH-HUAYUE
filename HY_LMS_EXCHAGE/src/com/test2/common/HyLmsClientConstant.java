@@ -71,6 +71,8 @@ public class HyLmsClientConstant {
 	public static boolean IS_SYS_LOGIN_IN=false;//是否已登录
 	public static String API_SERVER_URL;//api url
 	
+	public static int HEARB_BEAT_TIME_OUT_MAX_TIMES=5;
+	
 	static{
 		//初始化 response 及对应的 处理类
 		RESPONSE_PARSER_MAP.put("lms.message.framework.login.response", "com.test2.response.parser.LoginParser");
@@ -90,6 +92,8 @@ public class HyLmsClientConstant {
         try {
         	Properties properties = new Properties();
             properties.load(in);
+            //心跳连续超时 超过 HEARB_BEAT_TIME_OUT_MAX_TIMES，将发起重连
+            HEARB_BEAT_TIME_OUT_MAX_TIMES = Integer.valueOf(properties.getProperty("HEARB_BEAT_TIME_OUT_MAX_TIMES"));
             //连接超时：秒
             CONNECT_TIME_OUT = Integer.valueOf(properties.getProperty("CONNECT_TIME_OUT"));
             //消息buffer大小
@@ -145,4 +149,21 @@ public class HyLmsClientConstant {
         }
 		
 	}
+	
+	private	static String IS_CONNECTING="0";
+	
+	public static synchronized void connecting(){
+		IS_CONNECTING="1";
+		logger.debug("method connecting");
+	}
+	
+	public static synchronized void connectingNot(){
+		IS_CONNECTING="0";
+		logger.debug("method connectingNot");
+	}
+	
+	public static boolean isConnecting(){
+		return "1".equals(IS_CONNECTING);
+	}
+	
 }

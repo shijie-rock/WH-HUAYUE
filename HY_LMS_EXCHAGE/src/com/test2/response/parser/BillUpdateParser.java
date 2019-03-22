@@ -16,6 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.hy.exchange.pofactory.TmExMsgPOFactory;
+import com.test2.common.HyLmsClientConstant;
 import com.test2.common.HyLmsSignUtil;
 import com.test2.dto.BaseResponseBean;
 import com.test2.msgfactory.HyMessageHttpClientFactory;
@@ -78,8 +79,8 @@ public class BillUpdateParser implements HyResponseParserInter {
 		String executeResult=resJsonObj.containsKey("executeResult")?resJsonObj.getString("executeResult"):"";
 		String errorCode=resJsonObj.containsKey("errorCode")?resJsonObj.getString("errorCode"):"";
 		String errorMessage=resJsonObj.containsKey("errorMessage")?resJsonObj.getString("errorMessage"):"";
-		String responseData=resJsonObj.containsKey("data")?resJsonObj.getString("data"):""
-		TmExMsgPOFactory.updateApiReqMsg(apiDBId, executeResult, errorCode, errorMessage, responseData);
+		String responseData=resJsonObj.containsKey("data")?resJsonObj.getString("data"):"";
+		TmExMsgPOFactory.updateApiReqMsg(apiDBId, executeResult, errorCode, errorMessage, responseData,HyLmsClientConstant.TOPIC_BUSI_BILL_UPDATE);
 		
 		return 1;
 	}

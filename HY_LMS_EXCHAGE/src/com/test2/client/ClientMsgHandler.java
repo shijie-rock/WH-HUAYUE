@@ -8,11 +8,13 @@
 package com.test2.client;
 
 import java.net.InetSocketAddress;
+import java.util.concurrent.ExecutorService;
 
 import org.apache.log4j.Logger;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
+import org.apache.mina.transport.socket.nio.NioSocketConnector;
 import org.joda.time.LocalDateTime;
 
 import com.hy.exchange.pofactory.TmExMsgPOFactory;
@@ -22,6 +24,7 @@ import com.test2.common.HyLmsSignUtil;
 import com.test2.dto.BaseRequestParamBean;
 import com.test2.msgfactory.HyMessageFactory;
 import com.test2.response.HyResponseParserThread;
+import com.test2.response.ParserThreadPool;
 import com.youbus.framework.comm.AppLog;
 
 /**
@@ -66,8 +69,6 @@ public class ClientMsgHandler extends IoHandlerAdapter {
     		
     	}
 
-        
-
     }
 
     @Override
@@ -95,8 +96,32 @@ public class ClientMsgHandler extends IoHandlerAdapter {
                 	
                 }
             }*/
+        
+        //20190314-解决 服务器频繁重启，导致客户存有多个session，先关闭原session
+        
+        //add begin
+		NioSocketConnector  CONNECTOR = ClientHelper.getInstance().getCONNECTOR();
+		IoSession SESSION_CHANNAL = ClientHelper.getInstance().getSESSION_CHANNAL();
+		if(SESSION_CHANNAL!=null)
+		while( !SESSION_CHANNAL.isIdle(IdleStatus.BOTH_IDLE) 
+				&& SESSION_CHANNAL.isConnected() ){
+			try {
+				Thread.sleep(2000);//判断session 是否是空闲，不空闲则等待
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		if(CONNECTOR!=null)
+		CONNECTOR.dispose();
+		HyLmsClientConstant.connectingNot();
+        //add end
+		
         if(!HyLmsClientConstant.NEED_CLOSE){
-            new HyLmsClient().connect();
+        	if(!HyLmsClientConstant.isConnecting()){
+        		  new HyLmsClient().connect();//改为只启动一次连接 //20190314
+        	}else{
+        		  deLog.error(" HyLmsClientConstant.isConnecting():= "+HyLmsClientConstant.isConnecting());
+        	}
         }
     }
 
@@ -107,8 +132,16 @@ public class ClientMsgHandler extends IoHandlerAdapter {
         
 //        HyResponseUtil.parseReceiveMsg(message.toString());
         //改为线程方式
-        Thread t=new Thread(new HyResponseParserThread(message.toString()));
-        t.start();
+//        Thread t=new Thread(new HyResponseParserThread(message.toString()));
+//        t.start();
+        
+        //改为线程池方式：
+        
+        ExecutorService es= ParserThreadPool.getInstance().getPool();
+        deLog.debug(" 线程池："+es);
+        es.execute(new HyResponseParserThread(message.toString()));
+        
+        deLog.debug(" 进入线程池处理 : "+message);
         deLog.debug(" 处理服务端消息 结束 : "+message);
     }
 

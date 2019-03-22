@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -24,6 +25,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.mina.filter.codec.ProtocolCodecFilter;
+import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
 
 import com.youbus.framework.comm.AppLog;
 import com.youbus.framework.comm.remoteclient.ParamBean;
@@ -224,7 +227,11 @@ public class HyLmsSignUtil {
 				}
 			}
 			sbf.append("}");
-			sbf.append("\r\n");//粘包分离
+//			sbf.append("\r\n");//粘包分离
+//			粘包 已由mina处理			
+//			connector.getFilterChain().addLast("codec1",
+//			new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"),MSG_SPLIT,MSG_SPLIT)));//utf-8
+			
 			System.out.println("bean to json :="+sbf.toString());
 			log.debug("bean to json :="+sbf.toString());;
 			return sbf.toString();

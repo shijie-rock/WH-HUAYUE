@@ -16,6 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.hy.exchange.pofactory.TmExMsgPOFactory;
+import com.test2.common.HyLmsClientConstant;
 import com.test2.common.HyLmsSignUtil;
 import com.test2.dto.BaseResponseBean;
 import com.test2.msgfactory.HyMessageHttpClientFactory;
@@ -82,7 +83,7 @@ public class BillCreateParser implements HyResponseParserInter {
 		String errorCode=resJsonObj.containsKey("errorCode")?resJsonObj.getString("errorCode"):"";
 		String errorMessage=resJsonObj.containsKey("errorMessage")?resJsonObj.getString("errorMessage"):"";
 		String responseData=resJsonObj.containsKey("data")?resJsonObj.getString("data"):"";
-		TmExMsgPOFactory.updateApiReqMsg(apiDBId, executeResult, errorCode, errorMessage, responseData);
+		TmExMsgPOFactory.updateApiReqMsg(apiDBId, executeResult, errorCode, errorMessage, responseData,HyLmsClientConstant.TOPIC_BUSI_BILL_CREATE);
 		
 		return 1;
 	}
@@ -93,4 +94,5 @@ public class BillCreateParser implements HyResponseParserInter {
 //委托单取消业务，不需要发httpclient，需要人为创建一条消息，到：TM_EX_API_REC_MSG，TM_EX_API_REC_MSG_RESPONSE
 //便于.net获取该记录后，触发.net的取消业务。
 //3：缺少登录失败，重新登录的处理。--目前，放入session open 中。（即在服务端重启之后，session open 之后，会再次发起登录）。
+	
 }

@@ -70,6 +70,13 @@ public class HyResponseUtil {
 		logger.debug("resBean msgTopic:="+resBean.getTopic());
 		logger.debug("parserClassName :="+HyLmsClientConstant.RESPONSE_PARSER_MAP.get(msgTopic));
 		
+		boolean needSendConfirmTag=true;
+		
+		//如果是 服务端 发出的 登录，登出的应答消息，则不需要发confirm消息给服务器
+		if(HyLmsClientConstant.TOPIC_SYS_LOGIN_RES.equals(msgTopic)||HyLmsClientConstant.TOPIC_SYS_LOGOFF_RES.equals(msgTopic)){
+			needSendConfirmTag=false;
+		}
+		
 		if(HyLmsClientConstant.RESPONSE_PARSER_MAP.containsKey(msgTopic)){
 			String parserClassName=HyLmsClientConstant.RESPONSE_PARSER_MAP.get(msgTopic);
 			try {
@@ -81,6 +88,7 @@ public class HyResponseUtil {
 				
 				//发送 成功 confirm 应答给服务端
 //				BaseResponseBean clientResBean=HyMessageFactory.createConfirmResponseMsg(msgId, HyLmsClientConstant.MSG_RESULT_SUCCESS, null, null, null);
+				if(needSendConfirmTag)
 				HyMessageFactory.sendResponseConfirmMsg(msgId, HyLmsClientConstant.MSG_RESULT_SUCCESS, null, null, null);
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -102,6 +110,7 @@ public class HyResponseUtil {
 				//发送 处理失败 confirm 应答给服务端
 //				BaseResponseBean clientResBean=HyMessageFactory.createConfirmResponseMsg(msgId, HyLmsClientConstant.MSG_RESULT_ERROR, "S999", "具体异常信息", null);
 				try {
+					if(needSendConfirmTag)
 					HyMessageFactory.sendResponseConfirmMsg(msgId, HyLmsClientConstant.MSG_RESULT_ERROR, "S999", "未定义错误+具体异常信息", null);
 				} catch (IllegalAccessException e1) {
 					// TODO Auto-generated catch block
@@ -124,6 +133,7 @@ public class HyResponseUtil {
 			//S101 消息主题不存在
 			//消息发送
 			try {
+				if(needSendConfirmTag)
 				HyMessageFactory.sendResponseConfirmMsg(msgId, HyLmsClientConstant.MSG_RESULT_ERROR, "S101", "消息主题不存在", null);
 			} catch (IllegalAccessException e) {
 				// TODO Auto-generated catch block

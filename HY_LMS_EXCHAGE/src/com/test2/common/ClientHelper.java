@@ -33,6 +33,8 @@ public class ClientHelper {
 	private NioSocketConnector  CONNECTOR = null;
 	private IoSession SESSION_CHANNAL = null;
 	
+	private static int hearBeatRetryTimes=0;
+	
 	private static ClientHelper instance;
 	
 	public static ClientHelper getInstance(){
@@ -78,5 +80,34 @@ public class ClientHelper {
 	}
 	
 	
-
+	/**
+	 * 心跳超时时，调用
+	 * 方   法  名:beatTimeOut
+	 * 方法描述:
+	 * 参         数:@return
+	 * 返   回  值:int
+	 * 创   建  人:rock
+	 * @exception
+	 * @since  1.0.0
+	 */
+	public int beatTimeOut(){
+		hearBeatRetryTimes++;
+		return hearBeatRetryTimes;
+	}
+	
+	
+	/**
+	 * 心跳正常是，调用
+	 * 方   法  名:beatIntime
+	 * 方法描述:
+	 * 参         数:@return
+	 * 返   回  值:int
+	 * 创   建  人:rock
+	 * @exception
+	 * @since  1.0.0
+	 */
+	public int beatIntime(){
+		hearBeatRetryTimes=0;
+		return hearBeatRetryTimes;
+	}
 }

@@ -7,10 +7,13 @@
  */
 package com.test2.response.parser;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.hy.exchange.pofactory.TmExMsgPOFactory;
+import com.test2.common.HyLmsClientConstant;
 import com.test2.dto.BaseResponseBean;
+import com.test2.response.HyResponseUtil;
 
 /**
  * 类名称:BillCancelParser
@@ -37,6 +40,20 @@ public class BillCancelParser implements HyResponseParserInter {
 		String minaMsgId=response.getId();
 		String result=response.getResult();//执行结果，Success：成功，Error：失败
 		
+		String contentJson=response.getContent();
+		if(StringUtils.isBlank(contentJson)){
+			logger.warn("msg is empty,退出执行线程");
+			return 0;
+		}
+		logger.debug("开始处理内容content:"+contentJson);
+		
+		String billNo=HyResponseUtil.getBillNoFromResponseContent(contentJson);
+		if(StringUtils.isBlank(billNo)){
+			logger.warn("billNo is empty,退出执行线程");
+			return 0;
+		}
+		
+		TmExMsgPOFactory.addRecMsgResponseContent(billNo, HyLmsClientConstant.TOPIC_BUSI_BILL_CANCEL);
 		
 		return 0;
 	}

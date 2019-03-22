@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.keepalive.KeepAliveMessageFactory;
 
+import com.test2.common.ClientHelper;
 import com.test2.common.HyLmsClientConstant;
 import com.youbus.framework.comm.AppLog;
 
@@ -31,13 +32,13 @@ public class ClientKeepAliveMessageFactoryImpl implements
 	 * @see org.apache.mina.filter.keepalive.KeepAliveMessageFactory#getRequest(org.apache.mina.core.session.IoSession)
 	 */
 	/**
-	 * 返回给服务端消息
+	 * 发给服务端消息
 	 */
 	@Override
 	public Object getRequest(IoSession arg0) {
 		// TODO Auto-generated method stub
 		System.out.println("client getRequest :="+HyLmsClientConstant.HEART_BEAT_CLIENT_RESQ);
-		return HyLmsClientConstant.HEART_BEAT_CLIENT_RESQ;
+		return HyLmsClientConstant.HEART_BEAT_CLIENT_RESQ;//粘包处理
 	}
 
 	/* (non-Javadoc)
@@ -58,7 +59,7 @@ public class ClientKeepAliveMessageFactoryImpl implements
 	 * @see org.apache.mina.filter.keepalive.KeepAliveMessageFactory#isRequest(org.apache.mina.core.session.IoSession, java.lang.Object)
 	 */
 	/**
-	 * 客户端接收到服务器发送的数据
+	 * 客户端发服务器发送的数据
 	 */
 	@Override
 	public boolean isRequest(IoSession arg0, Object message) {
@@ -71,7 +72,8 @@ public class ClientKeepAliveMessageFactoryImpl implements
 //			return false;
 //		}
 		
-		if(message.equals(HyLmsClientConstant.HEART_BEAT_CLIENT_RESQ)){
+//		if(message.equals(HyLmsClientConstant.HEART_BEAT_CLIENT_RESQ)){
+		if(message.toString().startsWith((HyLmsClientConstant.HEART_BEAT_CLIENT_RESQ))){
 			logger.info("isRequest: " + message);
 			deLog.debug("客户端发送心跳");
 			return true;
@@ -85,7 +87,7 @@ public class ClientKeepAliveMessageFactoryImpl implements
 	 * @see org.apache.mina.filter.keepalive.KeepAliveMessageFactory#isResponse(org.apache.mina.core.session.IoSession, java.lang.Object)
 	 */
 	/**
-	 * 判断客户端发送的是否是客户端请求消息
+	 * 判断服务端发送的是否是客户端请求消息
 	 */
 	@Override
 	public boolean isResponse(IoSession arg0, Object message) {
@@ -98,7 +100,9 @@ public class ClientKeepAliveMessageFactoryImpl implements
 //			return false;
 //		}
 		
-		if(message.equals(HyLmsClientConstant.HEART_BEAT_SERVER_RESP)){
+		if(message.toString().startsWith(HyLmsClientConstant.HEART_BEAT_SERVER_RESP)){
+//		if(message.equals(HyLmsClientConstant.HEART_BEAT_SERVER_RESP)){
+	    	ClientHelper.getInstance().beatIntime();//当前心跳超时次数清零
 			logger.info("isResponse: " + message);
 			deLog.debug("客户端收到心跳");
 			return true;

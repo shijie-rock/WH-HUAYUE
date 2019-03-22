@@ -243,7 +243,7 @@ public class TmExMsgPOFactory extends POFactory {
 	 * @exception
 	 * @since  1.0.0
 	 */
-	public static int updateApiReqMsg(int apiDBId,String result,String errorCode,String errorMsg,String responseData){
+	public static int updateApiReqMsg(int apiDBId,String result,String errorCode,String errorMsg,String responseData,String topic){
 		
 		DBService db=DBService.getInstance();
 		Connection conn=db.getConnection();
@@ -286,6 +286,11 @@ public class TmExMsgPOFactory extends POFactory {
 				responsePOCon.setCreateTime(new Date(System.currentTimeMillis()));
 				responsePOCon.setId(POFactory.getIntPriKey(conn, responsePOCon));
 				responsePOCon.setResponseData(responseData);
+				
+				responsePOCon.setTopic(topic);
+				responsePOCon.setParseStatus("1");//待处理
+//				responsePOCon.setParseTime(null);
+				
 				POFactory.insert(conn, responsePOCon);
 			}
 			POFactory.update(conn, apiMsgPOCon, apiMsgPOValue);
@@ -295,6 +300,60 @@ public class TmExMsgPOFactory extends POFactory {
 			t.printStackTrace();
 			log.error(t);
 		}finally{
+			db.closeTransaction(txn, commit);
+			db.closeConnection(conn);
+		}
+		return id;
+	}
+	
+	/**
+	 * 仅仅存入rec msg response 表，无rec msg 主表对应。
+	 * 用于处理，当mina接收到取消委托单消息时，此表生产一条记录，存入要取消的单号，
+	 * 而不再发 http接口去服务端获取整个委托单。
+	 * 方   法  名:addRecMsgResponseContent
+	 * 方法描述:
+	 * 参         数:@param responseData
+	 * 参         数:@param topic
+	 * 参         数:@return
+	 * 返   回  值:int
+	 * 创   建  人:rock
+	 * @exception
+	 * @since  1.0.0
+	 */
+	public static int addRecMsgResponseContent(String responseData,String topic){
+
+		DBService db = DBService.getInstance();
+		Connection conn = db.getConnection();
+		Object txn = db.getTransaction();
+		if (conn == null) {
+			log.error("conn is null");
+			return 0;
+		}
+		if (txn == null) {
+			log.error("txn is null");
+			return 0;
+		}
+		boolean commit = false;
+		int id = 0;
+		try {
+			TmExApiRecMsgResponsePO responsePOCon = new TmExApiRecMsgResponsePO();
+			responsePOCon.setStatus("1");
+			responsePOCon.setCreateBy(0);
+			responsePOCon.setCreateTime(new Date(System.currentTimeMillis()));
+			responsePOCon.setId(POFactory.getIntPriKey(conn, responsePOCon));
+			responsePOCon.setResponseData(responseData);
+
+			responsePOCon.setTopic(topic);
+			responsePOCon.setParseStatus("1");// 待处理
+			// responsePOCon.setParseTime(null);
+
+			POFactory.insert(conn, responsePOCon);
+			id=responsePOCon.getId();
+			commit = true;
+		} catch (Throwable t) {
+			t.printStackTrace();
+			log.error(t);
+		} finally {
 			db.closeTransaction(txn, commit);
 			db.closeConnection(conn);
 		}
