@@ -163,9 +163,11 @@ public class HyMessageHttpClientFactory {
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			appLog.error(e.getMessage());
 		}catch (Throwable e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			appLog.error(e.getMessage());
 		}
 		finally{  
 			if(post!=null)

@@ -72,8 +72,9 @@ public class HyResponseUtil {
 		
 		boolean needSendConfirmTag=true;
 		
-		//如果是 服务端 发出的 登录，登出的应答消息，则不需要发confirm消息给服务器
-		if(HyLmsClientConstant.TOPIC_SYS_LOGIN_RES.equals(msgTopic)||HyLmsClientConstant.TOPIC_SYS_LOGOFF_RES.equals(msgTopic)){
+		//如果是 服务端 发出的 登录，登出的应答消息,服务器报错的消息，则不需要发confirm消息给服务器
+		if(HyLmsClientConstant.TOPIC_SYS_LOGIN_RES.equals(msgTopic)||HyLmsClientConstant.TOPIC_SYS_LOGOFF_RES.equals(msgTopic)
+				||HyLmsClientConstant.TOPIC_BUSI_MSG_ERROR.equals(msgTopic)){
 			needSendConfirmTag=false;
 		}
 		
@@ -109,6 +110,7 @@ public class HyResponseUtil {
 				
 				//发送 处理失败 confirm 应答给服务端
 //				BaseResponseBean clientResBean=HyMessageFactory.createConfirmResponseMsg(msgId, HyLmsClientConstant.MSG_RESULT_ERROR, "S999", "具体异常信息", null);
+				/* 20190322-处理失败，不再发确认消息
 				try {
 					if(needSendConfirmTag)
 					HyMessageFactory.sendResponseConfirmMsg(msgId, HyLmsClientConstant.MSG_RESULT_ERROR, "S999", "未定义错误+具体异常信息", null);
@@ -125,6 +127,7 @@ public class HyResponseUtil {
 					e1.printStackTrace();
 					logger.error(" send response error  ");
 				}
+				*/
 			}
 			
 		}else{

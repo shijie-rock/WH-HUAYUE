@@ -73,6 +73,13 @@ public class HyLmsClientConstant {
 	
 	public static int HEARB_BEAT_TIME_OUT_MAX_TIMES=5;
 	
+	//
+//	public static Map<String,String> NO_NEED_CONFRIM_STR=new Hashtable<String, String>();
+//	//接收到服务端的消息，如果包含以下内容，则不需要发确认消息给服务端。
+//	static{
+//		NO_NEED_CONFRIM_STR.put("被响应的消息不存在", "被响应的消息不存在");
+//	}
+	
 	static{
 		//初始化 response 及对应的 处理类
 		RESPONSE_PARSER_MAP.put("lms.message.framework.login.response", "com.test2.response.parser.LoginParser");

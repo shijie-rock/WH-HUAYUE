@@ -37,7 +37,8 @@ public class ClientKeepAliveMessageFactoryImpl implements
 	@Override
 	public Object getRequest(IoSession arg0) {
 		// TODO Auto-generated method stub
-		System.out.println("client getRequest :="+HyLmsClientConstant.HEART_BEAT_CLIENT_RESQ);
+		deLog.debug("=========client getRequest :="+HyLmsClientConstant.HEART_BEAT_CLIENT_RESQ);
+//		System.out.println("client getRequest :="+HyLmsClientConstant.HEART_BEAT_CLIENT_RESQ);
 		return HyLmsClientConstant.HEART_BEAT_CLIENT_RESQ;//粘包处理
 	}
 
@@ -50,9 +51,11 @@ public class ClientKeepAliveMessageFactoryImpl implements
 	@Override
 	public Object getResponse(IoSession arg0, Object message) {
 		// TODO Auto-generated method stub
-		System.out.println("client getResponse :="+message);
+		deLog.debug("=========client getResponse :="+message);
+//		System.out.println("client getResponse :="+message);
 //		return message;
-		return HyLmsClientConstant.HEART_BEAT_SERVER_RESP;
+		return null;
+//		return HyLmsClientConstant.HEART_BEAT_SERVER_RESP;
 	}
 
 	/* (non-Javadoc)
@@ -73,6 +76,7 @@ public class ClientKeepAliveMessageFactoryImpl implements
 //		}
 		
 //		if(message.equals(HyLmsClientConstant.HEART_BEAT_CLIENT_RESQ)){
+		/*
 		if(message.toString().startsWith((HyLmsClientConstant.HEART_BEAT_CLIENT_RESQ))){
 			logger.info("isRequest: " + message);
 			deLog.debug("客户端发送心跳");
@@ -81,6 +85,9 @@ public class ClientKeepAliveMessageFactoryImpl implements
 			logger.warn("isRequest: " + message);
 			return false;
 		}
+		*/
+		deLog.debug("=========client isRequest :="+message);
+		return false;
 	}
 
 	/* (non-Javadoc)
@@ -91,6 +98,7 @@ public class ClientKeepAliveMessageFactoryImpl implements
 	 */
 	@Override
 	public boolean isResponse(IoSession arg0, Object message) {
+		logger.info("=========client isResponse: " + message);
 		// TODO Auto-generated method stub
 //		if(message.equals(HyLmsClientConstant.HEART_BEAT_CLIENT_RESQ)){
 //			logger.info("客户端发送数据包中引发心跳事件: " + message);
@@ -104,7 +112,7 @@ public class ClientKeepAliveMessageFactoryImpl implements
 //		if(message.equals(HyLmsClientConstant.HEART_BEAT_SERVER_RESP)){
 	    	ClientHelper.getInstance().beatIntime();//当前心跳超时次数清零
 			logger.info("isResponse: " + message);
-			deLog.debug("客户端收到心跳");
+			deLog.debug("客户端收到心跳:"+message);
 			return true;
 		}else{
 			logger.warn("isResponse: " + message);
