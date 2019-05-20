@@ -4,7 +4,7 @@
 * License version 1.0, a copy of which has been included with this
 * distribution in the LICENSE.txt file.
 *
-* CreateDate : 2018-10-22 16:48:30
+* CreateDate : 2019-05-20 15:35:17
 * CreateBy   : rock
 * Comment    : generate by com.infoservice.po.POGen
 */
@@ -12,77 +12,29 @@
 package com.hy.exchange.po;
 
 import java.util.Date;
-
 import com.infoservice.po.DataBean;
 import com.infoservice.po.POFactoryUtil;
 
 @SuppressWarnings("serial")
 public class TmExApiRecMsgResponsePO implements DataBean{
 
+	private Date parseTime;
 	private String responseData;
 	private Integer updateBy;
 	private Date createTime;
 	private Integer id;
 	private Integer createBy;
 	private Date updateTime;
-	private String status;
-	
-	private Date parseTime;
 	private String topic;
+	private String status;
 	private String parseStatus;
 
-	/**
-	 * parseTime
-	 *
-	 * @return  the parseTime
-	 * @since   1.0.0
-	 */
-	
-	public Date getParseTime() {
-		return parseTime;
+	public void setParseTime(Date parseTime){
+		this.parseTime=parseTime;
 	}
 
-	/**
-	 * @param parseTime the parseTime to set
-	 */
-	public void setParseTime(Date parseTime) {
-		this.parseTime = parseTime;
-	}
-
-	/**
-	 * topic
-	 *
-	 * @return  the topic
-	 * @since   1.0.0
-	 */
-	
-	public String getTopic() {
-		return topic;
-	}
-
-	/**
-	 * @param topic the topic to set
-	 */
-	public void setTopic(String topic) {
-		this.topic = topic;
-	}
-
-	/**
-	 * parseStatus
-	 *
-	 * @return  the parseStatus
-	 * @since   1.0.0
-	 */
-	
-	public String getParseStatus() {
-		return parseStatus;
-	}
-
-	/**
-	 * @param parseStatus the parseStatus to set
-	 */
-	public void setParseStatus(String parseStatus) {
-		this.parseStatus = parseStatus;
+	public Date getParseTime(){
+		return this.parseTime;
 	}
 
 	public void setResponseData(String responseData){
@@ -133,12 +85,28 @@ public class TmExApiRecMsgResponsePO implements DataBean{
 		return this.updateTime;
 	}
 
+	public void setTopic(String topic){
+		this.topic=topic;
+	}
+
+	public String getTopic(){
+		return this.topic;
+	}
+
 	public void setStatus(String status){
 		this.status=status;
 	}
 
 	public String getStatus(){
 		return this.status;
+	}
+
+	public void setParseStatus(String parseStatus){
+		this.parseStatus=parseStatus;
+	}
+
+	public String getParseStatus(){
+		return this.parseStatus;
 	}
 
 	public String toXMLString(){
