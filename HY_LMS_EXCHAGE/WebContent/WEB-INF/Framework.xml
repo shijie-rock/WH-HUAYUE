@@ -113,6 +113,10 @@
 <!-- 	<Service id="YoubusNativeCacheService" classname="com.youbus.framework.comm.YoubusNativeCacheService"/>	 -->
 	<Service id="YoubusFileService" classname="com.youbus.framework.comm.YoubusFileService"/>	
 	<Service id="EncryptService" classname="com.youbus.framework.comm.security.MyEncryptServiceImp"/>
+	
+	<Service id="AsynMinaMsgParseService" classname="com.test2.common.AsynMinaMsgParseService">
+		<Param name="PEROID_TIME_LENGTH" value="90"/>
+	</Service>
 <!-- 	<Service id="VehicleInfoInitService" classname="com.vehicle.service.VehicleInfoInitService"/> -->
 <!-- 	<Service id="ScheduleService" classname="com.infoservice.schedule.ScheduleService"> -->
 <!-- 		<Param name="StartService" value="true"/> -->

@@ -68,7 +68,7 @@ public class HyResponseUtil {
 		String msgTopic=resBean.getTopic();
 		String msgId=resBean.getId();
 		logger.debug("resBean msgTopic:="+resBean.getTopic());
-		logger.debug("parserClassName :="+HyLmsClientConstant.RESPONSE_PARSER_MAP.get(msgTopic));
+//		logger.debug("parserClassName :="+HyLmsClientConstant.RESPONSE_PARSER_MAP.get(msgTopic));
 		
 		boolean needSendConfirmTag=true;
 		
@@ -77,28 +77,34 @@ public class HyResponseUtil {
 				||HyLmsClientConstant.TOPIC_BUSI_MSG_ERROR.equals(msgTopic)){
 			needSendConfirmTag=false;
 		}
-		
+		//20190401-改为只存库，再异步 发起 api请求。
+		int nimaDBId=TmExMsgPOFactory.insertNeedParseResponse(resBean);
+//		int nimaDBId=TmExMsgPOFactory.insertResponse(resBean);
+		logger.debug(" 消息本地存库 ："+responseJson);	
 		if(HyLmsClientConstant.RESPONSE_PARSER_MAP.containsKey(msgTopic)){
-			String parserClassName=HyLmsClientConstant.RESPONSE_PARSER_MAP.get(msgTopic);
+//			String parserClassName=HyLmsClientConstant.RESPONSE_PARSER_MAP.get(msgTopic);
 			try {
+				//20190401-改为只存库，再异步 发起 api请求。转为 schedule TmExMsgPOFactory parseDBMinaMsg 处理
+				/*
 				logger.debug("进入应答消息处理：="+parserClassName);
 				Class parseClass=Class.forName(parserClassName);
 				HyResponseParserInter parser=(HyResponseParserInter)parseClass.newInstance();
 				parser.parseResponse(resBean);
 				logger.debug("结束处理报文："+responseJson);	
+				*/
 				
 				//发送 成功 confirm 应答给服务端
 //				BaseResponseBean clientResBean=HyMessageFactory.createConfirmResponseMsg(msgId, HyLmsClientConstant.MSG_RESULT_SUCCESS, null, null, null);
 				if(needSendConfirmTag)
 				HyMessageFactory.sendResponseConfirmMsg(msgId, HyLmsClientConstant.MSG_RESULT_SUCCESS, null, null, null);
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				logger.error("parserClassName not be class "+e.getMessage());
-			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				logger.error("parserClassName can't instance "+e.getMessage());
+//			} catch (ClassNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//				logger.error("parserClassName not be class "+e.getMessage());
+//			} catch (InstantiationException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//				logger.error("parserClassName can't instance "+e.getMessage());
 			} catch (IllegalAccessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

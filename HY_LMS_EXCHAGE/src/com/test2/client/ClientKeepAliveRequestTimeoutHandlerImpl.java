@@ -14,6 +14,7 @@ import org.apache.mina.filter.keepalive.KeepAliveFilter;
 import org.apache.mina.filter.keepalive.KeepAliveRequestTimeoutHandler;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 
+import com.hy.exchange.pofactory.TmExMsgPOFactory;
 import com.test2.common.ClientHelper;
 import com.test2.common.HyLmsClientConstant;
 import com.youbus.framework.comm.AppLog;
@@ -38,11 +39,14 @@ public class ClientKeepAliveRequestTimeoutHandlerImpl implements
 	public void keepAliveRequestTimedOut(KeepAliveFilter arg0, IoSession arg1)
 			throws Exception {
 		// TODO Auto-generated method stub
-		logger.info("client heartbeat timeout.");
+		logger.error("client heartbeat timeout.");
 		//发起重连
-		
+		TmExMsgPOFactory.recordMinaBeatLog("timeout");//20190520 心跳超时记录
 		int timeOutTimes=ClientHelper.getInstance().beatTimeOut();//当前连续超时次数
+		logger.error("current timeOutTimes :=."+timeOutTimes);
 		if(HyLmsClientConstant.HEARB_BEAT_TIME_OUT_MAX_TIMES<=timeOutTimes){
+			
+			logger.error(" try reconnect :=."+timeOutTimes);
 //			先执行关闭
 			/*
 			NioSocketConnector  CONNECTOR = ClientHelper.getInstance().getCONNECTOR();
@@ -70,28 +74,39 @@ public class ClientKeepAliveRequestTimeoutHandlerImpl implements
 	        //add begin
 			NioSocketConnector  CONNECTOR = ClientHelper.getInstance().getCONNECTOR();
 			IoSession SESSION_CHANNAL = ClientHelper.getInstance().getSESSION_CHANNAL();
+			/*
 			if(SESSION_CHANNAL!=null)
+			
 			while( !SESSION_CHANNAL.isIdle(IdleStatus.BOTH_IDLE) 
 					&& SESSION_CHANNAL.isConnected() ){
 				try {
 					Thread.sleep(2000);//判断session 是否是空闲，不空闲则等待
+					logger.debug(" SESSION_CHANNAL SLEEP 2 SECOND ");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			}
+			}*/
+			//不做空闲等待处理	
+				
+			logger.error(" close connector ");	
 			if(CONNECTOR!=null)
 			CONNECTOR.dispose();
 			HyLmsClientConstant.connectingNot();
 	        //add end
-			
+			logger.error(" session reconnect ");	
 	        if(!HyLmsClientConstant.NEED_CLOSE){
 	        	if(!HyLmsClientConstant.isConnecting()){
+	        			logger.error(" session reconnect begin ");	
+	        			logger.info(" 已经超过允许最大心跳超时次数，发起重新连接.");
 	        		  new HyLmsClient().connect();//改为只启动一次连接 //20190314
+	        			logger.error(" session reconnect end");	
 	        	}else{
 	        		  deLog.error(" HyLmsClientConstant.isConnecting():= "+HyLmsClientConstant.isConnecting());
 	        	}
 	        }
 			
+		}else{
+			logger.error(" no need reconnect :=."+timeOutTimes);
 		}
 		
 	}

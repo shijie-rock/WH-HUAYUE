@@ -40,9 +40,10 @@ public class BillCreateParser implements HyResponseParserInter {
 	@Override
 	public int parseResponse(BaseResponseBean response) throws Exception {
 		// TODO Auto-generated method stub
-		logger.debug("begin parse");
+		logger.debug("BillCreateParser begin parse");
 		//本地存库mina
-		int nimaDBId=TmExMsgPOFactory.insertResponse(response);
+//		int nimaDBId=TmExMsgPOFactory.insertResponse(response);
+		//20190401-异步 发起 api请求。
 		String minaMsgId=response.getId();
 		String result=response.getResult();//执行结果，Success：成功，Error：失败
 //暂时去掉
@@ -84,6 +85,8 @@ public class BillCreateParser implements HyResponseParserInter {
 		String errorMessage=resJsonObj.containsKey("errorMessage")?resJsonObj.getString("errorMessage"):"";
 		String responseData=resJsonObj.containsKey("data")?resJsonObj.getString("data"):"";
 		TmExMsgPOFactory.updateApiReqMsg(apiDBId, executeResult, errorCode, errorMessage, responseData,HyLmsClientConstant.TOPIC_BUSI_BILL_CREATE);
+		
+		logger.debug("BillCreateParser end parse");
 		
 		return 1;
 	}

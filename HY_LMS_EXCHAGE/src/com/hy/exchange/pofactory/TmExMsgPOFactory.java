@@ -17,13 +17,17 @@ import org.apache.log4j.Logger;
 
 import com.hy.exchange.po.TmExApiRecMsgPO;
 import com.hy.exchange.po.TmExApiRecMsgResponsePO;
+import com.hy.exchange.po.TmExMinaBeatLogPO;
 import com.hy.exchange.po.TmExNimaMsgPO;
 import com.infoservice.framework.services.DBService;
+import com.infoservice.po.DynaBean;
 import com.infoservice.po.POFactory;
 import com.test2.common.HyLmsClientConstant;
 import com.test2.dto.BaseRequestParamBean;
 import com.test2.dto.BaseResponseBean;
+import com.test2.response.parser.HyResponseParserInter;
 import com.youbus.framework.comm.remoteclient.ParamBean;
+import com.youbus.framework.util.DBConUtil;
 
 /**
  * 类名称:TmExMsgPOFactory
@@ -85,7 +89,7 @@ public class TmExMsgPOFactory extends POFactory {
 			minaPOCon.setId(POFactory.getIntPriKey(conn, minaPOCon));
 			minaPOCon.setMsgId(reqBean.getId());
 			minaPOCon.setMsgType(HyLmsClientConstant.MSG_TYPE_REQ);
-			minaPOCon.setParseStatus("4");//已处理，已发送
+			minaPOCon.setParseStatus("3");//已处理，已发送
 			minaPOCon.setPubAppKey(reqBean.getPublishAppKey());
 			minaPOCon.setPubTime(reqBean.getPublishTime());
 			minaPOCon.setSign(reqBean.getSign());
@@ -141,6 +145,68 @@ public class TmExMsgPOFactory extends POFactory {
 			minaPOCon.setMsgId(resBean.getId());
 			minaPOCon.setMsgType(HyLmsClientConstant.MSG_TYPE_RSP);
 			minaPOCon.setParseStatus("1");//待处理
+			minaPOCon.setPubAppKey(resBean.getPublishAppKey());
+			minaPOCon.setPubTime(resBean.getPublishTime());
+			minaPOCon.setSign(resBean.getSign());
+			minaPOCon.setStatus("1");
+			minaPOCon.setTopic(resBean.getTopic());
+			minaPOCon.setContent(resBean.getContent());
+			minaPOCon.setErrCode(resBean.getErrorCode());
+			minaPOCon.setErrMsg(resBean.getErrorMessage());
+			minaPOCon.setReqMsgId(resBean.getRequestMessageId());
+			minaPOCon.setResult(resBean.getResult());
+			
+			POFactory.insert(conn, minaPOCon);
+			id=minaPOCon.getId();
+			commit=true;
+		}catch(Throwable t){
+			t.printStackTrace();
+			log.error(t);
+		}finally{
+			db.closeTransaction(txn, commit);
+			db.closeConnection(conn);
+		}
+		return id;
+	}
+	
+	/**
+	 * 插入接收的应答消息(需要异步线程发起api请求)
+	 * 方   法  名:insertResponse
+	 * 方法描述:
+	 * 参         数:@param resBean
+	 * 参         数:@return
+	 * 返   回  值:int
+	 * 创   建  人:rock
+	 * @exception
+	 * @since  1.0.0
+	 */
+	public static int insertNeedParseResponse(BaseResponseBean resBean){
+		if(resBean==null){
+			log.error("resBean is null");
+			return 0;
+		}
+		
+		DBService db=DBService.getInstance();
+		Connection conn=db.getConnection();
+		Object txn = db.getTransaction();
+		if(conn==null){
+			log.error("conn is null");
+			return 0;
+		}
+		if(txn==null){
+			log.error("txn is null");
+			return 0;
+		}
+		boolean commit=false;
+		int id=0;
+		try{
+			TmExNimaMsgPO minaPOCon=new TmExNimaMsgPO();
+			minaPOCon.setCreateBy(0);
+			minaPOCon.setCreateTime(new Date(System.currentTimeMillis()));
+			minaPOCon.setId(POFactory.getIntPriKey(conn, minaPOCon));
+			minaPOCon.setMsgId(resBean.getId());
+			minaPOCon.setMsgType(HyLmsClientConstant.MSG_TYPE_RSP);
+			minaPOCon.setParseStatus("2");//处理中
 			minaPOCon.setPubAppKey(resBean.getPublishAppKey());
 			minaPOCon.setPubTime(resBean.getPublishTime());
 			minaPOCon.setSign(resBean.getSign());
@@ -358,6 +424,293 @@ public class TmExMsgPOFactory extends POFactory {
 			db.closeConnection(conn);
 		}
 		return id;
+	}
+	
+	
+	/**
+	 * 从数据库中读取TmExNimaMsg 需要处理的数据（parse status=2 or 4）数据，
+	 * 方   法  名:parseDBMinaMsg
+	 * 方法描述:
+	 * 参         数:
+	 * 返   回  值:void
+	 * 创   建  人:rock
+	 * @exception
+	 * @since  1.0.0
+	 */
+	private static List<DynaBean> queryParseDBMinaMsg(){
+		
+		DBService db = DBService.getInstance();
+		Connection conn = db.getConnection();
+		Object txn = db.getTransaction();
+		if (conn == null) {
+			log.error("conn is null");
+			return null;
+		}
+		if (txn == null) {
+			log.error("txn is null");
+			return null;
+		}
+		boolean commit = false;
+		
+		String sql=" SELECT ID,MSG_ID,TOPIC,PUB_APP_KEY,PUB_TIME,MSG_TYPE,SIGN,"
+				+ " REQ_MSG_ID,RESULT,ERR_CODE,ERR_MSG,CONTENT,PARSE_STATUS,PARSE_TIME ,PARSE_COUNT "
+				+ " FROM TM_EX_NIMA_MSG "
+				+ " WHERE STATUS='1' "
+				+ " AND PARSE_STATUS IN ('2','4') "
+				+ " AND CONTENT IS NOT NULL "
+				+ " AND CONTENT <>'' "
+				+ " AND PUB_APP_KEY='99_MessageCenter' "
+				+ " AND TOPIC IS NOT NULL "
+				+ " AND TOPIC <>'' "
+				+ " AND PARSE_COUNT <5"
+				+ " AND STATUS='1' "
+				+ " ORDER BY ID ASC "
+				+ " LIMIT 10 ";
+		log.debug("parseDBMinaMsg sql:="+sql);
+		try {
+			List<DynaBean> list=DBConUtil.getResult(conn, sql, "MINA_MSG_BEAN");
+			commit = true;
+			return list;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e.getMessage());
+		} finally {
+			db.closeTransaction(txn, commit);
+			db.closeConnection(conn);
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * schedule 异步处理，需要发api接口的消息
+	 * 方   法  名:parseDBMinaMsg
+	 * 方法描述:
+	 * 参         数:
+	 * 返   回  值:void
+	 * 创   建  人:rock
+	 * @exception
+	 * @since  1.0.0
+	 */
+	public static void parseDBMinaMsg(){
+		
+		List<DynaBean> list=queryParseDBMinaMsg();
+		if(list!=null&&list.size()>0){
+			for(DynaBean bean:list){
+				BaseResponseBean resBean =new BaseResponseBean();
+				resBean.setContent(bean.getString("CONTENT"));
+				resBean.setErrorCode(bean.getString("ERR_CODE"));
+				resBean.setMessageType(bean.getString("MSG_TYPE"));
+				resBean.setPublishAppKey(bean.getString("PUB_APP_KEY"));
+				resBean.setPublishTime(bean.getString("PUB_TIME"));
+				resBean.setRequestMessageId(bean.getString("REQ_MSG_ID"));
+				resBean.setResult(bean.getString("RESULT"));
+				resBean.setSign(bean.getString("SIGN"));
+				resBean.setTopic(bean.getString("TOPIC"));
+				resBean.setErrorMessage(bean.getString("ERR_MSG"));
+				
+//				Object idObj=bean.get("ID");
+//				if(idObj instanceof Long)
+//				resBean.setId(((Long)idObj).intValue());
+//				else{
+//					
+//				}
+				
+				int minaMsgId=bean.getInt("ID");
+				
+				int parseCount=bean.getInt("PARSE_COUNT");
+				
+				resBean.setId(bean.getString("MSG_ID"));
+				
+				String msgTopic=resBean.getTopic();
+				
+				String parserClassName=HyLmsClientConstant.RESPONSE_PARSER_MAP.get(msgTopic);
+				logger.debug("parserClassName :="+parserClassName);
+				logger.debug("开始处理消息ID["+minaMsgId+"]：="+resBean.toXMLString());
+				Class parseClass;
+				int parseResult=0;//api 发送处理结果
+				try {
+					parseClass = Class.forName(parserClassName);
+					HyResponseParserInter parser=(HyResponseParserInter)parseClass.newInstance();
+					parseResult=parser.parseResponse(resBean);
+//				} catch (ClassNotFoundException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//					logger.error(e.getMessage());
+//				} catch (InstantiationException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//					logger.error(e.getMessage());
+//				} catch (IllegalAccessException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//					logger.error(e.getMessage());
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//					logger.error(e.getMessage());
+//				}
+
+				logger.debug((1==parseResult?"[消息处理成功]":"[消息处理失败]")+" 结束处理报文ID["+minaMsgId+"]："+resBean.toXMLString());		
+				
+				if(1==parseResult){
+					logger.debug("消息ID["+minaMsgId+"]处理成功:mina msg更新状态");
+					parseSuccess(minaMsgId, parseCount);
+					
+				}else{
+					logger.debug("消息ID["+minaMsgId+"]处理失败:mina msg更新状态");
+					parseFaild(minaMsgId, parseCount);
+				}
+				
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					logger.error(e.getMessage());
+				} catch (InstantiationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					logger.error(e.getMessage());
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					logger.error(e.getMessage());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					logger.error(e.getMessage());
+				} catch (Throwable e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					logger.error(e.getMessage());
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 处理成功，更新mina表处理状态
+	 * 方   法  名:parseSuccess
+	 * 方法描述:
+	 * 参         数:@param minaMsgId
+	 * 参         数:@param parseCount
+	 * 返   回  值:void
+	 * 创   建  人:rock
+	 * @exception
+	 * @since  1.0.0
+	 */
+	private static void parseSuccess(int minaMsgId,int parseCount){
+		TmExNimaMsgPO minaPOCon=new TmExNimaMsgPO();
+		minaPOCon.setId(minaMsgId);
+		minaPOCon.setStatus("1");
+		
+		TmExNimaMsgPO minaPOValue=new TmExNimaMsgPO();
+		minaPOValue.setUpdateBy(0);
+		minaPOValue.setUpdateTime(new Date(System.currentTimeMillis()));
+		minaPOValue.setParseStatus("3");
+		minaPOValue.setParseTime(new Date(System.currentTimeMillis()));
+		minaPOValue.setParseCount(parseCount+1);
+		
+		DBService db = DBService.getInstance();
+		Connection conn = db.getConnection();
+		Object txn = db.getTransaction();
+		if (conn == null) {
+			log.error("conn is null");
+			return ;
+		}
+		if (txn == null) {
+			log.error("txn is null");
+			return ;
+		}
+		boolean commit = false;
+		POFactory.update(conn, minaPOCon, minaPOValue);
+		commit = true;
+		db.closeTransaction(txn, commit);
+		db.closeConnection(conn);
+		
+	}
+	
+	/**
+	 * 处理失败，更新mina处理状态
+	 * 方   法  名:parseFaild
+	 * 方法描述:
+	 * 参         数:@param minaMsgId
+	 * 参         数:@param parseCount
+	 * 返   回  值:void
+	 * 创   建  人:rock
+	 * @exception
+	 * @since  1.0.0
+	 */
+	private static void parseFaild(int minaMsgId,int parseCount){
+		TmExNimaMsgPO minaPOCon=new TmExNimaMsgPO();
+		minaPOCon.setId(minaMsgId);
+		minaPOCon.setStatus("1");
+		
+		TmExNimaMsgPO minaPOValue=new TmExNimaMsgPO();
+		minaPOValue.setUpdateBy(0);
+		minaPOValue.setUpdateTime(new Date(System.currentTimeMillis()));
+		minaPOValue.setParseStatus("4");
+		minaPOValue.setParseTime(new Date(System.currentTimeMillis()));
+		minaPOValue.setParseCount(parseCount+1);
+		
+		DBService db = DBService.getInstance();
+		Connection conn = db.getConnection();
+		Object txn = db.getTransaction();
+		if (conn == null) {
+			log.error("conn is null");
+			return ;
+		}
+		if (txn == null) {
+			log.error("txn is null");
+			return ;
+		}
+		boolean commit = false;
+		POFactory.update(conn, minaPOCon, minaPOValue);
+		commit = true;
+		db.closeTransaction(txn, commit);
+		db.closeConnection(conn);
+		
+	}
+	
+	
+	/**
+	 * 记录心跳日志（超时）
+	 * 方   法  名:recordMinaBeatLog
+	 * 方法描述:
+	 * 参         数:@param logContent
+	 * 返   回  值:void
+	 * 创   建  人:rock
+	 * @exception
+	 * @since  1.0.0
+	 */
+	public static void recordMinaBeatLog(String logContent){
+		
+		DBService db = DBService.getInstance();
+		Connection conn = db.getConnection();
+		Object txn = db.getTransaction();
+		if (conn == null) {
+			log.error("conn is null");
+			return ;
+		}
+		if (txn == null) {
+			log.error("txn is null");
+			return ;
+		}
+		boolean commit = false;
+		
+		TmExMinaBeatLogPO logPOCon=new TmExMinaBeatLogPO();
+		logPOCon.setBeatConnStatus(logContent);
+		logPOCon.setCreateBy(0);
+		logPOCon.setCreateTime(new Date(System.currentTimeMillis()));
+		logPOCon.setId(POFactory.getIntPriKey(conn, logPOCon));
+		logPOCon.setRecordTime(new Date(System.currentTimeMillis()));
+		logPOCon.setStatus("1");
+		
+		POFactory.insert(conn, logPOCon);
+		commit = true;
+		db.closeTransaction(txn, commit);
+		db.closeConnection(conn);
+		
 	}
 	
 }

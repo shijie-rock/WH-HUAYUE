@@ -137,7 +137,9 @@ public class HyMessageHttpClientFactory {
 		List<NameValuePair> paramList=parseParam2NameValuePair(params);
 		
 		post= new HttpPost(serverUrl); //
-		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(20000).setConnectTimeout(20000).build();//设置请求和传输超时时间
+//		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(20000).setConnectTimeout(20000).build();//设置请求和传输超时时间
+		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(20000)
+				.setConnectTimeout(20000).setConnectionRequestTimeout(20000).setStaleConnectionCheckEnabled(true).build();//设置请求和传输超时时间
 		post.setConfig(requestConfig);
 		post.addHeader("Connection", "close");  
 //		post.addRequestHeader("connection","keep-alive");//test
@@ -178,6 +180,7 @@ public class HyMessageHttpClientFactory {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					appLog.error(e.getMessage());
 				}
 			if(client!=null)
 				try {
@@ -185,6 +188,7 @@ public class HyMessageHttpClientFactory {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					appLog.error(e.getMessage());
 				}
 //			client.getHttpConnectionManager().closeIdleConnections(0);    
 		}  
@@ -217,7 +221,8 @@ public class HyMessageHttpClientFactory {
 		}
 		String paramJson=HyLmsSignUtil.getApiRequestJson(params);
 		post= new HttpPost(serverUrl); //
-		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(20000).setConnectTimeout(20000).build();//设置请求和传输超时时间
+		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(20000)
+				.setConnectTimeout(20000).setConnectionRequestTimeout(20000).setStaleConnectionCheckEnabled(true).build();//设置请求和传输超时时间
 		post.setConfig(requestConfig);
 		post.addHeader("Connection", "close");  
 //		post.addRequestHeader("connection","keep-alive");//test
@@ -239,9 +244,11 @@ public class HyMessageHttpClientFactory {
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			appLog.error(e.getMessage());
 		}catch (Throwable e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			appLog.error(e.getMessage());
 		}
 		finally{  
 			if(post!=null)
@@ -252,6 +259,7 @@ public class HyMessageHttpClientFactory {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					appLog.error(e.getMessage());
 				}
 			if(client!=null)
 				try {
@@ -259,6 +267,7 @@ public class HyMessageHttpClientFactory {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					appLog.error(e.getMessage());
 				}
 //			client.getHttpConnectionManager().closeIdleConnections(0);    
 		}  
@@ -291,7 +300,9 @@ public class HyMessageHttpClientFactory {
 		}
 //		String paramJson=HyLmsSignUtil.getApiRequestJson(params);
 		post= new HttpPost(serverUrl); //
-		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(20000).setConnectTimeout(20000).build();//设置请求和传输超时时间
+//		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(20000).setConnectTimeout(20000).build();//设置请求和传输超时时间
+		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(20000)
+				.setConnectTimeout(20000).setConnectionRequestTimeout(20000).setStaleConnectionCheckEnabled(true).build();//设置请求和传输超时时间
 		post.setConfig(requestConfig);
 		post.addHeader("Connection", "close");  
 //		post.addRequestHeader("connection","keep-alive");//test
@@ -313,9 +324,11 @@ public class HyMessageHttpClientFactory {
 		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			appLog.error(e.getMessage());
 		}catch (Throwable e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			appLog.error(e.getMessage());
 		}
 		finally{  
 			if(post!=null)
@@ -326,6 +339,7 @@ public class HyMessageHttpClientFactory {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					appLog.error(e.getMessage());
 				}
 			if(client!=null)
 				try {
@@ -333,6 +347,7 @@ public class HyMessageHttpClientFactory {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					appLog.error(e.getMessage());
 				}
 //			client.getHttpConnectionManager().closeIdleConnections(0);    
 		}  
